@@ -603,6 +603,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.miklKonovalov.Navigation;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

@@ -70,6 +70,12 @@ class ProfileViewController: UIViewController {
         
         self.view.bringSubviewToFront(avatar)
         
+        #if DEBUG
+        self.view.backgroundColor = .red
+        #else
+        self.view.backgroundColor = .green
+        #endif
+        
         //MARK: Setup Avatar constraints
         var avatarTopAnchor =
             avatar.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 16)
