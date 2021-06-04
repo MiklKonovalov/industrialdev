@@ -94,8 +94,8 @@
             filePath = "Navigation/Controllers/ProfileViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "62"
-            endingLineNumber = "62"
+            startingLineNumber = "63"
+            endingLineNumber = "63"
             landmarkName = "viewDidLoad()"
             landmarkType = "7">
          </BreakpointContent>
@@ -148,7 +148,7 @@
             landmarkType = "7">
             <Locations>
                <Location
-                  uuid = "E3865890-3CDC-4C1B-9837-E39CBF521C13 - fd8c7a483f5f87bd"
+                  uuid = "E3865890-3CDC-4C1B-9837-E39CBF521C13 - d24e122b29ef2032"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -163,7 +163,7 @@
                   offsetFromSymbolStart = "30">
                </Location>
                <Location
-                  uuid = "E3865890-3CDC-4C1B-9837-E39CBF521C13 - 77388792a8839eb1"
+                  uuid = "E3865890-3CDC-4C1B-9837-E39CBF521C13 - 58faeff1be33391d"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -190,8 +190,8 @@
             filePath = "Navigation/Controllers/ProfileViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "138"
-            endingLineNumber = "138"
+            startingLineNumber = "139"
+            endingLineNumber = "139"
             landmarkName = "setupConstraints()"
             landmarkType = "7">
          </BreakpointContent>
