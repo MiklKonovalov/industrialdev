@@ -11,13 +11,28 @@ import UIKit
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
+    
+    //Внедрите зависимость контроллера от LoginInspector, то есть присвойте значение свойству делегата в SceneDelegate или AppDelegate
+        var loginInspector: LoginInspetor?
 
-
+        var logInViewController = LogInViewController()
+//
+//      init(loginInspector: LoginInspetor) {
+//        self.loginInspector = loginInspector
+//
+//
+//    }
+    
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
-        // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
-        // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
-        // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
+        
         guard let _ = (scene as? UIWindowScene) else { return }
+        
+        let sceneDelegate = UIApplication.shared.connectedScenes
+            .first!.delegate as! SceneDelegate
+            sceneDelegate.window!.rootViewController = logInViewController
+        
+        logInViewController.delegate = loginInspector
+
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {

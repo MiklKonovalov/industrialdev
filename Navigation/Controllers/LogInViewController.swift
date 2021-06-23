@@ -8,8 +8,20 @@
 
 import UIKit
 
+//Протокол делегирования проверки логинаи пароля. Он имеет несколько параметров, данных для передачи обратно вызвавшему контроллеру. В данном случае я передаю обратно контроллеру логин и пароль.
+protocol LogInViewControllerDelegate: AnyObject {
+    //1.1 В методе делегата передаём экземпляр делегирующего объекта, чтобы вернуть результат работы
+    func checkValue(class: LogInViewController, login: String, password: String) -> User
+
+}
+
 class LogInViewController: UIViewController {
 
+    //1.2 Объявляем делегата для использования. В контроллере мы создаем instance протокола и называем его делегат
+    weak var delegate: LogInViewControllerDelegate?
+    
+    //1.3 Метод делегата проверяет значения, введенные в 2 UITextField контроллера.
+    
     //MARK: Create subviews
     let substrate: UIView = {
         let substrate = UIView()
@@ -55,7 +67,6 @@ class LogInViewController: UIViewController {
     private var userNameTextField: UITextField = {
         let userNameTextField = UITextField()
         userNameTextField.layer.borderColor = UIColor.white.cgColor
-        //userNameTextField.layer.borderWidth = 0
         userNameTextField.layer.cornerRadius = 10
         userNameTextField.layer.backgroundColor = UIColor.systemGray6.cgColor
         userNameTextField.translatesAutoresizingMaskIntoConstraints = false
@@ -67,7 +78,6 @@ class LogInViewController: UIViewController {
     private var passwordTextField: UITextField = {
         let passwordTextField = UITextField()
         passwordTextField.layer.borderColor = UIColor.white.cgColor
-        //passwordTextField.layer.borderWidth = 0
         passwordTextField.layer.cornerRadius = 10
         passwordTextField.layer.backgroundColor = UIColor.systemGray6.cgColor
         passwordTextField.translatesAutoresizingMaskIntoConstraints = false
@@ -97,19 +107,20 @@ class LogInViewController: UIViewController {
         return separator
     }()
     
-        override func viewDidLayoutSubviews() {
-            super.viewDidLayoutSubviews()
-            
-        }
-    
     @objc private func logInButtonPressed() {
-        guard let userName = userNameTextField.text else { return }
+        
+        guard let userName = userNameTextField.text, let  passValue = passwordTextField.text else { return }
     #if DEBUG
         let userService = TestUserService()
     #else
         let userService = CurrentUserService()
     #endif
-        let profileViewController = ProfileViewController(userService: userService, userName: userName ?? " ")
+        var profileViewController = ProfileViewController(userService: userService, userName: userName) {
+            didSet {
+                //1.4. Метод делегата проверяет значения, введенные в 2 UITextField контроллера
+                delegate?.checkValue(class: self, login: userName , password: passValue)
+            }
+        }
         self.navigationController?.pushViewController(profileViewController, animated: true)
     }
     
@@ -230,3 +241,16 @@ class LogInViewController: UIViewController {
     }
     
 }
+
+//4. Создаем произвольный класс/структуру LoginInspector (или придумайте свое название), который подписывается на протокол LoginViewControllerDelegate, реализуем в нем протокольный метод.
+//5. LoginInspector проверяет точность введенного пароля с помощью синглтона Checker.
+class LoginInspetor: LogInViewControllerDelegate {
+    func checkValue(class: LogInViewController, login: String, password: String) -> User {
+        
+        Checker.shared.checking()
+        
+        return Checker.shared.user
+    }
+    
+}
+
