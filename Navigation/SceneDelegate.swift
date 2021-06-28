@@ -13,25 +13,26 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     var window: UIWindow?
     
     //Внедрите зависимость контроллера от LoginInspector, то есть присвойте значение свойству делегата в SceneDelegate или AppDelegate
-        var loginInspector: LoginInspetor?
 
-        var logInViewController = LogInViewController()
-//
-//      init(loginInspector: LoginInspetor) {
-//        self.loginInspector = loginInspector
-//
-//
-//    }
+    //Фабрика п3: Инициализируйте в SceneDelegate / AppDelegate только фабрику .
+    let myLoginFactory = MyLoginFactory()
     
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         
-        guard let _ = (scene as? UIWindowScene) else { return }
+        guard let windowScene = (scene as? UIWindowScene) else { return }
+        //Создаём UIWindow используя
+        let window = UIWindow(windowScene: windowScene)
+        //Создаём программно новую иерархию вью
+        let loginViewController = LogInViewController()
         
-        let sceneDelegate = UIApplication.shared.connectedScenes
-            .first!.delegate as! SceneDelegate
-            sceneDelegate.window!.rootViewController = logInViewController
+        let navigationController = UINavigationController(rootViewController: loginViewController)
+        //Устанавливаем главный вью контроллер окну с нашим вью контроллером
+        window.rootViewController = navigationController
         
-        logInViewController.delegate = loginInspector
+        self.window = window
+        window.makeKeyAndVisible()
+        
+        loginViewController.delegate = myLoginFactory.checkLoginByFactory()
 
     }
 

@@ -15,10 +15,35 @@ protocol LogInViewControllerDelegate: AnyObject {
 
 }
 
-class LogInViewController: UIViewController {
+//Фабрика п1: Создайте protocol LoginFactory с 1 методом без параметров, который возвращает LoginInspector.
 
+//Комментарий: Объявляем интерфейс, который будет играть роль «абстрактной фабрики»:
+protocol LoginFactory {
+    //Создаём фабричный метод (Фабричный метод - это метод, который что-то возвращает), который возвращает LoginInspector. Мы знаем, что фабрика должна проверять логин и пароль, по-этому, когда мы пишем общий интерфейс для фабрики, мы возвращаем LjginInspector. Интерфейс абстрактной фабрики содержит один метода: для проверки логина и пароля. Метод возвращает экземпляр общего базового класса? Таким образом, ограничивается область распространения знаний о конкретных типах пределами той области, в которой это действительно необходимо.
+    func checkLoginByFactory() -> LoginInspetor
+}
+
+class LogInViewController: UIViewController {
+    
     //1.2 Объявляем делегата для использования. В контроллере мы создаем instance протокола и называем его делегат
     weak var delegate: LogInViewControllerDelegate?
+    
+    //В контроллере у нас есть зависимость от фабрики. Она жёсткая, так как мы внедряем её через инициализатор
+    private var factory: LoginFactory?
+    
+//    init(factory: LoginFactory? = nil) {
+//        self.factory = factory
+//        super.init(nibName: nil, bundle: nil)
+//    }
+    
+//    required init?(coder: NSCoder) {
+//        fatalError("init(coder:) has not been implemented")
+//    }
+    
+//    required init?(coder aDecoder: NSCoder) {
+//        super.init(coder: aDecoder)
+//        super.init(factory: LoginFactory)
+//    }
     
     //1.3 Метод делегата проверяет значения, введенные в 2 UITextField контроллера.
     
@@ -254,3 +279,26 @@ class LoginInspetor: LogInViewControllerDelegate {
     
 }
 
+//Фабрика п2: Вынесите генерацию LoginInspector из SceneDelegate (или AppDelegate) в фабрику: создайте объект MyLoginFactory (название на ваше усмотрение), подпишите на протокол.
+
+//Комментарий: Тут мы реализуем логику фабрики:
+struct MyLoginFactory: LoginFactory {
+    
+    func checkLoginByFactory() -> LoginInspetor {
+        print("check login")
+        return LoginInspetor()
+    }
+}
+
+//Фабрика п4: Внедрите зависимость контроллера от LoginInspector, создав инспектора с помощью фабричного метода.
+
+//Комментарий: Логика в dataSource контроллера. У нас есть задача показать юзера, которую мы выполняем.
+extension LogInViewController {
+
+    func dataSourceFunction() -> User {
+        let inspector = factory?.checkLoginByFactory()
+        let user = inspector?.checkValue(class: self, login: "1", password: "2")
+        return user!
+    }
+
+}
