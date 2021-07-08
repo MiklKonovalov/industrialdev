@@ -83,9 +83,14 @@ struct RugbyFlow {
             RugbyPhotos(rugbyImage: UIImage(named: "18")!),
             RugbyPhotos(rugbyImage: UIImage(named: "19")!),
             RugbyPhotos(rugbyImage: UIImage(named: "20")!),
-    
     ]
     )
+}
+
+struct PhotosForObserver {
+   
+    
+
 }
 
 //Добавить класс User для хранения информации о пользователе: полное имя, аватар, статус.

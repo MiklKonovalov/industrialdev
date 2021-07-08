@@ -8,8 +8,25 @@
 
 import Foundation
 import UIKit
+import iOSIntPackage
 
-class PhotosViewController: UIViewController {
+//ImageLibrarySubscriber - это Паблишер
+class PhotosViewController: UIViewController, ImageLibrarySubscriber {
+    
+    var receivedImages: [RugbyPhotos] = []
+    
+    func receive(images: [UIImage]) {
+        //Записываем картинки в новый датасорс
+        if images is [RugbyPhotos] {
+            self.receivedImages = images as! [RugbyPhotos]
+        }
+        
+        self.collectionView.reloadData()
+        print(type(of: self), #function)
+    }
+    
+    //ImagePublisherFacade содержит методы добавления, удаления наблюдателя и вызов нотификации
+    var imagePublisherFacade = ImagePublisherFacade()
     
     var labelString: String!
     
@@ -18,6 +35,7 @@ class PhotosViewController: UIViewController {
         self.navigationController?.navigationBar.isHidden = false
         title = "Photos Gallery"
         navigationController?.title = labelString
+        
     }
     
     //MARK: setup collection
@@ -30,11 +48,19 @@ class PhotosViewController: UIViewController {
         collectionView.backgroundColor = .white
         return collectionView
     }()
-
+    
+    
+    
     //MARK: viewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
         setupCollectionsConstraints()
+        
+        //подписываем класс PhotosViewController на изменения
+        imagePublisherFacade.subscribe(self)
+        
+        //Запускаем сценарий выполнения публикации
+        imagePublisherFacade.addImagesWithTimer(time: 1, repeat: 10, userImages: RugbyFlow.rugbySections.imageArrayOfRugbyPhotos as? [UIImage])
     }
 
     //MARK: setup collection's constraint
@@ -61,20 +87,18 @@ class PhotosViewController: UIViewController {
 
 extension PhotosViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        20
-
+        receivedImages.count
     }
 
     //создаём ячейку, которая будет отображать данные
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        //создаём переиспользование ячеек
+
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: PhotoCollectionViewCell.self), for: indexPath) as! PhotoCollectionViewCell
-        //ниже нам надо создать экземпляры ячеек
-
-        let rugbyFlow = RugbyFlow.rugbySections.imageArrayOfRugbyPhotos[indexPath.item]
         
-        (cell as? PhotoCollectionViewCell)?.photos = rugbyFlow
-
+        //let rugbyFlow = RugbyFlow.rugbySections.imageArrayOfRugbyPhotos[indexPath.item]
+        
+        cell.photos = receivedImages[indexPath.item]
+        
        return cell
     }
 }
