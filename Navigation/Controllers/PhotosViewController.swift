@@ -26,7 +26,7 @@ class PhotosViewController: UIViewController, ImageLibrarySubscriber {
     }
     
     //ImagePublisherFacade содержит методы добавления, удаления наблюдателя и вызов нотификации
-    var imagePublisherFacade = ImagePublisherFacade()
+    var imagePublisherFacade: ImagePublisherFacade? = .init()
     
     var labelString: String!
     
@@ -57,10 +57,10 @@ class PhotosViewController: UIViewController, ImageLibrarySubscriber {
         setupCollectionsConstraints()
         
         //подписываем класс PhotosViewController на изменения
-        imagePublisherFacade.subscribe(self)
+        imagePublisherFacade?.subscribe(self)
         
         //Запускаем сценарий выполнения публикации
-        imagePublisherFacade.addImagesWithTimer(time: 1, repeat: 10, userImages: RugbyFlow.rugbySections.imageArrayOfRugbyPhotos as? [UIImage])
+        imagePublisherFacade?.addImagesWithTimer(time: 1, repeat: 10, userImages: RugbyFlow.rugbySections.imageArrayOfRugbyPhotos as? [UIImage])
     }
 
     //MARK: setup collection's constraint

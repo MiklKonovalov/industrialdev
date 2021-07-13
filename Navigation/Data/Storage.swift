@@ -87,12 +87,6 @@ struct RugbyFlow {
     )
 }
 
-struct PhotosForObserver {
-   
-    
-
-}
-
 //Добавить класс User для хранения информации о пользователе: полное имя, аватар, статус.
 class User {
     var name: String
@@ -106,8 +100,6 @@ class User {
     }
     
 }
-
-//var userOne = User(name: "Mike", avatar: UIImage(named: "эко-мороженое 1") ?? UIImage(), status: "work")
 
 //Добавить протокол UserService с функцией, которая принимает имя пользователя и возвращает объект класса User.
 protocol UserService {
@@ -149,7 +141,6 @@ class TestUserService: UserService {
     }
     
 }
-
 
 //Создаем сервис для проверки логина и пароля Checker или любым другим названием, у сервиса (это Singleton) будет 1 интерфейсный метод для проверки логина и пароля
 class Checker {
