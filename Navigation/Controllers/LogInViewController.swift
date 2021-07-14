@@ -11,12 +11,11 @@ import UIKit
 //Протокол делегирования проверки логинаи пароля. Он имеет несколько параметров, данных для передачи обратно вызвавшему контроллеру. В данном случае я передаю обратно контроллеру логин и пароль.
 protocol LogInViewControllerDelegate: AnyObject {
     //1.1 В методе делегата передаём экземпляр делегирующего объекта, чтобы вернуть результат работы
-    func checkValue(class: LogInViewController, login: String, password: String) -> User
+    func checkValue(login: String, password: String) -> User?
 
 }
 
-//Фабрика п1: Создайте protocol LoginFactory с 1 методом без параметров, который возвращает LoginInspector.
-
+//Фабрика 1: Создайте protocol LoginFactory с 1 методом без параметров, который возвращает LoginInspector.
 //Комментарий: Объявляем интерфейс, который будет играть роль «абстрактной фабрики»:
 protocol LoginFactory {
     //Создаём фабричный метод (Фабричный метод - это метод, который что-то возвращает), который возвращает LoginInspector. Мы знаем, что фабрика должна проверять логин и пароль, по-этому, когда мы пишем общий интерфейс для фабрики, мы возвращаем LjginInspector. Интерфейс абстрактной фабрики содержит один метода: для проверки логина и пароля. Метод возвращает экземпляр общего базового класса? Таким образом, ограничивается область распространения знаний о конкретных типах пределами той области, в которой это действительно необходимо.
@@ -28,24 +27,23 @@ class LogInViewController: UIViewController {
     //1.2 Объявляем делегата для использования. В контроллере мы создаем instance протокола и называем его делегат
     weak var delegate: LogInViewControllerDelegate?
     
+    //Фабрика: Внедрите зависимость контроллера от LoginInspector, создав инспектора с помощью фабричного метода.
     //В контроллере у нас есть зависимость от фабрики. Она жёсткая, так как мы внедряем её через инициализатор
-    private var factory: LoginFactory?
+    var factory: MyLoginFactory
     
-//    init(factory: LoginFactory? = nil) {
-//        self.factory = factory
-//        super.init(nibName: nil, bundle: nil)
-//    }
+    init(factory: MyLoginFactory) {
+        self.factory = factory
+        
+        factory.checkLoginByFactory()
+        
+        super.init(nibName: nil, bundle: nil)
+    }
     
-//    required init?(coder: NSCoder) {
-//        fatalError("init(coder:) has not been implemented")
-//    }
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
-//    required init?(coder aDecoder: NSCoder) {
-//        super.init(coder: aDecoder)
-//        super.init(factory: LoginFactory)
-//    }
-    
-    //1.3 Метод делегата проверяет значения, введенные в 2 UITextField контроллера.
+
     
     //MARK: Create subviews
     let substrate: UIView = {
@@ -140,12 +138,7 @@ class LogInViewController: UIViewController {
     #else
         let userService = CurrentUserService()
     #endif
-        var profileViewController = ProfileViewController(userService: userService, userName: userName) {
-            didSet {
-                //1.4. Метод делегата проверяет значения, введенные в 2 UITextField контроллера
-                delegate?.checkValue(class: self, login: userName , password: passValue)
-            }
-        }
+        var profileViewController = ProfileViewController(userService: userService, userName: userName) 
         self.navigationController?.pushViewController(profileViewController, animated: true)
     }
     
@@ -181,6 +174,7 @@ class LogInViewController: UIViewController {
     //MARK: Add subviews
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         self.navigationController?.isNavigationBarHidden = true
         view.backgroundColor = .white
         
@@ -267,22 +261,34 @@ class LogInViewController: UIViewController {
     
 }
 
+//LoginInspector - это делегат
 //4. Создаем произвольный класс/структуру LoginInspector (или придумайте свое название), который подписывается на протокол LoginViewControllerDelegate, реализуем в нем протокольный метод.
 //5. LoginInspector проверяет точность введенного пароля с помощью синглтона Checker.
 class LoginInspetor: LogInViewControllerDelegate {
-    func checkValue(class: LogInViewController, login: String, password: String) -> User {
+    
+    func checkValue(login: String, password: String) -> User? {
         
-        Checker.shared.checking()
+        let user = Checker.shared.user
         
-        return Checker.shared.user
+        _ = Checker.shared.checkLoginAndPassword(param: login, param: password)
+            
+            if login == "1" && password == "2" {
+                return user
+            } else {
+                print("Login not correct")
+            }
+        
+        return user
     }
     
 }
 
 //Фабрика п2: Вынесите генерацию LoginInspector из SceneDelegate (или AppDelegate) в фабрику: создайте объект MyLoginFactory (название на ваше усмотрение), подпишите на протокол.
 
-//Комментарий: Тут мы реализуем логику фабрики:
-struct MyLoginFactory: LoginFactory {
+//Мы хотим инкапсулировать логику создания делегата для LoginViewController, для этого мы описываем MyLoginFactory.
+
+//Тут мы реализуем логику фабрики:
+class MyLoginFactory: LoginFactory {
     
     func checkLoginByFactory() -> LoginInspetor {
         print("check login")
@@ -290,15 +296,3 @@ struct MyLoginFactory: LoginFactory {
     }
 }
 
-//Фабрика п4: Внедрите зависимость контроллера от LoginInspector, создав инспектора с помощью фабричного метода.
-
-//Комментарий: Логика в dataSource контроллера. У нас есть задача показать юзера, которую мы выполняем.
-extension LogInViewController {
-
-    func dataSourceFunction() -> User {
-        let inspector = factory?.checkLoginByFactory()
-        let user = inspector?.checkValue(class: self, login: "1", password: "2")
-        return user!
-    }
-
-}
