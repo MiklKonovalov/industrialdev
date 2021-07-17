@@ -23,6 +23,8 @@ protocol LoginFactory {
     func checkLoginByFactory() -> LoginInspetor
 }
 
+// Слой Presentation: M-V-C (V + C)
+
 class LogInViewController: UIViewController {
     
     //1.2 Объявляем делегата для использования. В контроллере мы создаем instance протокола и называем его делегат
@@ -30,22 +32,6 @@ class LogInViewController: UIViewController {
     
     //В контроллере у нас есть зависимость от фабрики. Она жёсткая, так как мы внедряем её через инициализатор
     private var factory: LoginInspetor?
-    
-//    init(factory: LoginFactory? = nil) {
-//        self.factory = factory
-//        super.init(nibName: nil, bundle: nil)
-//    }
-    
-//    required init?(coder: NSCoder) {
-//        fatalError("init(coder:) has not been implemented")
-//    }
-    
-//    required init?(coder aDecoder: NSCoder) {
-//        super.init(coder: aDecoder)
-//        super.init(factory: LoginFactory)
-//    }
-    
-    //1.3 Метод делегата проверяет значения, введенные в 2 UITextField контроллера.
     
     //MARK: Create subviews
     let substrate: UIView = {
@@ -111,18 +97,18 @@ class LogInViewController: UIViewController {
         return passwordTextField
     }()
     
-    private var logInButton: UIButton = {
-        let logInButton = UIButton(type: .system)
-        logInButton.layer.cornerRadius = 10
-        logInButton.clipsToBounds = true
-        logInButton.setBackgroundImage(#imageLiteral(resourceName: "blue_pixel"), for: .normal)
-        logInButton.setTitleColor(.white, for: .normal)
-        logInButton.setTitleColor(.darkGray, for: .selected)
-        logInButton.setTitleColor(.darkGray, for: .highlighted)
-        logInButton.setTitle("Log In", for: .normal)
-        logInButton.addTarget(self, action: #selector(logInButtonPressed), for: .touchUpInside)
-        logInButton.translatesAutoresizingMaskIntoConstraints = false
-        return logInButton
+    private lazy var logInButton: CustomButton = {
+        let button = CustomButton(title: "Login", titleColor: .gray ) {
+            self.logInButtonPressed()
+        }
+        button.layer.cornerRadius = 10
+        button.clipsToBounds = true
+        button.setBackgroundImage(#imageLiteral(resourceName: "blue_pixel"), for: .normal)
+        button.setTitleColor(.white, for: .normal)
+        button.setTitle("Log In", for: .normal)
+        button.addTarget(self, action: #selector(logInButtonPressed), for: .touchUpInside)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
     }()
     
     private var separator: UIView = {
@@ -131,6 +117,17 @@ class LogInViewController: UIViewController {
         separator.translatesAutoresizingMaskIntoConstraints = false
         return separator
     }()
+    
+    private var model: ModelInput
+    
+    init(model: ModelInput) {
+        self.model = model
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     @objc private func logInButtonPressed() {
         

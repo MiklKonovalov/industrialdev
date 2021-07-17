@@ -8,54 +8,74 @@
 
 import UIKit
 
+//Контроллер отвечает за то, как будут отображаться данные из модели.
+
+//Контроллер должен быть подписан на изменения модели. Через Notifications?
+
 final class FeedViewController: UIViewController {
     
-    let post: Post = Post(title: "Пост")
+    var onText: ((String) -> Void)?
     
-    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
-        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
-        print(type(of: self), #function)
+    var model: ModelInput
+    
+    init(onText: ((String) -> Void)?, model: ModelInput) {
+        self.onText = onText
+        self.model = model
+        super.init(nibName: nil, bundle: nil)
     }
     
     required init?(coder: NSCoder) {
-        super.init(coder: coder)
-        print(type(of: self), #function)
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    let post: Post = Post(title: "Пост")
+    
+    private lazy var textField: TextInput = {
+        let textField = TextInput(onText: {
+            [weak self] text in
+            self?.textField.text = text
+        })
+        return textField
+    }()
+    
+    private lazy var button: CustomButton = {
+        let button = CustomButton(title: "Button", titleColor: .yellow, onTap: {
+            self.buttonPressed()
+        })
+        button.layer.cornerRadius = 10
+        button.clipsToBounds = true
+        button.addTarget(self, action: #selector(buttonPressed), for: .editingChanged)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
+    
+    @objc private func buttonPressed() {
+        model.check(word: textField.text ?? "")
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        print(type(of: self), #function)
+        self.view.addSubview(textField)
+        self.view.addSubview(button)
+        
+        let constraints = [
+            
+            textField.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor,constant: 20),
+            textField.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
+            textField.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
+            
+            button.topAnchor.constraint(equalTo: textField.bottomAnchor, constant: 20),
+            button.leadingAnchor.constraint(equalTo: textField.leadingAnchor),
+            button.trailingAnchor.constraint(equalTo: textField.trailingAnchor),
+            
+        ]
+        NSLayoutConstraint.activate(constraints)
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        print(type(of: self), #function)
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        print(type(of: self), #function)
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        print(type(of: self), #function)
-    }
-    
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
-        print(type(of: self), #function)
-    }
-    
-    override func viewWillLayoutSubviews() {
-        super.viewWillLayoutSubviews()
-        print(type(of: self), #function)
-    }
-    
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        print(type(of: self), #function)
-    }
+//    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
+//        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+//        print(type(of: self), #function)
+//    }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         guard segue.identifier == "post" else {
@@ -67,3 +87,4 @@ final class FeedViewController: UIViewController {
         postViewController.post = post
     }
 }
+

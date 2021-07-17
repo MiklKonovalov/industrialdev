@@ -17,13 +17,19 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     //Фабрика п3: Инициализируйте в SceneDelegate / AppDelegate только фабрику .
     let myLoginFactory = MyLoginFactory()
     
+    var model: ModelInput?
+    
+//    init(model: ModelInput) {
+//        self.model = model
+//    }
+    
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         
         guard let windowScene = (scene as? UIWindowScene) else { return }
         //Создаём UIWindow используя
         let window = UIWindow(windowScene: windowScene)
         //Создаём программно новую иерархию вью
-        let loginViewController = LogInViewController()
+        let loginViewController = LogInViewController(model: model as! ModelInput)
         
         let navigationController = UINavigationController(rootViewController: loginViewController)
         //Устанавливаем главный вью контроллер окну с нашим вью контроллером
