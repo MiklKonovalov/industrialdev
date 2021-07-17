@@ -151,7 +151,7 @@ class Checker {
     //создаём синглтон внутри себя. Статик так как создаём объект внутри объекта (Checker внутри Checker)
     static let shared = Checker()
     
-    var user = User(name: "Делагатор", avatar: UIImage(named: "gratis") ?? UIImage(), status: "Делегачу-синглтоню!")
+    var user = User(name: "Регбист", avatar: UIImage(named: "регби") ?? UIImage(), status: "Бегу-бью!")
     
     private let login = "1"
     
@@ -171,10 +171,6 @@ class Checker {
         return user
     }
     
-    func checking() {
-        var myClass = Checker.shared
-        myClass.checkLoginAndPassword(param: "1", param: "2")
-    }
 }
 
 

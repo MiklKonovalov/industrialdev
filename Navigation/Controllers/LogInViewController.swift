@@ -25,23 +25,24 @@ protocol LoginFactory {
 class LogInViewController: UIViewController {
     
     //1.2 Объявляем делегата для использования. В контроллере мы создаем instance протокола и называем его делегат
-    weak var delegate: LogInViewControllerDelegate?
+    var delegate: LogInViewControllerDelegate?
     
     //Фабрика: Внедрите зависимость контроллера от LoginInspector, создав инспектора с помощью фабричного метода.
     //В контроллере у нас есть зависимость от фабрики. Она жёсткая, так как мы внедряем её через инициализатор
-    var factory: MyLoginFactory
     
-    init(factory: MyLoginFactory) {
-        self.factory = factory
+//    var factory: MyLoginFactory
+//
+//    init(factory: MyLoginFactory) {
+//        self.factory = factory
+//
+//        factory.checkLoginByFactory()
         
-        factory.checkLoginByFactory()
-        
-        super.init(nibName: nil, bundle: nil)
-    }
+//        super.init(nibName: nil, bundle: nil)
+//    }
     
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
+//    required init?(coder: NSCoder) {
+//        fatalError("init(coder:) has not been implemented")
+//    }
     
 
     
@@ -132,13 +133,15 @@ class LogInViewController: UIViewController {
     
     @objc private func logInButtonPressed() {
         
-        guard let userName = userNameTextField.text, let  passValue = passwordTextField.text else { return }
+        
+        //guard let userName = userNameTextField.text, let  passValue = passwordTextField.text else { return }
     #if DEBUG
-        let userService = TestUserService()
+    let user = delegate?.checkValue(login: userNameTextField.text ?? "", password: passwordTextField.text ?? "") ?? User(name: "Нет данных", avatar: UIImage(named: "gratis") ?? UIImage(), status: "Нет данных")
     #else
         let userService = CurrentUserService()
     #endif
-        var profileViewController = ProfileViewController(userService: userService, userName: userName) 
+        let profileViewController = ProfileViewController(user: user)
+        //var profileViewController = ProfileViewController(userService: userService, userName: userName)
         self.navigationController?.pushViewController(profileViewController, animated: true)
     }
     
@@ -261,7 +264,7 @@ class LogInViewController: UIViewController {
     
 }
 
-//LoginInspector - это делегат
+//LoginInspector - это реализация делегата.
 //4. Создаем произвольный класс/структуру LoginInspector (или придумайте свое название), который подписывается на протокол LoginViewControllerDelegate, реализуем в нем протокольный метод.
 //5. LoginInspector проверяет точность введенного пароля с помощью синглтона Checker.
 class LoginInspetor: LogInViewControllerDelegate {
@@ -288,6 +291,10 @@ class LoginInspetor: LogInViewControllerDelegate {
 //Мы хотим инкапсулировать логику создания делегата для LoginViewController, для этого мы описываем MyLoginFactory.
 
 //Тут мы реализуем логику фабрики:
+
+//MyLoginFactory должна подготовить объект (необходимый делегат для LoginViewController) до инициализации ViewController
+
+//Делегат получается от фабрики MyLoginFactory (в этом случае мы имитируем решение, если нам надо иметь возможность что-то менять, не меняя саму структуру кода)
 class MyLoginFactory: LoginFactory {
     
     func checkLoginByFactory() -> LoginInspetor {

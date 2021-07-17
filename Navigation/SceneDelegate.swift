@@ -22,7 +22,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         //Создаём UIWindow используя
         let window = UIWindow(windowScene: windowScene)
         //Создаём программно новую иерархию вью
-        let loginViewController = LogInViewController(factory: myLoginFactory)
+        let loginViewController = LogInViewController()
         
         let navigationController = UINavigationController(rootViewController: loginViewController)
         //Устанавливаем главный вью контроллер окну с нашим вью контроллером
