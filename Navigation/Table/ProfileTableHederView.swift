@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SnapKit
 
 class ProfileTableHeaderView: UITableViewHeaderFooterView {
     
@@ -88,72 +89,6 @@ class ProfileTableHeaderView: UITableViewHeaderFooterView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    //MARK: Layout subviews
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        
-    //MARK: Setup Gesture
-        //let tap1 = UITapGestureRecognizer(target: self, action: #selector(tap))
-        //avatar.isUserInteractionEnabled = true
-        //avatar.addGestureRecognizer(tap1)
-        //self.contentView.bringSubviewToFront(avatar)
-        
-        //let stopAnimationTap = UITapGestureRecognizer(target: self, action: #selector(tapToClose))
-        //closeButton.isUserInteractionEnabled = true
-        //closeButton.addGestureRecognizer(stopAnimationTap)
-    }
-    
-    @objc func tap() {
-        //animate()
-        //animateKeyFrame()
-        //animateBasicAnimation()
-        //()
-        print("tapHeader")
-    }
-    
-    @objc func tapToClose() {
-        closeAnimate()
-    }
-    
-    func closeAnimate() {
-        
-//        let closeAnimator = UIViewPropertyAnimator(duration: 0.5, curve: .linear) {
-                //let changeConstraintsPosition = [
-                    //self.avatar.widthAnchor.constraint(equalTo: self.contentView.widthAnchor, constant: -270),
-                    //]
-                    //NSLayoutConstraint.activate(changeConstraintsPosition)
-                    //self.avatar.transform = self.avatar.transform.translatedBy(x: 16, y: -200)
-                    
-//                    self.avatar.layer.cornerRadius = 100 / 2
-//                    self.avatar.clipsToBounds = true
-//                    self.avatar.layer.borderWidth = 3
-            
-                    //self.closeButton.isHidden = true
-            
-                    //self.greyViewForAction.backgroundColor = UIColor.init(white: 1, alpha: 0)
-//            }
-//            closeAnimator.startAnimation()
-//    }
-   
-//    func animateAnimator() {
-//        let animator = UIViewPropertyAnimator(duration: 0.5, curve: .linear) {
-//            let changeConstraintsPosition = [
-//                self.closeButton.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: 10),
-//                self.closeButton.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor,constant: -10),
-//                ]
-//                NSLayoutConstraint.activate(changeConstraintsPosition)
-//            
-//                self.closeButton.translatesAutoresizingMaskIntoConstraints = false
-//                self.closeButton.isHidden = false
-//            
-//
-                
-//                self.greyViewForAction.translatesAutoresizingMaskIntoConstraints = false
-//                self.greyViewForAction.backgroundColor = UIColor.init(white: 1, alpha: 0.5)
-//        }
-//        animator.startAnimation()
-    }
-    
     //MARK: Add subviews
     fileprivate func setupViews() {
         contentView.addSubview(userName)
@@ -165,33 +100,39 @@ class ProfileTableHeaderView: UITableViewHeaderFooterView {
         contentView.addSubview(spaceView)
         
     //MARK: Setup constraints
-    let constraints = [
-                userName.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 27),
-                userName.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
-                userName.heightAnchor.constraint(equalToConstant: 40),
-                
-                currentStatus.topAnchor.constraint(equalTo: userName.bottomAnchor, constant: 20),
-                currentStatus.leadingAnchor.constraint(equalTo: userName.leadingAnchor, constant: 0),
-                
-                newStatus.topAnchor.constraint(equalTo: currentStatus.bottomAnchor, constant: 20),
-                newStatus.leadingAnchor.constraint(equalTo: userName.leadingAnchor),
-                newStatus.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
-                newStatus.heightAnchor.constraint(equalToConstant: 40),
-                
-                spaceView.topAnchor.constraint(equalTo: newStatus.topAnchor),
-                spaceView.leadingAnchor.constraint(equalTo: newStatus.leadingAnchor, constant: 10),
-                spaceView.widthAnchor.constraint(equalToConstant: 20),
-                spaceView.bottomAnchor.constraint(equalTo: newStatus.bottomAnchor),
-                
-                actionButton.topAnchor.constraint(equalTo: newStatus.bottomAnchor, constant: 20),
-                //actionButton.centerXAnchor.constraint(equalTo: userName.centerXAnchor),
-                actionButton.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
-                actionButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
-                //actionButton.widthAnchor.constraint(equalTo: contentView.widthAnchor),
-                //actionButton.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
-            ]
-            NSLayoutConstraint.activate(constraints)
+        userName.snp.makeConstraints { make in
+            make.top.equalToSuperview().multipliedBy(27)
+            make.centerX.equalToSuperview()
+            make.height.equalTo(40)
         }
+        
+        currentStatus.snp.makeConstraints { make in
+            make.top.equalTo(userName.snp.bottom).offset(20)
+            make.left.equalTo(userName.snp.left).offset(0)
+        }
+        
+        newStatus.snp.makeConstraints { make in
+            make.top.equalTo(currentStatus.snp.bottom).offset(20)
+            make.left.equalTo(userName.snp.left)
+            make.trailing.equalToSuperview().offset(-16)
+            //make.right.equalTo(contentView.snp.right).offset(-16)
+            make.height.equalTo(40)
+        }
+            
+        spaceView.snp.makeConstraints { make in
+            make.top.equalTo(newStatus.snp.top)
+            make.left.equalTo(newStatus.snp.left).offset(10)
+            make.width.equalTo(20)
+            make.bottom.equalTo(newStatus.snp.bottom)
+        }
+        
+        actionButton.snp.makeConstraints { make in
+            make.top.equalTo(newStatus.snp.bottom).offset(20)
+            make.left.equalTo(contentView.snp.left).offset(16)
+            make.right.equalTo(contentView.snp.right).offset(-16)
+        }
+            
 }
  
 
+}
