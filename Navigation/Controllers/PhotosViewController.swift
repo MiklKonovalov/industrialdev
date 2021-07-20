@@ -17,8 +17,9 @@ class PhotosViewController: UIViewController, ImageLibrarySubscriber {
     
     func receive(images: [UIImage]) {
         //Записываем картинки в новый датасорс
-        if images is [RugbyPhotos] {
-            self.receivedImages = images as! [RugbyPhotos]
+        
+        for images in RugbyFlow.rugbySections.imageArrayOfRugbyPhotos {
+                receivedImages.append(images)
         }
         
         self.collectionView.reloadData()
