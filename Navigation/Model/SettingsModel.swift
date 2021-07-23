@@ -13,23 +13,17 @@ import UIKit
 
 //Внедряем зависимость через Протокол
 protocol ModelInput {
-    func check(word: String) -> String
+    func check(word: String, completion: (Bool) -> Void)
     
 }
 
 //Модель проверяет слово и отправляет ответ: верно/не верно
 struct CheckModel: ModelInput {
+        
+    var password = "key"
     
-    var titleModel: String
-    var titleColorModel: UIColor
-    var password = "Пароль-король!"
-    
-    func check(word: String) -> String {
-        if word == password {
-            return("true")
-        } else {
-            return("false")
-        }
+    func check(word: String, completion: (Bool) -> Void) {
+        completion(word == password)
     }
 
 }

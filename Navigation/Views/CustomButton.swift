@@ -13,33 +13,27 @@ import UIKit
 class CustomButton: UIButton {
     
     //1.1 будет собственный инициализатор, в который передаются, к примеру, параметры title, titleColor и другие по желанию
-    var title: String
-    var titleColor: UIColor
+//    var title: String
+//    var titleColor: UIColor
     //1.2 замыкание, в котором вызывающий объект, контроллер или родительское UIView, определят действие по нажатию кнопки
     var onTap: (() -> Void)?
     
     init(title: String, titleColor: UIColor, onTap: (() -> Void)?) {
-        self.title = title
-        self.titleColor = titleColor
         self.onTap = onTap
         super.init(frame: .zero)
+        setTitle(title, for: .normal)
+        setTitleColor(titleColor, for: .normal)
         translatesAutoresizingMaskIntoConstraints = false
         addTarget(self, action: #selector(tapped), for: .touchUpInside)
     }
     
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        super.init(coder: coder)
     }
     
     //@objc private func buttonTapped() будет спрятана внутрь реализации CustomButton, и на уровне родительского UIView фигурировать не будет
-    
-    //Вью создаёт экшн для контроллера
     @objc private func tapped() {
         onTap?()
-    }
-
-    func check(word: String) {
-        
     }
     
 }

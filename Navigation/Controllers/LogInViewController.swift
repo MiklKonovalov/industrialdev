@@ -30,9 +30,6 @@ class LogInViewController: UIViewController {
     //1.2 Объявляем делегата для использования. В контроллере мы создаем instance протокола и называем его делегат
     weak var delegate: LogInViewControllerDelegate?
     
-    //В контроллере у нас есть зависимость от фабрики. Она жёсткая, так как мы внедряем её через инициализатор
-    private var factory: LoginInspetor?
-    
     //MARK: Create subviews
     let substrate: UIView = {
         let substrate = UIView()
@@ -98,14 +95,13 @@ class LogInViewController: UIViewController {
     }()
     
     private lazy var logInButton: CustomButton = {
-        let button = CustomButton(title: "Login", titleColor: .gray ) {
+        let button = CustomButton(title: "Login", titleColor: .yellow ) {
+            print("Custom Button Closure")
             self.logInButtonPressed()
         }
         button.layer.cornerRadius = 10
         button.clipsToBounds = true
         button.setBackgroundImage(#imageLiteral(resourceName: "blue_pixel"), for: .normal)
-        button.setTitleColor(.white, for: .normal)
-        button.setTitle("Log In", for: .normal)
         button.addTarget(self, action: #selector(logInButtonPressed), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
@@ -118,7 +114,7 @@ class LogInViewController: UIViewController {
         return separator
     }()
     
-    private var model: ModelInput
+    private var model: ModelInput?
     
     init(model: ModelInput) {
         self.model = model
@@ -126,7 +122,7 @@ class LogInViewController: UIViewController {
     }
     
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        super.init(coder: coder)
     }
     
     @objc private func logInButtonPressed() {
