@@ -12,9 +12,9 @@ import iOSIntPackage
 class PhotoCollectionViewCell: UICollectionViewCell {
     
     
-    var photos: RugbyPhotos? {
+    var photos: UIImage? {
         didSet {
-            rugbyImage.image = photos?.rugbyImage
+            rugbyImage.image = photos
         }
     }
     

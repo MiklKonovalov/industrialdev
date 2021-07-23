@@ -13,13 +13,14 @@ import iOSIntPackage
 //ImageLibrarySubscriber - это Паблишер
 class PhotosViewController: UIViewController, ImageLibrarySubscriber {
     
-    var receivedImages: [RugbyPhotos] = []
+    var newArrayForImage: [UIImage] = []
+    
+    var receivedImages: [UIImage] = []
     
     func receive(images: [UIImage]) {
-        //Записываем картинки в новый датасорс
-        
-        for images in RugbyFlow.rugbySections.imageArrayOfRugbyPhotos {
-                receivedImages.append(images)
+    
+        for images in newArrayForImage {
+            receivedImages.append(images)
         }
         
         self.collectionView.reloadData()
@@ -57,11 +58,14 @@ class PhotosViewController: UIViewController, ImageLibrarySubscriber {
         super.viewDidLoad()
         setupCollectionsConstraints()
         
+        receivedImages.append(UIImage(named: "9") ?? UIImage())
+        newArrayForImage.append(UIImage(named: "регби") ?? UIImage())
+        
         //подписываем класс PhotosViewController на изменения
         imagePublisherFacade?.subscribe(self)
         
         //Запускаем сценарий выполнения публикации
-        imagePublisherFacade?.addImagesWithTimer(time: 1, repeat: 10, userImages: RugbyFlow.rugbySections.imageArrayOfRugbyPhotos as? [UIImage])
+        imagePublisherFacade?.addImagesWithTimer(time: 1, repeat: 12, userImages: receivedImages)
     }
 
     //MARK: setup collection's constraint
@@ -98,7 +102,9 @@ extension PhotosViewController: UICollectionViewDataSource {
         
         //let rugbyFlow = RugbyFlow.rugbySections.imageArrayOfRugbyPhotos[indexPath.item]
         
-        cell.photos = receivedImages[indexPath.item]
+        let rugbyFlow = receivedImages[indexPath.item]
+        
+        cell.photos = rugbyFlow
         
        return cell
     }
