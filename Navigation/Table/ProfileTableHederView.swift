@@ -50,8 +50,7 @@ class ProfileTableHeaderView: UITableViewHeaderFooterView {
         
     //MARK: Create Actions
     @objc private func actionButtonPressed() {
-//        currentStatus.text = statusText
-//        print(currentStatus.text ?? "no status")
+        print("change status pressed")
     }
     
     @objc private func statusTextChange(_ newStatus: UITextField) {

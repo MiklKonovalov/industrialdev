@@ -20,7 +20,7 @@ protocol ModelInput {
 //Модель проверяет слово и отправляет ответ: верно/не верно
 struct CheckModel: ModelInput {
         
-    var password = "key"
+    var password = "Key"
     
     func check(word: String, completion: (Bool) -> Void) {
         completion(word == password)

@@ -10,20 +10,8 @@ import UIKit
 
 //Контроллер отвечает за то, как будут отображаться данные из модели.
 
-//Контроллер должен быть подписан на изменения модели. Через Notifications?
-
 final class FeedViewController: UIViewController {
-    
-//    func check(word: String) -> String {
-//        if word == textField.text {
-//            print("true")
-//        } else {
-//            print("false")
-//        }
-//        return word
-//    }
-    
-    
+        
     var onText: ((String) -> Void)?
     
     var model: ModelInput?
@@ -38,53 +26,13 @@ final class FeedViewController: UIViewController {
         super.init(coder: coder)
     }
     
-    let post: Post = Post(title: "Пост")
-    
-    @IBAction func mainButton(_ sender: UIButton) {
-        guard let text = mainTextField.text, text.count > 0 else { return }
-        
-        let model = CheckModel()
-        
-        model.check(word: text) { isRight in
-            label.textColor = isRight ? .green : .red
-            label.text = isRight ? "Right!" : "Wrong!"
-        }
-        
-        UIView.animate(withDuration: 0.3) {
-            self.label.alpha = 1
-        }
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-            UIView.animate(withDuration: 0.3) {
-                self.label.alpha = 0
-            }
-        }
-    }
-    
-    @IBOutlet weak var mainTextField: UITextField!
-    
-    
-    @IBOutlet weak var label: UILabel!
-    //не понял это замыкание
-    private lazy var textField: TextInput = {
-        let textField = TextInput(onText: {
-            [weak self] text in
-            self?.textField.text = text
-            self?.textField.backgroundColor = .orange
-            self?.textField.tintColor = .red
-        })
+    private lazy var textField: UITextField = {
+        let textField = UITextField()
+        textField.layer.borderColor = UIColor.white.cgColor
+        textField.layer.cornerRadius = 10
+        textField.layer.backgroundColor = UIColor.systemGray6.cgColor
+        textField.translatesAutoresizingMaskIntoConstraints = false
         return textField
-    }()
-    
-    private lazy var textField2: UITextField = {
-//        let tf = UITextField()
-//        let textField = TextInput(onText: {
-//            [weak self] text in
-//            self?.textField2.text = text
-//            self?.textField2.backgroundColor = .orange
-//            self?.textField2.tintColor = .red
-//        })
-        return UITextField(frame: CGRect(x: 0, y: 0, width: 50, height: 50))
     }()
     
     private lazy var button: CustomButton = {
@@ -98,7 +46,35 @@ final class FeedViewController: UIViewController {
         return button
     }()
     
+    private lazy var label: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.systemFont(ofSize: 25, weight: .regular)
+        label.textColor = .yellow
+        label.textAlignment = .center
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.text = "Check the password!"
+        return label
+    }()
+    
     @objc private func buttonPressed() {
+        guard let text = textField.text, text.count > 0 else { return }
+
+        let model = CheckModel()
+
+        model.check(word: text) { isRight in
+            label.textColor = isRight ? .green : .red
+            label.text = isRight ? "Ok" : "No"
+        }
+        //Устанавливаем анимацию длительность 0,3 сек на появление alpha
+        UIView.animate(withDuration: 0.3) {
+            self.label.alpha = 1
+        }
+        //Устанавливаем асинхронную анимацию через 1 секунду длительностью 0.3 сек для прозрачности лейбла в 100%
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+        UIView.animate(withDuration: 0.3) {
+            self.label.alpha = 0
+            }
+        }
         
     }
     
@@ -106,42 +82,29 @@ final class FeedViewController: UIViewController {
         super.viewDidLoad()
         self.view.addSubview(textField)
         self.view.addSubview(button)
-        //self.view.addSubview(textField2)
+        self.view.addSubview(label)
+        //устанавливаем непрозрачность для label 100%
         label.alpha = 0
         
         let constraints = [
             
-            textField.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor,constant: 60),
+            textField.topAnchor.constraint(equalTo: button.topAnchor,constant: 50),
             textField.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
             textField.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
-            //textField.heightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.heightAnchor, constant: 0.1),
-            textField.widthAnchor.constraint(equalTo: view.safeAreaLayoutGuide.widthAnchor, constant: 1),
+            textField.heightAnchor.constraint(equalToConstant: 50),
             
-            button.topAnchor.constraint(equalTo: textField.bottomAnchor, constant: 20),
-            button.leadingAnchor.constraint(equalTo: textField.leadingAnchor),
-            button.trailingAnchor.constraint(equalTo: textField.trailingAnchor),
+            button.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
+            button.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
+            button.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
             
-//            textField2.topAnchor.constraint(equalTo: button.bottomAnchor, constant: 20),
-//            textField2.leadingAnchor.constraint(equalTo: button.leadingAnchor),
-//            textField2.trailingAnchor.constraint(equalTo: button.trailingAnchor),
+            label.topAnchor.constraint(equalTo: textField.bottomAnchor, constant: 20),
+            label.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
+            label.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
+            label.heightAnchor.constraint(equalToConstant: 50),
             
         ]
         NSLayoutConstraint.activate(constraints)
     }
     
-//    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
-//        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
-//        print(type(of: self), #function)
-//    }
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        guard segue.identifier == "post" else {
-            return
-        }
-        guard let postViewController = segue.destination as? PostViewController else {
-            return
-        }
-        postViewController.post = post
-    }
 }
 
