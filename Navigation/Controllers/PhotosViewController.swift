@@ -58,8 +58,18 @@ class PhotosViewController: UIViewController, ImageLibrarySubscriber {
         super.viewDidLoad()
         setupCollectionsConstraints()
         
+        receivedImages.append(UIImage(named: "1") ?? UIImage())
+        receivedImages.append(UIImage(named: "2") ?? UIImage())
+        receivedImages.append(UIImage(named: "3") ?? UIImage())
+        receivedImages.append(UIImage(named: "4") ?? UIImage())
+        receivedImages.append(UIImage(named: "5") ?? UIImage())
+        receivedImages.append(UIImage(named: "6") ?? UIImage())
+        receivedImages.append(UIImage(named: "7") ?? UIImage())
+        receivedImages.append(UIImage(named: "8") ?? UIImage())
         receivedImages.append(UIImage(named: "9") ?? UIImage())
-        newArrayForImage.append(UIImage(named: "регби") ?? UIImage())
+        receivedImages.append(UIImage(named: "10") ?? UIImage())
+        
+        newArrayForImage.append(UIImage(named: "cosmos") ?? UIImage())
         
         //подписываем класс PhotosViewController на изменения
         imagePublisherFacade?.subscribe(self)
