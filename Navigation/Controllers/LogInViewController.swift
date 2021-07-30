@@ -114,31 +114,31 @@ class LogInViewController: UIViewController {
         return separator
     }()
     
-    private var model: ModelInput?
+    private var model: SettingsViewOutput?
     
-    init(model: ModelInput) {
+    init(model: SettingsViewOutput) {
         self.model = model
         super.init(nibName: nil, bundle: nil)
     }
     
     required init?(coder: NSCoder) {
-        super.init(coder: coder)
+        fatalError("init(coder:) has not been implemented")
     }
+
+//Используется, если есть storyboard
+//    required init?(coder: NSCoder) {
+//        super.init(coder: coder)
+//    }
     
     @objc private func logInButtonPressed() {
         
-        guard let userName = userNameTextField.text, let  passValue = passwordTextField.text else { return }
+        //guard let userName = userNameTextField.text, let _ = passwordTextField.text else { return }
     #if DEBUG
-        let userService = TestUserService()
+    let user = delegate?.checkValue(login: userNameTextField.text ?? "", password: passwordTextField.text ?? "") ?? User(name: "Нет данных", avatar: UIImage(named: "gratis") ?? UIImage(), status: "Нет данных")
     #else
         let userService = CurrentUserService()
     #endif
-        var profileViewController = ProfileViewController(userService: userService, userName: userName) {
-            didSet {
-                //1.4. Метод делегата проверяет значения, введенные в 2 UITextField контроллера
-                delegate?.checkValue(login: userName , password: passValue)
-            }
-        }
+        var profileViewController = ProfileViewController(user: user)
         self.navigationController?.pushViewController(profileViewController, animated: true)
     }
     
@@ -263,14 +263,19 @@ class LogInViewController: UIViewController {
 //4. Создаем произвольный класс/структуру LoginInspector (или придумайте свое название), который подписывается на протокол LoginViewControllerDelegate, реализуем в нем протокольный метод.
 //5. LoginInspector проверяет точность введенного пароля с помощью синглтона Checker.
 class LoginInspetor: LogInViewControllerDelegate {
+    
     func checkValue(login: String, password: String) -> User? {
         
-        Checker.shared.checkLoginAndPassword(param: login, param: password)
+        let user = Checker.shared.user
+        
+        _ = Checker.shared.checkLoginAndPassword(param: login, param: password)
         
             if login == "1" && password == "2" {
-                return Checker.shared.user
+                return user
+            } else {
+                print("Login not correct")
             }
-            return Checker.shared.user
+            return user
     }
     
 }
