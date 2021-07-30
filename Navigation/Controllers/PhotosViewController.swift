@@ -59,15 +59,15 @@ class PhotosViewController: UIViewController, ImageLibrarySubscriber {
         setupCollectionsConstraints()
         
         receivedImages.append(UIImage(named: "1") ?? UIImage())
-        receivedImages.append(UIImage(named: "2") ?? UIImage())
-        receivedImages.append(UIImage(named: "3") ?? UIImage())
-        receivedImages.append(UIImage(named: "4") ?? UIImage())
-        receivedImages.append(UIImage(named: "5") ?? UIImage())
-        receivedImages.append(UIImage(named: "6") ?? UIImage())
-        receivedImages.append(UIImage(named: "7") ?? UIImage())
-        receivedImages.append(UIImage(named: "8") ?? UIImage())
-        receivedImages.append(UIImage(named: "9") ?? UIImage())
-        receivedImages.append(UIImage(named: "10") ?? UIImage())
+        //receivedImages.append(UIImage(named: "2") ?? UIImage())
+        //receivedImages.append(UIImage(named: "3") ?? UIImage())
+        //receivedImages.append(UIImage(named: "4") ?? UIImage())
+        //receivedImages.append(UIImage(named: "5") ?? UIImage())
+        //receivedImages.append(UIImage(named: "6") ?? UIImage())
+        //receivedImages.append(UIImage(named: "7") ?? UIImage())
+        //receivedImages.append(UIImage(named: "8") ?? UIImage())
+        //receivedImages.append(UIImage(named: "9") ?? UIImage())
+        //receivedImages.append(UIImage(named: "10") ?? UIImage())
         
         newArrayForImage.append(UIImage(named: "cosmos") ?? UIImage())
         
@@ -75,7 +75,7 @@ class PhotosViewController: UIViewController, ImageLibrarySubscriber {
         imagePublisherFacade?.subscribe(self)
         
         //Запускаем сценарий выполнения публикации
-        imagePublisherFacade?.addImagesWithTimer(time: 1, repeat: 12, userImages: receivedImages)
+        imagePublisherFacade?.addImagesWithTimer(time: 1, repeat: 12, userImages: RugbyFlow.rugbySections.imageArrayOfRugbyPhotos as? [UIImage])
     }
 
     //MARK: setup collection's constraint
@@ -110,9 +110,9 @@ extension PhotosViewController: UICollectionViewDataSource {
 
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: PhotoCollectionViewCell.self), for: indexPath) as! PhotoCollectionViewCell
         
-        //let rugbyFlow = RugbyFlow.rugbySections.imageArrayOfRugbyPhotos[indexPath.item]
+        let rugbyFlow = RugbyFlow.rugbySections.imageArrayOfRugbyPhotos[indexPath.item]
         
-        let rugbyFlow = receivedImages[indexPath.item]
+        //let rugbyFlow = receivedImages[indexPath.item]
         
         cell.photos = rugbyFlow
         
