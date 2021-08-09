@@ -10,8 +10,72 @@ import Foundation
 import UIKit
 import iOSIntPackage
 
+// -Создаём таймер
+let timer = Timer(timeInterval: 1, repeats: true) { _ in
+    print("Some work")
+}
+
+
+// ***RUNLOOP + ТАЙМЕР***
+//Таймер - гибкий инструмент для выполнения отложенных задач единожды или периодически
+//Создаём свой собственный поток Thread
+class ExampleThread: Thread {
+    override func main() {
+        // -у текущего ранлупа в данном потке мы добавляем таймер, в режиме common (этот режим позволяет делать что-то в главном потоке)
+        RunLoop.current.add(timer, forMode: .common)
+        // -запукаем ранлуп
+        RunLoop.current.run()
+    }
+}
+
+// -Пример Run-loop
+class Some: NSObject {
+    func generateNumber() {
+        print("Current thread: \(Thread.current)")
+        // -вызываем метод, который передаст работу в новый поток и эту работу мы укажем через имя функции
+        Thread.detachNewThreadSelector(#selector(generate), toTarget: self, with: nil)
+    }
+    
+    @objc private func generate() {
+        print("Current thread: \(Thread.current)")
+        // -этот код будет выполняться в отдельном потоке
+        let result = Int.random(in: 1...10000)
+        // -вызываем метод из Objective-C, который позволяет вызвать метод на любом потоке
+        self.performSelector(onMainThread: #selector(printResult(number:)),
+                             with: NSNumber(value: result), // - передаём наш результат
+                             waitUntilDone: true) // - true - будет ждать пока метод выполнится на главном потоке
+        
+        }
+    
+    @objc private func printResult(number: NSNumber) {
+        print("Current thread: \(Thread.current)")
+        // -передаём выполнение result на главный поток, что бы распечатать/показать на экране (все манипуляции с интерфейсом, который мы видим на экране должны происходить в главном потоке)
+        print("Result: \(number)")
+    }
+}
+
+
+// ***СОЗДАЁМ ПОТОК МЕТОДОМ THREAD***
+//class MyThread: Thread {
+//
+//    override func main() {
+//        var count: Int = 0
+//        for _ in 0...20 {
+//            count += 1
+//        }
+//        print("Current thread: \(Thread.current)")
+//        print("count: \(count)")
+//    }
+//
+//}
+
 //ImageLibrarySubscriber - это Паблишер
 class PhotosViewController: UIViewController, ImageLibrarySubscriber {
+    
+    let thread = ExampleThread()
+    
+    // -создаём объект и у объекта вызываем метод
+    let some = Some()
     
     var newArrayForImage: [UIImage] = []
     
@@ -59,6 +123,10 @@ class PhotosViewController: UIViewController, ImageLibrarySubscriber {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupCollectionsConstraints()
+        
+        thread.start()
+        
+        some.generateNumber()
         
         receivedImages.append(UIImage(named: "1") ?? UIImage())
         
