@@ -8,10 +8,23 @@
 
 import UIKit
 
-//Контроллер отвечает за то, как будут отображаться данные из модели.
-//Контроллер не зависит от модели (не обращается к ней)
+// -RunLoop - это цикл обработки событий, который планирует работу и занимается обработкой входящих событий. Цикл держит поток занятым, пока он работает и переводит его в «спящее» состояние, когда работы для него нет. Каждый раз, когда вы запускаете приложение, система создаёт главный поток приложения, у каждого потока есть автоматически созданный для него цикл выполнения.
+
 final class FeedViewController: UIViewController {
-     
+    
+    //MARK: ТАЙМЕР
+    // -Нам надо запустить выполнение таймера в другом режиме, что бы не тормозить отрисову изображения
+    var timer: Timer?
+    
+    var timerLeft = Timer()
+    var time = 50 {
+        didSet{
+            timeLabel.text = "\(time)"
+        }
+    }
+    //MARK: ----------
+    
+    
     //так как у нас есть паттерн Фабрика, то мы прописываем зависимость от неё
     public var factory: ControllerFactory?
     
@@ -31,6 +44,8 @@ final class FeedViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
+    
+    //MARK:VIEWS
     private lazy var textField: UITextField = {
         let textField = UITextField()
         textField.layer.borderColor = UIColor.white.cgColor
@@ -46,6 +61,7 @@ final class FeedViewController: UIViewController {
         })
         button.layer.cornerRadius = 10
         button.clipsToBounds = true
+        // -нажатие кнопки запускает цикл выполнения (всего есть три режима: default, common, tracking)
         button.addTarget(self, action: #selector(buttonPressed), for: .editingChanged)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
@@ -72,7 +88,32 @@ final class FeedViewController: UIViewController {
         return label
     }()
     
+    private lazy var timeLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.systemFont(ofSize: 25, weight: .regular)
+        label.textColor = .white
+        label.textAlignment = .center
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    private lazy var statusLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.systemFont(ofSize: 15, weight: .regular)
+        label.textColor = .white
+        label.textAlignment = .center
+        label.text = "До повторного ввода осталось:"
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    
+    
+    //MARK:SELECTORS
     @objc private func buttonPressed() {
+        createTimer()
+        timer!.tolerance = 0.1
+        
         guard let text = textField.text, text.count > 0 else { return }
         
         // Контроллер обрабатывает нажатие через вью модель
@@ -83,15 +124,15 @@ final class FeedViewController: UIViewController {
         //-Отправляет события, возможно с параметрами
         viewModel.check(word: text) { isRight in
             label.textColor = isRight ? .green : .red
-            label.text = isRight ? "Ok" : "No"
+            label.text = isRight ? "Ok" : "Blocked"
         }
         //Устанавливаем анимацию длительность 0,3 сек на появление alpha
-        UIView.animate(withDuration: 0.3) {
+        UIView.animate(withDuration: 1) {
             self.label.alpha = 1
         }
         //Устанавливаем асинхронную анимацию через 1 секунду длительностью 0.3 сек для прозрачности лейбла в 100%
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-        UIView.animate(withDuration: 0.3) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 50) {
+        UIView.animate(withDuration: 1) {
             self.label.alpha = 0
             }
         }
@@ -104,12 +145,31 @@ final class FeedViewController: UIViewController {
         viewModel.onTapShowNextModel()
     }
     
+    @objc func tick() {
+        print("Current thread: \(Thread.current)")
+        time -= 1
+        if time == 0 {
+            timer!.invalidate()
+            statusLabel.text = "Разрешён повторный ввод"
+        }
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+
+    }
+    
+    
+    //MARK:ViewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.addSubview(textField)
         self.view.addSubview(button)
         self.view.addSubview(label)
         self.view.addSubview(showModuleButton)
+        self.view.addSubview(timeLabel)
+        self.view.addSubview(statusLabel)
         //устанавливаем непрозрачность для label 100%
         label.alpha = 0
         
@@ -134,11 +194,32 @@ final class FeedViewController: UIViewController {
             showModuleButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
             showModuleButton.heightAnchor.constraint(equalToConstant: 50),
             
+            statusLabel.topAnchor.constraint(equalTo: showModuleButton.bottomAnchor, constant: 20),
+            statusLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
+            statusLabel.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
+            statusLabel.heightAnchor.constraint(equalToConstant: 50),
+            
+            timeLabel.topAnchor.constraint(equalTo: statusLabel.bottomAnchor, constant: 20),
+            timeLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
+            timeLabel.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
+            timeLabel.heightAnchor.constraint(equalToConstant: 50)
+            
         ]
         NSLayoutConstraint.activate(constraints)
     }
     
-    
-    
 }
 
+extension FeedViewController {
+    func createTimer() {
+        timer = Timer.scheduledTimer(timeInterval: 1.0,
+                                     target: self,
+                                     selector: #selector(tick),
+                                     userInfo: nil,
+                                     repeats: true)
+        // -Добавляем цикл выполнения в режиме common, чтобы работа таймера не мешала отображению элементов
+        RunLoop.current.add(timer!, forMode: .common)
+        timer!.tolerance = 0.1
+        print("Current thread: \(Thread.current)")
+    }
+}
