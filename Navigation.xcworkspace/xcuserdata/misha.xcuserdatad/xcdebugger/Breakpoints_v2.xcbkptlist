@@ -32,8 +32,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "173"
             endingLineNumber = "173"
-            landmarkName = "LogInViewController"
-            landmarkType = "3">
+            landmarkName = "logInButtonPressed()"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -48,7 +48,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "166"
             endingLineNumber = "166"
-            landmarkName = "keyboardWillShow(notification:)"
+            landmarkName = "logInButtonPressed()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -71,114 +71,6 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "95318FFA-D74D-4E5E-911C-DD6567EB3B0B"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Navigation/Controllers/PhotosViewController.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "35"
-            endingLineNumber = "35"
-            landmarkName = "PhotosViewController"
-            landmarkType = "3">
-            <Locations>
-               <Location
-                  uuid = "95318FFA-D74D-4E5E-911C-DD6567EB3B0B - ef683c7ea4e37036"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "Navigation.PhotosViewController.imagePublisherFacade.getter : iOSIntPackage.ImagePublisherFacade"
-                  moduleName = "Navigation"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/misha/Documents/XCode/Inddev/Navigation/Controllers/PhotosViewController.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "25"
-                  endingLineNumber = "25"
-                  offsetFromSymbolStart = "122">
-               </Location>
-               <Location
-                  uuid = "95318FFA-D74D-4E5E-911C-DD6567EB3B0B - 1a7dbfb337a77fde"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "Navigation.PhotosViewController.imagePublisherFacade.setter : iOSIntPackage.ImagePublisherFacade"
-                  moduleName = "Navigation"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/misha/Documents/XCode/Inddev/Navigation/Controllers/PhotosViewController.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "25"
-                  endingLineNumber = "25"
-                  offsetFromSymbolStart = "148">
-               </Location>
-               <Location
-                  uuid = "95318FFA-D74D-4E5E-911C-DD6567EB3B0B - 783f4e17f00c2b73"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "Navigation.PhotosViewController.imagePublisherFacade.modify : iOSIntPackage.ImagePublisherFacade"
-                  moduleName = "Navigation"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/misha/Documents/XCode/Inddev/Navigation/Controllers/PhotosViewController.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "0"
-                  endingLineNumber = "0"
-                  offsetFromSymbolStart = "18">
-               </Location>
-               <Location
-                  uuid = "95318FFA-D74D-4E5E-911C-DD6567EB3B0B - 8502c6483d3f75dd"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "Navigation.PhotosViewController.imagePublisherFacade.modify : iOSIntPackage.ImagePublisherFacade with unmangled suffix &quot;.resume.0&quot;"
-                  moduleName = "Navigation"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/misha/Documents/XCode/Inddev/Navigation/Controllers/PhotosViewController.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "25"
-                  endingLineNumber = "25"
-                  offsetFromSymbolStart = "8">
-               </Location>
-               <Location
-                  uuid = "95318FFA-D74D-4E5E-911C-DD6567EB3B0B - 875935f90d1a34f6"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "Navigation.PhotosViewController.init(nibName: Swift.Optional&lt;Swift.String&gt;, bundle: Swift.Optional&lt;__C.NSBundle&gt;) -&gt; Navigation.PhotosViewController"
-                  moduleName = "Navigation"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/misha/Documents/XCode/Inddev/Navigation/Controllers/PhotosViewController.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "25"
-                  endingLineNumber = "25"
-                  offsetFromSymbolStart = "281">
-               </Location>
-               <Location
-                  uuid = "95318FFA-D74D-4E5E-911C-DD6567EB3B0B - e52b7fcfad693ded"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "Navigation.PhotosViewController.init(coder: __C.NSCoder) -&gt; Swift.Optional&lt;Navigation.PhotosViewController&gt;"
-                  moduleName = "Navigation"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/misha/Documents/XCode/Inddev/Navigation/Controllers/PhotosViewController.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "25"
-                  endingLineNumber = "25"
-                  offsetFromSymbolStart = "222">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             uuid = "C1C36C7E-E638-4DCD-9ADB-B5DC9162EC83"
             shouldBeEnabled = "No"
             ignoreCount = "0"
@@ -186,10 +78,8 @@
             filePath = "Navigation/Controllers/PhotosViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "137"
-            endingLineNumber = "137"
-            landmarkName = "setupCollectionsConstraints()"
-            landmarkType = "7">
+            startingLineNumber = "192"
+            endingLineNumber = "192">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -218,10 +108,8 @@
             filePath = "Navigation/Controllers/PhotosViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "173"
-            endingLineNumber = "173"
-            landmarkName = "PhotosViewController"
-            landmarkType = "21">
+            startingLineNumber = "226"
+            endingLineNumber = "226">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -234,10 +122,8 @@
             filePath = "Navigation/Controllers/PhotosViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "181"
-            endingLineNumber = "181"
-            landmarkName = "PhotosViewController"
-            landmarkType = "21">
+            startingLineNumber = "234"
+            endingLineNumber = "234">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -298,9 +184,9 @@
             filePath = "Navigation/Controllers/PhotosViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "23"
-            endingLineNumber = "23"
-            landmarkName = "receive(images:)"
+            startingLineNumber = "87"
+            endingLineNumber = "87"
+            landmarkName = "viewDidLoad()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -314,10 +200,8 @@
             filePath = "Navigation/Controllers/PhotosViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "169"
-            endingLineNumber = "169"
-            landmarkName = "collectionView(_:layout:sizeForItemAt:)"
-            landmarkType = "7">
+            startingLineNumber = "222"
+            endingLineNumber = "222">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -331,7 +215,9 @@
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "379"
-            endingLineNumber = "379">
+            endingLineNumber = "379"
+            landmarkName = "checkValue(login:password:)"
+            landmarkType = "7">
             <Locations>
                <Location
                   uuid = "A9C3E96A-3D56-46D4-8F18-90384F513B42 - b33e8ca148af93e7"
@@ -516,8 +402,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "34"
             endingLineNumber = "34"
-            landmarkName = "substrate"
-            landmarkType = "24">
+            landmarkName = "LogInViewController"
+            landmarkType = "3">
             <Locations>
                <Location
                   uuid = "10537A38-E6C8-4E14-A526-BE606E0BA72C - 9539bfae83f860df"
@@ -623,7 +509,9 @@
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "375"
-            endingLineNumber = "375">
+            endingLineNumber = "375"
+            landmarkName = "LoginInspetor"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -637,7 +525,9 @@
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "404"
-            endingLineNumber = "404">
+            endingLineNumber = "404"
+            landmarkName = "unknown"
+            landmarkType = "0">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -700,7 +590,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "172"
             endingLineNumber = "172"
-            landmarkName = "keyboardWillHide(notification:)"
+            landmarkName = "logInButtonPressed()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -730,10 +620,8 @@
             filePath = "Navigation/Controllers/PhotosViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "140"
-            endingLineNumber = "140"
-            landmarkName = "setupCollectionsConstraints()"
-            landmarkType = "7">
+            startingLineNumber = "195"
+            endingLineNumber = "195">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -748,8 +636,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "174"
             endingLineNumber = "174"
-            landmarkName = "LogInViewController"
-            landmarkType = "3">
+            landmarkName = "logInButtonPressed()"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -764,7 +652,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "169"
             endingLineNumber = "169"
-            landmarkName = "keyboardWillHide(notification:)"
+            landmarkName = "logInButtonPressed()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -842,10 +730,8 @@
             filePath = "Navigation/FeedSettingsModule/FeedViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "104"
-            endingLineNumber = "104"
-            landmarkName = "showNextModule()"
-            landmarkType = "7">
+            startingLineNumber = "145"
+            endingLineNumber = "145">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -969,9 +855,9 @@
             filePath = "Navigation/Controllers/PhotosViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "73"
-            endingLineNumber = "73"
-            landmarkName = "viewDidLoad()"
+            startingLineNumber = "112"
+            endingLineNumber = "112"
+            landmarkName = "setupCollectionsConstraints()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -985,10 +871,8 @@
             filePath = "Navigation/Controllers/PhotosViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "134"
-            endingLineNumber = "134"
-            landmarkName = "setupCollectionsConstraints()"
-            landmarkType = "7">
+            startingLineNumber = "189"
+            endingLineNumber = "189">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -1001,10 +885,10 @@
             filePath = "Navigation/Controllers/PhotosViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "19"
-            endingLineNumber = "19"
-            landmarkName = "PhotosViewController"
-            landmarkType = "3">
+            startingLineNumber = "83"
+            endingLineNumber = "83"
+            landmarkName = "viewDidLoad()"
+            landmarkType = "7">
             <Locations>
                <Location
                   uuid = "C0C023FB-3D25-4B41-A053-FC44E4F8F85C - fb52e74ee1448bcc"
@@ -1109,9 +993,9 @@
             filePath = "Navigation/Controllers/PhotosViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "21"
-            endingLineNumber = "21"
-            landmarkName = "receive(images:)"
+            startingLineNumber = "85"
+            endingLineNumber = "85"
+            landmarkName = "viewDidLoad()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1175,7 +1059,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "113"
             endingLineNumber = "113"
-            landmarkName = "separator"
+            landmarkName = "pickUpPass"
             landmarkType = "24">
             <Locations>
                <Location
@@ -1223,8 +1107,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "119"
             endingLineNumber = "119"
-            landmarkName = "init(model:)"
-            landmarkType = "7">
+            landmarkName = "pickUpPass"
+            landmarkType = "24">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -1324,7 +1208,7 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "D7B85113-CE1E-4420-927C-998462FF5412"
-            shouldBeEnabled = "No"
+            shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Navigation/Controllers/LogInViewController.swift"
@@ -1332,7 +1216,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "177"
             endingLineNumber = "177"
-            landmarkName = "viewDidLoad()"
+            landmarkName = "generatePassword(passwordLength:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1348,7 +1232,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "269"
             endingLineNumber = "269"
-            landmarkName = "checkValue(login:password:)"
+            landmarkName = "viewDidLoad()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1364,7 +1248,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "272"
             endingLineNumber = "272"
-            landmarkName = "checkValue(login:password:)"
+            landmarkName = "viewDidLoad()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1380,7 +1264,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "219"
             endingLineNumber = "219"
-            landmarkName = "viewDidLoad()"
+            landmarkName = "generatePassword(passwordLength:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1388,7 +1272,7 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "504F9E4A-EBE3-4953-B8DD-C2D6B417C362"
-            shouldBeEnabled = "No"
+            shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Navigation/Controllers/LogInViewController.swift"
@@ -1396,7 +1280,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "180"
             endingLineNumber = "180"
-            landmarkName = "viewDidLoad()"
+            landmarkName = "generatePassword(passwordLength:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1412,7 +1296,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "210"
             endingLineNumber = "210"
-            landmarkName = "viewDidLoad()"
+            landmarkName = "generatePassword(passwordLength:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1420,7 +1304,7 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "B6B427AF-55C7-4BF0-B2BC-F2B0EAFB9E8B"
-            shouldBeEnabled = "No"
+            shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Navigation/Controllers/LogInViewController.swift"
@@ -1428,7 +1312,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "205"
             endingLineNumber = "205"
-            landmarkName = "viewDidLoad()"
+            landmarkName = "generatePassword(passwordLength:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1436,7 +1320,7 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "CB850C22-B385-4383-BEA4-1670C5E823BE"
-            shouldBeEnabled = "No"
+            shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Navigation/Controllers/LogInViewController.swift"
@@ -1444,7 +1328,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "190"
             endingLineNumber = "190"
-            landmarkName = "viewDidLoad()"
+            landmarkName = "generatePassword(passwordLength:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1452,7 +1336,7 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "549BC4D7-CCF4-4516-BAFF-BE8B90C646E1"
-            shouldBeEnabled = "No"
+            shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Navigation/Controllers/LogInViewController.swift"
@@ -1460,22 +1344,80 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "212"
             endingLineNumber = "212"
-            landmarkName = "viewDidLoad()"
+            landmarkName = "generatePassword(passwordLength:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "F2E2EA24-693C-410D-9F3C-38EB3A5FBB67"
+            uuid = "E423C0BE-D578-481E-B696-B3E6B19F605B"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Navigation/Controllers/PhotosViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "78"
-            endingLineNumber = "78"
+            startingLineNumber = "102"
+            endingLineNumber = "102"
+            landmarkName = "setupCollectionsConstraints()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "D1471879-9857-47F5-ACE5-0BEF4A7D9410"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Navigation/FeedSettingsModule/FeedViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "152"
+            endingLineNumber = "152">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "4C937CF3-03AC-4064-805E-391D9EDF893F"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Navigation/FeedSettingsModule/FeedViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "160"
+            endingLineNumber = "160">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "0009C54D-2519-4174-A139-407100C43CF9"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Navigation/FeedSettingsModule/FeedViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "159"
+            endingLineNumber = "159">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "5B485D23-5860-422E-AF29-E26875214C9E"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Navigation/FeedSettingsModule/FeedViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "115"
+            endingLineNumber = "115"
             landmarkName = "viewDidLoad()"
             landmarkType = "7">
          </BreakpointContent>
@@ -1483,111 +1425,29 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "FA7DA5C7-1E96-4371-934B-6C54A37FBE76"
+            uuid = "7BE625E6-9787-4A2C-A86F-90C7D08A7E46"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Navigation/Controllers/PhotosViewController.swift"
+            filePath = "Navigation/FeedSettingsModule/FeedViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "96"
-            endingLineNumber = "96"
-            landmarkName = "viewDidLoad()"
-            landmarkType = "7">
+            startingLineNumber = "221"
+            endingLineNumber = "221">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "FDD0CF0C-A20F-4E5F-8A38-C003EFC6CBDF"
+            uuid = "5FC2248B-5D05-40C7-85F9-3112D3DE1009"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Navigation/Controllers/PhotosViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "98"
-            endingLineNumber = "98"
-            landmarkName = "viewDidLoad()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "2B5046CA-DC47-4EE6-8125-5167AE0241E5"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Navigation/Controllers/PhotosViewController.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "90"
-            endingLineNumber = "90"
-            landmarkName = "viewDidLoad()"
-            landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "2B5046CA-DC47-4EE6-8125-5167AE0241E5 - d32254da5ded714e"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 () -&gt; () in closure #1 (Swift.Array&lt;Swift.Optional&lt;__C.CGImageRef&gt;&gt;) -&gt; () in Navigation.PhotosViewController.viewDidLoad() -&gt; ()"
-                  moduleName = "Navigation"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/misha/Documents/XCode/Inddev/Navigation/Controllers/PhotosViewController.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "84"
-                  endingLineNumber = "84"
-                  offsetFromSymbolStart = "54">
-               </Location>
-               <Location
-                  uuid = "2B5046CA-DC47-4EE6-8125-5167AE0241E5 - 62cdc6625aff4ad9"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (Swift.Optional&lt;__C.CGImageRef&gt;) -&gt; __C.UIImage in closure #1 () -&gt; () in closure #1 (Swift.Array&lt;Swift.Optional&lt;__C.CGImageRef&gt;&gt;) -&gt; () in Navigation.PhotosViewController.viewDidLoad() -&gt; ()"
-                  moduleName = "Navigation"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/misha/Documents/XCode/Inddev/Navigation/Controllers/PhotosViewController.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "84"
-                  endingLineNumber = "84"
-                  offsetFromSymbolStart = "53">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "5C1AA4B7-1FE6-4DD8-8C22-126B3597E6E9"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Navigation/Controllers/PhotosViewController.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "92"
-            endingLineNumber = "92"
-            landmarkName = "viewDidLoad()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "7EE008EA-E001-44F2-81FB-47D2077874CC"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Navigation/Controllers/PhotosViewController.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "81"
-            endingLineNumber = "81"
+            startingLineNumber = "74"
+            endingLineNumber = "74"
             landmarkName = "viewDidLoad()"
             landmarkType = "7">
          </BreakpointContent>

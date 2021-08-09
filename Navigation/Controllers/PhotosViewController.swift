@@ -60,24 +60,24 @@ class PhotosViewController: UIViewController, ImageLibrarySubscriber {
         super.viewDidLoad()
         setupCollectionsConstraints()
         
-        receivedImages = RugbyFlow.rugbySections.imageArrayOfRugbyPhotos.prefix(upTo: 3).map({$0.rugbyImage})
+        receivedImages = RugbyFlow.rugbySections.imageArrayOfRugbyPhotos.map({$0.rugbyImage}) //prefix(upTo: 3)
         
         print("rI",receivedImages)
+        
+        //receivedImages.append(UIImage(named: "1") ?? UIImage())
         
         //newArrayForImage.append(UIImage(named: "cosmos") ?? UIImage())
 
         //подписываем класс PhotosViewController на изменения
-        //imagePublisherFacade?.subscribe(self)
+        imagePublisherFacade?.subscribe(self)
         
-        //imagePublisherFacade?.addImagesWithTimer(time: 1, repeat: 10, userImages: RugbyFlow.rugbySections.imageArrayOfRugbyPhotos as? [UIImage])
+        imagePublisherFacade?.addImagesWithTimer(time: 1, repeat: 10, userImages: receivedImages)
  
 // *СПОСОБ 1*
-        //Для выполнения загрузки данных, что может занять значительное время и заблокировать Main queue, мы АСИНХРОННО переключаем выполнение этого ресурса-емкого задания на глобальную параллельную очередь с качеством обслуживания qos, равным .utility
+        //Для выполнения загрузки данных, что может занять значительное время и заблокировать Main queue, мы АСИНХРОННО переключаем выполнение этого ресурса-емкого задания на глобальную параллельную очередь с качеством обслуживания qos, равным .background
         
-        //queue.async { // - открывается блок кода который должен выполнятся в очереди созданной ранее
-            //DispatchQueue.main.async { // - открываете блок кода который встанет обратно на выполнение в главную очередь
-        print("apply filter")
         let date = Date()
+        print("\r⚡️: \(Thread.current)\r" + ": \(OperationQueue.current?.underlyingQueue?.label ?? "None")\r")
         self.imageProcessor?.processImagesOnThread(
             sourceImages: self.receivedImages, // - передаете изображение которое должно быть отфильтровано
             filter: .gaussianBlur(radius: 30), // - говорите какой фильтр вы хотите применить
@@ -86,39 +86,12 @@ class PhotosViewController: UIViewController, ImageLibrarySubscriber {
             let date2 = Date()
             print("distance:", date.distance(to: date2))
             print("filter applied")
-            DispatchQueue.main.async {
+            DispatchQueue.main.async { // -обеспечиваем показ изображений на главном потоке, в замыкании мы должны получить массив обработанных изображений
                 self.receivedImages = images.map({UIImage(cgImage: $0!)})
                 self.collectionView.reloadData()
-                //print("\r⚡️: \(Thread.current)\r" + ": \(OperationQueue.current?.underlyingQueue?.label ?? "None")\r")
+                print("\r⚡️: \(Thread.current)\r" + ": \(OperationQueue.current?.underlyingQueue?.label ?? "None")\r")
             }
-                                    
-                    } // - в замыкании мы должны получить массив обработанных изображений
-                //print("\r⚡️: \(Thread.current)\r" + ": \(OperationQueue.current?.underlyingQueue?.label ?? "None")\r")
-            //}
-        //print("\r⚡️: \(Thread.current)\r" + ": \(OperationQueue.current?.underlyingQueue?.label ?? "None")\r")
-        //}
-
-// *СПОСОБ 2*
-//        DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
-//            self.imageProcessor?.processImagesOnThread(
-//                    sourceImages: self.receivedImages,
-//                    filter: .fade,
-//                    qos: .background) {_ in
-//                }
-//        }
- 
-// *СПОСОБ 3*
-//        let serialQueue = DispatchQueue(label: "new")
-//        let currentQueue = DispatchQueue(label: "array", qos: .background, attributes: .concurrent, autoreleaseFrequency: .inherit, target: nil)
-//
-//        currentQueue.async {
-//            self.imageProcessor?.processImagesOnThread(
-//                sourceImages: self.receivedImages,
-//                filter: .fade,
-//                qos: .background) {_ in
-//            }
-//
-//        }
+            }
 
 }
     
