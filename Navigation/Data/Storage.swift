@@ -142,12 +142,49 @@ class TestUserService: UserService {
     
 }
 
+
+
+
+
+
 //Создаем сервис для проверки логина и пароля Checker или любым другим названием, у сервиса (это Singleton) будет 1 интерфейсный метод для проверки логина и пароля
 class Checker {
+    
     //создаём синглтон внутри себя. Статик так как создаём объект внутри объекта (Checker внутри Checker)
     static let shared = Checker()
     
-    var user = User(name: "Регбист", avatar: UIImage(named: "регби") ?? UIImage(), status: "Бегу-бью!")
+    let user = User(name: "Регбист", avatar: UIImage(named: "регби") ?? UIImage(), status: "Бегу-бью!")
+    
+    func loadUser(completion: @escaping (User) -> Void) {
+        DispatchQueue.global().async {
+            // -оборачиваем в блок do функцию, которая может выбросить ошибку. try - попробуй вызвать. Если всё хорошо, то catch не вызовется
+            do {
+                let user = try self.fetchUser()
+                DispatchQueue.main.async {
+                    completion (user)
+                }
+            } catch LogInViewController.ApiError.unautorized {
+                let viewModel = NextViewModel()
+                let loginViewController = LogInViewController(model: viewModel as! SettingsViewOutput)
+                let alertController = UIAlertController(title: "Пользователь не найден", message: "Проверьте логин", preferredStyle: .alert)
+                loginViewController.present(alertController, animated: true, completion: nil)
+                    //present(alertController, animated: true, completion: nil)
+            } catch {
+                print("Что-то пошло не так")
+            }
+        }
+    }
+    
+    private func fetchUser() throws -> User {
+        if login == "1" && password == "2" {
+            let user = self.user
+            return (user)
+        } else {
+            throw LogInViewController.ApiError.unautorized
+        }
+    }
+    
+    //var user = User(name: "Регбист", avatar: UIImage(named: "регби") ?? UIImage(), status: "Бегу-бью!")
     
     private let login = "1"
     

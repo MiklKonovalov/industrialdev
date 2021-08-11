@@ -122,7 +122,6 @@ class ProfileViewController: UIViewController {
         userNameLabel.text = user.name
         currentStatusLabel.text = user.status
         
-        
         //MARK: Setup constraints
         var avatarTopAnchor =
             avatar.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 16)

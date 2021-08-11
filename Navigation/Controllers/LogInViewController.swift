@@ -26,6 +26,33 @@ protocol LoginFactory {
 // Слой Presentation: M-V-C (V + C)
 
 class LogInViewController: UIViewController {
+
+    enum ApiError: Error {
+        case unautorized
+        case notFound
+    }
+
+    func handleError(error: ApiError) {
+        switch error {
+        case .unautorized:
+            let alertController = UIAlertController(title: "Пользователь не найден", message: "Проверьте логин", preferredStyle: .alert)
+            present(alertController, animated: true, completion: nil)
+        case .notFound:
+            print("Alert not found")
+        }
+    }
+    
+    let client = Checker.shared
+    
+    func start() {
+        //действие вызывается из compleation loadUser
+        client.loadUser { user in
+            let user = self.delegate?.checkValue(login: self.userNameTextField.text ?? "", password: self.passwordTextField.text ?? "") ?? User(name: "Нет данных", avatar: UIImage(named: "gratis") ?? UIImage(), status: "Нет данных")
+            var profileViewController = ProfileViewController(user: user)
+            self.navigationController?.pushViewController(profileViewController, animated: true)
+            
+            }
+    }
     
     let brutForce = BrutForce()
     
@@ -166,12 +193,13 @@ class LogInViewController: UIViewController {
         
         //guard let userName = userNameTextField.text, let _ = passwordTextField.text else { return }
     #if DEBUG
-    let user = delegate?.checkValue(login: userNameTextField.text ?? "", password: passwordTextField.text ?? "") ?? User(name: "Нет данных", avatar: UIImage(named: "gratis") ?? UIImage(), status: "Нет данных")
+    start()
+    //let user = delegate?.checkValue(login: userNameTextField.text ?? "", password: passwordTextField.text ?? "") ?? User(name: "Нет данных", avatar: UIImage(named: "gratis") ?? UIImage(), status: "Нет данных")
     #else
         let userService = CurrentUserService()
     #endif
-        var profileViewController = ProfileViewController(user: user)
-        self.navigationController?.pushViewController(profileViewController, animated: true)
+        //var profileViewController = ProfileViewController(user: user)
+        //self.navigationController?.pushViewController(profileViewController, animated: true)
     }
     
     @objc private func generatePassword(passwordLength: Int) -> String {
@@ -399,6 +427,7 @@ struct MyLoginFactory: LoginFactory {
         print("check login")
         return LoginInspetor()
     }
+    
 }
 
 //Фабрика п4: Внедрите зависимость контроллера от LoginInspector, создав инспектора с помощью фабричного метода.
