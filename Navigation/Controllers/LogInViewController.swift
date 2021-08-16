@@ -47,13 +47,18 @@ class LogInViewController: UIViewController {
     func start() {
         //действие вызывается из compleation loadUser
         client.loadUser { user in
-            let user = self.delegate?.checkValue(login: self.userNameTextField.text ?? "", password: self.passwordTextField.text ?? "") ?? User(name: "Нет данных", avatar: UIImage(named: "gratis") ?? UIImage(), status: "Нет данных")
-            var profileViewController = ProfileViewController(user: user)
-            self.navigationController?.pushViewController(profileViewController, animated: true)
+            if self.userNameTextField.text == "1", self.passwordTextField.text == "2" {
+                let user = self.client.user
+                var profileViewController = ProfileViewController(user: user)
+                self.navigationController?.pushViewController(profileViewController, animated: true)
+            } else {
+                self.handleError(error: .unautorized)
+             //self.delegate?.checkValue(login: self.userNameTextField.text ?? "", password: self.passwordTextField.text ?? "") ?? User(name: "Нет данных", avatar: UIImage(named: "gratis") ?? UIImage(), status: "Нет данных")
+            
             
             }
+        }
     }
-    
     let brutForce = BrutForce()
     
     //1.2 Объявляем делегата для использования. В контроллере мы создаем instance протокола и называем его делегат

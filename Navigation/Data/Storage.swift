@@ -168,7 +168,6 @@ class Checker {
                 let loginViewController = LogInViewController(model: viewModel as! SettingsViewOutput)
                 let alertController = UIAlertController(title: "Пользователь не найден", message: "Проверьте логин", preferredStyle: .alert)
                 loginViewController.present(alertController, animated: true, completion: nil)
-                    //present(alertController, animated: true, completion: nil)
             } catch {
                 print("Что-то пошло не так")
             }
