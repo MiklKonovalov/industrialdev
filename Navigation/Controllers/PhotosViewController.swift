@@ -71,6 +71,7 @@ class Some: NSObject {
 
 //ImageLibrarySubscriber - это Паблишер
 class PhotosViewController: UIViewController, ImageLibrarySubscriber {
+    //Создаём домен ошибок
     
     let thread = ExampleThread()
     
