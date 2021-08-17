@@ -103,6 +103,7 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
+<<<<<<< HEAD
             uuid = "E5979D36-FFB3-4DF7-9130-E51B0915C328"
             shouldBeEnabled = "No"
             ignoreCount = "0"
@@ -183,6 +184,8 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
+=======
+>>>>>>> feature/task-2/initial
             uuid = "DD64F503-D696-48C2-A3FB-0E3BC629D70C"
             shouldBeEnabled = "No"
             ignoreCount = "0"

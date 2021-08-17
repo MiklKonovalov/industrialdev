@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import iOSIntPackage
 
 struct Fasting {
     var autor: String

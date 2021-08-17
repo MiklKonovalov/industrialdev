@@ -7,16 +7,20 @@
 //
 
 import UIKit
+import iOSIntPackage
 
 final class FlowTableViewCell: UITableViewCell {
-    
+    //создаём инстанс структуры ImageProcessor
+    let imageProcessor = ImageProcessor()
+    //Тут я буду применять фильтр, так как тут мы передаём изображение.
     var fasting: Fasting? {
         didSet {
             userNameLable.text = fasting?.autor
             descriptionLable.text = fasting?.description
             likesLable.text = "Likes:" + String(fasting!.numberOfLikes)
             viewsLable.text = "Views:" + String(fasting!.numberOfviews)
-            flowImageView.image = fasting?.image
+            //вызываем функцию processImage и используем замыкание для передачи картинки с эффектом фильтра
+            imageProcessor.processImage(sourceImage: fasting?.image ?? UIImage() , filter: .colorInvert) { flowImageView.image = $0 }
         }
     }
     
