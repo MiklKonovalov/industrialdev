@@ -7,12 +7,14 @@
 //
 
 import UIKit
+import iOSIntPackage
 //тут работаем с ячейкой, делаем вёрстку
 class PhotoCollectionViewCell: UICollectionViewCell {
     
+    
     var photos: RugbyPhotos? {
         didSet {
-          rugbyImage.image = photos?.rugbyImage
+            rugbyImage.image = photos?.rugbyImage
         }
     }
     

@@ -11,7 +11,7 @@ import UIKit
 //Протокол делегирования проверки логинаи пароля. Он имеет несколько параметров, данных для передачи обратно вызвавшему контроллеру. В данном случае я передаю обратно контроллеру логин и пароль.
 protocol LogInViewControllerDelegate: AnyObject {
     //1.1 В методе делегата передаём экземпляр делегирующего объекта, чтобы вернуть результат работы
-    func checkValue(class: LogInViewController, login: String, password: String) -> User
+    func checkValue(login: String, password: String) -> User?
 
 }
 
@@ -29,7 +29,7 @@ class LogInViewController: UIViewController {
     weak var delegate: LogInViewControllerDelegate?
     
     //В контроллере у нас есть зависимость от фабрики. Она жёсткая, так как мы внедряем её через инициализатор
-    private var factory: LoginFactory?
+    private var factory: LoginInspetor?
     
 //    init(factory: LoginFactory? = nil) {
 //        self.factory = factory
@@ -143,7 +143,7 @@ class LogInViewController: UIViewController {
         var profileViewController = ProfileViewController(userService: userService, userName: userName) {
             didSet {
                 //1.4. Метод делегата проверяет значения, введенные в 2 UITextField контроллера
-                delegate?.checkValue(class: self, login: userName , password: passValue)
+                delegate?.checkValue(login: userName , password: passValue)
             }
         }
         self.navigationController?.pushViewController(profileViewController, animated: true)
@@ -270,11 +270,14 @@ class LogInViewController: UIViewController {
 //4. Создаем произвольный класс/структуру LoginInspector (или придумайте свое название), который подписывается на протокол LoginViewControllerDelegate, реализуем в нем протокольный метод.
 //5. LoginInspector проверяет точность введенного пароля с помощью синглтона Checker.
 class LoginInspetor: LogInViewControllerDelegate {
-    func checkValue(class: LogInViewController, login: String, password: String) -> User {
+    func checkValue(login: String, password: String) -> User? {
         
-        Checker.shared.checking()
+        Checker.shared.checkLoginAndPassword(param: login, param: password)
         
-        return Checker.shared.user
+            if login == "1" && password == "2" {
+                return Checker.shared.user
+            }
+            return Checker.shared.user
     }
     
 }
@@ -293,12 +296,12 @@ struct MyLoginFactory: LoginFactory {
 //Фабрика п4: Внедрите зависимость контроллера от LoginInspector, создав инспектора с помощью фабричного метода.
 
 //Комментарий: Логика в dataSource контроллера. У нас есть задача показать юзера, которую мы выполняем.
-extension LogInViewController {
-
-    func dataSourceFunction() -> User {
-        let inspector = factory?.checkLoginByFactory()
-        let user = inspector?.checkValue(class: self, login: "1", password: "2")
-        return user!
-    }
-
-}
+//extension LogInViewController {
+//
+//    func dataSourceFunction() -> User {
+//        let inspector = factory?.checkLoginByFactory()
+//        let user = inspector?.checkValue(login: "1", password: "2")
+//        return user!
+//    }
+//
+//}

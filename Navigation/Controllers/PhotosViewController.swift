@@ -8,8 +8,27 @@
 
 import Foundation
 import UIKit
+import iOSIntPackage
 
-class PhotosViewController: UIViewController {
+//ImageLibrarySubscriber - это Паблишер
+class PhotosViewController: UIViewController, ImageLibrarySubscriber {
+    
+    var newArrayForImage: [UIImage] = []
+    
+    var receivedImages: [UIImage] = []
+    
+    func receive(images: [UIImage]) {
+    
+        for images in newArrayForImage {
+            receivedImages.append(images)
+        }
+        
+        self.collectionView.reloadData()
+        print(type(of: self), #function)
+    }
+    
+    //ImagePublisherFacade содержит методы добавления, удаления наблюдателя и вызов нотификации
+    var imagePublisherFacade: ImagePublisherFacade? = .init()
     
     var labelString: String!
     
@@ -18,6 +37,7 @@ class PhotosViewController: UIViewController {
         self.navigationController?.navigationBar.isHidden = false
         title = "Photos Gallery"
         navigationController?.title = labelString
+        
     }
     
     //MARK: setup collection
@@ -30,11 +50,32 @@ class PhotosViewController: UIViewController {
         collectionView.backgroundColor = .white
         return collectionView
     }()
-
+    
+    
+    
     //MARK: viewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
         setupCollectionsConstraints()
+        
+        receivedImages.append(UIImage(named: "1") ?? UIImage())
+        //receivedImages.append(UIImage(named: "2") ?? UIImage())
+        //receivedImages.append(UIImage(named: "3") ?? UIImage())
+        //receivedImages.append(UIImage(named: "4") ?? UIImage())
+        //receivedImages.append(UIImage(named: "5") ?? UIImage())
+        //receivedImages.append(UIImage(named: "6") ?? UIImage())
+        //receivedImages.append(UIImage(named: "7") ?? UIImage())
+        //receivedImages.append(UIImage(named: "8") ?? UIImage())
+        //receivedImages.append(UIImage(named: "9") ?? UIImage())
+        //receivedImages.append(UIImage(named: "10") ?? UIImage())
+        
+        newArrayForImage.append(UIImage(named: "cosmos") ?? UIImage())
+        
+        //подписываем класс PhotosViewController на изменения
+        imagePublisherFacade?.subscribe(self)
+        
+        //Запускаем сценарий выполнения публикации
+        imagePublisherFacade?.addImagesWithTimer(time: 1, repeat: 12, userImages: RugbyFlow.rugbySections.imageArrayOfRugbyPhotos as? [UIImage])
     }
 
     //MARK: setup collection's constraint
@@ -61,20 +102,20 @@ class PhotosViewController: UIViewController {
 
 extension PhotosViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        20
-
+        receivedImages.count
     }
 
     //создаём ячейку, которая будет отображать данные
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        //создаём переиспользование ячеек
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: PhotoCollectionViewCell.self), for: indexPath) as! PhotoCollectionViewCell
-        //ниже нам надо создать экземпляры ячеек
 
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: PhotoCollectionViewCell.self), for: indexPath) as! PhotoCollectionViewCell
+        
         let rugbyFlow = RugbyFlow.rugbySections.imageArrayOfRugbyPhotos[indexPath.item]
         
-        (cell as? PhotoCollectionViewCell)?.photos = rugbyFlow
-
+        //let rugbyFlow = receivedImages[indexPath.item]
+        
+        cell.photos = rugbyFlow
+        
        return cell
     }
 }
