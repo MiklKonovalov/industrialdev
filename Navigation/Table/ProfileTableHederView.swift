@@ -32,26 +32,25 @@ class ProfileTableHeaderView: UITableViewHeaderFooterView {
         return newStatus
         }()
     
-    private let actionButton: UIButton = {
-        let actionButton = UIButton()
-        actionButton.layer.shadowRadius = 4
-        actionButton.layer.shadowColor = UIColor.black.cgColor
-        actionButton.layer.shadowOffset = CGSize(width: 4, height: 4)
-        actionButton.layer.shadowOpacity = 0.7
-        actionButton.layer.cornerRadius = 4
-        actionButton.clipsToBounds = false
-        actionButton.backgroundColor = .systemBlue
-        actionButton.setTitleColor(.white, for: .normal)
-        actionButton.setTitle("Show status", for: .normal)
-        actionButton.translatesAutoresizingMaskIntoConstraints = false
-        actionButton.addTarget(self, action: #selector(actionButtonPressed), for: .touchUpInside)
-        return actionButton
+    private let actionButton: CustomButton = {
+        let button = CustomButton(title: "Обновить статус", titleColor: .green) {
+            print("change status")
+        }
+        button.layer.shadowRadius = 4
+        button.layer.shadowColor = UIColor.black.cgColor
+        button.layer.shadowOffset = CGSize(width: 4, height: 4)
+        button.layer.shadowOpacity = 0.7
+        button.layer.cornerRadius = 4
+        button.clipsToBounds = false
+        button.backgroundColor = .systemBlue
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.addTarget(self, action: #selector(actionButtonPressed), for: .touchUpInside)
+        return button
         }()
         
     //MARK: Create Actions
     @objc private func actionButtonPressed() {
-        //currentStatus.text = statusText
-        //print(currentStatus.text ?? "no status")
+        print("change status pressed")
     }
     
     @objc private func statusTextChange(_ newStatus: UITextField) {
