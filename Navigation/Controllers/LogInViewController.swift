@@ -23,29 +23,12 @@ protocol LoginFactory {
     func checkLoginByFactory() -> LoginInspetor
 }
 
+// Слой Presentation: M-V-C (V + C)
+
 class LogInViewController: UIViewController {
     
     //1.2 Объявляем делегата для использования. В контроллере мы создаем instance протокола и называем его делегат
     weak var delegate: LogInViewControllerDelegate?
-    
-    //В контроллере у нас есть зависимость от фабрики. Она жёсткая, так как мы внедряем её через инициализатор
-    private var factory: LoginInspetor?
-    
-//    init(factory: LoginFactory? = nil) {
-//        self.factory = factory
-//        super.init(nibName: nil, bundle: nil)
-//    }
-    
-//    required init?(coder: NSCoder) {
-//        fatalError("init(coder:) has not been implemented")
-//    }
-    
-//    required init?(coder aDecoder: NSCoder) {
-//        super.init(coder: aDecoder)
-//        super.init(factory: LoginFactory)
-//    }
-    
-    //1.3 Метод делегата проверяет значения, введенные в 2 UITextField контроллера.
     
     //MARK: Create subviews
     let substrate: UIView = {
@@ -111,18 +94,17 @@ class LogInViewController: UIViewController {
         return passwordTextField
     }()
     
-    private var logInButton: UIButton = {
-        let logInButton = UIButton(type: .system)
-        logInButton.layer.cornerRadius = 10
-        logInButton.clipsToBounds = true
-        logInButton.setBackgroundImage(#imageLiteral(resourceName: "blue_pixel"), for: .normal)
-        logInButton.setTitleColor(.white, for: .normal)
-        logInButton.setTitleColor(.darkGray, for: .selected)
-        logInButton.setTitleColor(.darkGray, for: .highlighted)
-        logInButton.setTitle("Log In", for: .normal)
-        logInButton.addTarget(self, action: #selector(logInButtonPressed), for: .touchUpInside)
-        logInButton.translatesAutoresizingMaskIntoConstraints = false
-        return logInButton
+    private lazy var logInButton: CustomButton = {
+        let button = CustomButton(title: "Login", titleColor: .yellow ) {
+            print("Custom Button Closure")
+            self.logInButtonPressed()
+        }
+        button.layer.cornerRadius = 10
+        button.clipsToBounds = true
+        button.setBackgroundImage(#imageLiteral(resourceName: "blue_pixel"), for: .normal)
+        button.addTarget(self, action: #selector(logInButtonPressed), for: .touchUpInside)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
     }()
     
     private var separator: UIView = {
@@ -132,20 +114,31 @@ class LogInViewController: UIViewController {
         return separator
     }()
     
+    private var model: SettingsViewOutput?
+    
+    init(model: SettingsViewOutput) {
+        self.model = model
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+//Используется, если есть storyboard
+//    required init?(coder: NSCoder) {
+//        super.init(coder: coder)
+//    }
+    
     @objc private func logInButtonPressed() {
         
-        guard let userName = userNameTextField.text, let  passValue = passwordTextField.text else { return }
+        //guard let userName = userNameTextField.text, let _ = passwordTextField.text else { return }
     #if DEBUG
-        let userService = TestUserService()
+    let user = delegate?.checkValue(login: userNameTextField.text ?? "", password: passwordTextField.text ?? "") ?? User(name: "Нет данных", avatar: UIImage(named: "gratis") ?? UIImage(), status: "Нет данных")
     #else
         let userService = CurrentUserService()
     #endif
-        var profileViewController = ProfileViewController(userService: userService, userName: userName) {
-            didSet {
-                //1.4. Метод делегата проверяет значения, введенные в 2 UITextField контроллера
-                delegate?.checkValue(login: userName , password: passValue)
-            }
-        }
+        var profileViewController = ProfileViewController(user: user)
         self.navigationController?.pushViewController(profileViewController, animated: true)
     }
     
@@ -270,14 +263,19 @@ class LogInViewController: UIViewController {
 //4. Создаем произвольный класс/структуру LoginInspector (или придумайте свое название), который подписывается на протокол LoginViewControllerDelegate, реализуем в нем протокольный метод.
 //5. LoginInspector проверяет точность введенного пароля с помощью синглтона Checker.
 class LoginInspetor: LogInViewControllerDelegate {
+    
     func checkValue(login: String, password: String) -> User? {
         
-        Checker.shared.checkLoginAndPassword(param: login, param: password)
+        let user = Checker.shared.user
+        
+        _ = Checker.shared.checkLoginAndPassword(param: login, param: password)
         
             if login == "1" && password == "2" {
-                return Checker.shared.user
+                return user
+            } else {
+                print("Login not correct")
             }
-            return Checker.shared.user
+            return user
     }
     
 }
