@@ -13,20 +13,24 @@ import iOSIntPackage
 //ImageLibrarySubscriber - это Паблишер
 class PhotosViewController: UIViewController, ImageLibrarySubscriber {
     
-    var receivedImages: [RugbyPhotos] = []
+    var newArrayForImage: [UIImage] = []
+    
+    //Data source для массива изображений
+    var receivedImages: [UIImage] = []
     
     func receive(images: [UIImage]) {
         //Записываем картинки в новый датасорс
-        if images is [RugbyPhotos] {
-            self.receivedImages = images as! [RugbyPhotos]
+        for images in newArrayForImage {
+            receivedImages.append(images)
         }
-        
         self.collectionView.reloadData()
         print(type(of: self), #function)
     }
     
     //ImagePublisherFacade содержит методы добавления, удаления наблюдателя и вызов нотификации
     var imagePublisherFacade: ImagePublisherFacade? = .init()
+    
+    var imageProcessor: ImageProcessor? = .init()
     
     var labelString: String!
     
@@ -56,13 +60,41 @@ class PhotosViewController: UIViewController, ImageLibrarySubscriber {
         super.viewDidLoad()
         setupCollectionsConstraints()
         
+        receivedImages = RugbyFlow.rugbySections.imageArrayOfRugbyPhotos.map({$0.rugbyImage}) //prefix(upTo: 3)
+        
+        print("rI",receivedImages)
+        
+        //receivedImages.append(UIImage(named: "1") ?? UIImage())
+        
+        //newArrayForImage.append(UIImage(named: "cosmos") ?? UIImage())
+
         //подписываем класс PhotosViewController на изменения
         imagePublisherFacade?.subscribe(self)
         
-        //Запускаем сценарий выполнения публикации
-        imagePublisherFacade?.addImagesWithTimer(time: 1, repeat: 10, userImages: RugbyFlow.rugbySections.imageArrayOfRugbyPhotos as? [UIImage])
-    }
+        imagePublisherFacade?.addImagesWithTimer(time: 1, repeat: 10, userImages: receivedImages)
+ 
+// *СПОСОБ 1*
+        //Для выполнения загрузки данных, что может занять значительное время и заблокировать Main queue, мы АСИНХРОННО переключаем выполнение этого ресурса-емкого задания на глобальную параллельную очередь с качеством обслуживания qos, равным .background
+        
+        let date = Date()
+        print("\r⚡️: \(Thread.current)\r" + ": \(OperationQueue.current?.underlyingQueue?.label ?? "None")\r")
+        self.imageProcessor?.processImagesOnThread(
+            sourceImages: self.receivedImages, // - передаете изображение которое должно быть отфильтровано
+            filter: .gaussianBlur(radius: 30), // - говорите какой фильтр вы хотите применить
+            qos: .background) // - говорите на каком потоке вы хотите выполнять преобразование изображения
+                    { images in // - массив images будет содержать массив изображений с применённым фильтрос
+            let date2 = Date()
+            print("distance:", date.distance(to: date2))
+            print("filter applied")
+            DispatchQueue.main.async { // -обеспечиваем показ изображений на главном потоке, в замыкании мы должны получить массив обработанных изображений
+                self.receivedImages = images.map({UIImage(cgImage: $0!)})
+                self.collectionView.reloadData()
+                print("\r⚡️: \(Thread.current)\r" + ": \(OperationQueue.current?.underlyingQueue?.label ?? "None")\r")
+            }
+            }
 
+}
+    
     //MARK: setup collection's constraint
     private func setupCollectionsConstraints() {
         view.addSubview(collectionView)
@@ -95,9 +127,11 @@ extension PhotosViewController: UICollectionViewDataSource {
 
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: PhotoCollectionViewCell.self), for: indexPath) as! PhotoCollectionViewCell
         
-        //let rugbyFlow = RugbyFlow.rugbySections.imageArrayOfRugbyPhotos[indexPath.item]
+        let arrayOfRugby = receivedImages.map({RugbyPhotos(rugbyImage: $0)})
         
-        cell.photos = receivedImages[indexPath.item]
+        let rugbyFlow = arrayOfRugby[indexPath.item]
+        
+        cell.photos = rugbyFlow
         
        return cell
     }
