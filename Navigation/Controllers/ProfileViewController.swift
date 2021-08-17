@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import StorageService
 
 class ProfileViewController: UIViewController {
     
@@ -68,6 +69,12 @@ class ProfileViewController: UIViewController {
         avatar.clipsToBounds = true
         
         self.view.bringSubviewToFront(avatar)
+        
+        #if DEBUG
+        self.view.backgroundColor = .red
+        #else
+        self.view.backgroundColor = .green
+        #endif
         
         //MARK: Setup Avatar constraints
         var avatarTopAnchor =
