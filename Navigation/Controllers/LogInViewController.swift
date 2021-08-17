@@ -8,8 +8,44 @@
 
 import UIKit
 
-class LogInViewController: UIViewController {
+//Протокол делегирования проверки логинаи пароля. Он имеет несколько параметров, данных для передачи обратно вызвавшему контроллеру. В данном случае я передаю обратно контроллеру логин и пароль.
+protocol LogInViewControllerDelegate: AnyObject {
+    //1.1 В методе делегата передаём экземпляр делегирующего объекта, чтобы вернуть результат работы
+    func checkValue(login: String, password: String) -> User?
 
+}
+
+//Фабрика 1: Создайте protocol LoginFactory с 1 методом без параметров, который возвращает LoginInspector.
+//Комментарий: Объявляем интерфейс, который будет играть роль «абстрактной фабрики»:
+protocol LoginFactory {
+    //Создаём фабричный метод (Фабричный метод - это метод, который что-то возвращает), который возвращает LoginInspector. Мы знаем, что фабрика должна проверять логин и пароль, по-этому, когда мы пишем общий интерфейс для фабрики, мы возвращаем LjginInspector. Интерфейс абстрактной фабрики содержит один метода: для проверки логина и пароля. Метод возвращает экземпляр общего базового класса? Таким образом, ограничивается область распространения знаний о конкретных типах пределами той области, в которой это действительно необходимо.
+    func checkLoginByFactory() -> LoginInspetor
+}
+
+class LogInViewController: UIViewController {
+    
+    //1.2 Объявляем делегата для использования. В контроллере мы создаем instance протокола и называем его делегат
+    var delegate: LogInViewControllerDelegate?
+    
+    //Фабрика: Внедрите зависимость контроллера от LoginInspector, создав инспектора с помощью фабричного метода.
+    //В контроллере у нас есть зависимость от фабрики. Она жёсткая, так как мы внедряем её через инициализатор
+    
+//    var factory: MyLoginFactory
+//
+//    init(factory: MyLoginFactory) {
+//        self.factory = factory
+//
+//        factory.checkLoginByFactory()
+        
+//        super.init(nibName: nil, bundle: nil)
+//    }
+    
+//    required init?(coder: NSCoder) {
+//        fatalError("init(coder:) has not been implemented")
+//    }
+    
+
+    
     //MARK: Create subviews
     let substrate: UIView = {
         let substrate = UIView()
@@ -55,7 +91,6 @@ class LogInViewController: UIViewController {
     private var userNameTextField: UITextField = {
         let userNameTextField = UITextField()
         userNameTextField.layer.borderColor = UIColor.white.cgColor
-        //userNameTextField.layer.borderWidth = 0
         userNameTextField.layer.cornerRadius = 10
         userNameTextField.layer.backgroundColor = UIColor.systemGray6.cgColor
         userNameTextField.translatesAutoresizingMaskIntoConstraints = false
@@ -67,7 +102,6 @@ class LogInViewController: UIViewController {
     private var passwordTextField: UITextField = {
         let passwordTextField = UITextField()
         passwordTextField.layer.borderColor = UIColor.white.cgColor
-        //passwordTextField.layer.borderWidth = 0
         passwordTextField.layer.cornerRadius = 10
         passwordTextField.layer.backgroundColor = UIColor.systemGray6.cgColor
         passwordTextField.translatesAutoresizingMaskIntoConstraints = false
@@ -97,19 +131,17 @@ class LogInViewController: UIViewController {
         return separator
     }()
     
-        override func viewDidLayoutSubviews() {
-            super.viewDidLayoutSubviews()
-            
-        }
-    
     @objc private func logInButtonPressed() {
-        guard let userName = userNameTextField.text else { return }
+        
+        
+        //guard let userName = userNameTextField.text, let  passValue = passwordTextField.text else { return }
     #if DEBUG
-        let userService = TestUserService()
+    let user = delegate?.checkValue(login: userNameTextField.text ?? "", password: passwordTextField.text ?? "") ?? User(name: "Нет данных", avatar: UIImage(named: "gratis") ?? UIImage(), status: "Нет данных")
     #else
         let userService = CurrentUserService()
     #endif
-        let profileViewController = ProfileViewController(userService: userService, userName: userName ?? " ")
+        let profileViewController = ProfileViewController(user: user)
+        //var profileViewController = ProfileViewController(userService: userService, userName: userName)
         self.navigationController?.pushViewController(profileViewController, animated: true)
     }
     
@@ -145,6 +177,7 @@ class LogInViewController: UIViewController {
     //MARK: Add subviews
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         self.navigationController?.isNavigationBarHidden = true
         view.backgroundColor = .white
         
@@ -230,3 +263,43 @@ class LogInViewController: UIViewController {
     }
     
 }
+
+//LoginInspector - это реализация делегата.
+//4. Создаем произвольный класс/структуру LoginInspector (или придумайте свое название), который подписывается на протокол LoginViewControllerDelegate, реализуем в нем протокольный метод.
+//5. LoginInspector проверяет точность введенного пароля с помощью синглтона Checker.
+class LoginInspetor: LogInViewControllerDelegate {
+    
+    func checkValue(login: String, password: String) -> User? {
+        
+        let user = Checker.shared.user
+        
+        _ = Checker.shared.checkLoginAndPassword(param: login, param: password)
+            
+            if login == "1" && password == "2" {
+                return user
+            } else {
+                print("Login not correct")
+            }
+        
+        return user
+    }
+    
+}
+
+//Фабрика п2: Вынесите генерацию LoginInspector из SceneDelegate (или AppDelegate) в фабрику: создайте объект MyLoginFactory (название на ваше усмотрение), подпишите на протокол.
+
+//Мы хотим инкапсулировать логику создания делегата для LoginViewController, для этого мы описываем MyLoginFactory.
+
+//Тут мы реализуем логику фабрики:
+
+//MyLoginFactory должна подготовить объект (необходимый делегат для LoginViewController) до инициализации ViewController
+
+//Делегат получается от фабрики MyLoginFactory (в этом случае мы имитируем решение, если нам надо иметь возможность что-то менять, не меняя саму структуру кода)
+class MyLoginFactory: LoginFactory {
+    
+    func checkLoginByFactory() -> LoginInspetor {
+        print("check login")
+        return LoginInspetor()
+    }
+}
+

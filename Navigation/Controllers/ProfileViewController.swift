@@ -10,20 +10,27 @@ import UIKit
 
 class ProfileViewController: UIViewController {
     
-    //В классе ProfileViewController добавить свойство с типом UserService и инициализатор, который принимает объект UserService и имя пользователя, введённое на экране LogInViewController. При инициализации объекта ProfileViewController передать объект CurrentUserService.
-    var userService: UserService
+    //Зависимость: В классе ProfileViewController добавить свойство с типом UserService и инициализатор, который принимает объект UserService и имя пользователя, введённое на экране LogInViewController. При инициализации объекта ProfileViewController передать объект CurrentUserService.
+    //var userService: UserService
     
-    var userName: String
-        
-    //Создаём инициализатор, который будет принимать userService и userName
-    init(userService: UserService, userName: String) {
-        self.userService = userService
-        self.userName = userName
-        //Получаем именно того пользователя, имя которого мы передаём в инициализаторе (получаем объект пользователя)
-        self.userService.getUser(userName: self.userName)
-
+    //var userName: String
+      
+    var user: User
+    
+    init(user: User) {
+        self.user = user
         super.init(nibName: nil, bundle: nil)
     }
+    
+    //Создаём инициализатор, который будет принимать userService и userName
+    //init(userService: UserService, userName: String) {
+        //self.userService = userService
+        //self.userName = userName
+        //Получаем именно того пользователя, имя которого мы передаём в инициализаторе (получаем объект пользователя)
+        //self.userService.getUser(userName: self.userName)
+
+        //super.init(nibName: nil, bundle: nil)
+    //}
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -108,7 +115,7 @@ class ProfileViewController: UIViewController {
         
         self.view.bringSubviewToFront(avatar)
         
-        let user = userService.getUser(userName: userName)
+        //let user = userService.getUser(userName: userName)
         avatar.image = user.avatar
         userNameLabel.text = user.name
         currentStatusLabel.text = user.status
