@@ -11,6 +11,25 @@ import StorageService
 
 class ProfileViewController: UIViewController {
     
+    //В классе ProfileViewController добавить свойство с типом UserService и инициализатор, который принимает объект UserService и имя пользователя, введённое на экране LogInViewController. При инициализации объекта ProfileViewController передать объект CurrentUserService.
+    var userService: UserService
+    
+    var userName: String
+        
+    //Создаём инициализатор, который будет принимать userService и userName
+    init(userService: UserService, userName: String) {
+        self.userService = userService
+        self.userName = userName
+        //Получаем именно того пользователя, имя которого мы передаём в инициализаторе (получаем объект пользователя)
+        self.userService.getUser(userName: self.userName)
+
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     var howToConstraint = [NSLayoutConstraint]()
     var howToConstraintActivate = [NSLayoutConstraint]()
     var deactivateAnimation = [NSLayoutConstraint]()
@@ -19,10 +38,30 @@ class ProfileViewController: UIViewController {
     var header = ProfileTableHeaderView()
     
     //MARK: -Create subview's for animation
+    let currentStatusLabel: UILabel = {
+        let currentStatus = UILabel()
+        currentStatus.font = UIFont.systemFont(ofSize: 14, weight: .regular)
+        currentStatus.text = "Waiting for something..."
+        currentStatus.textColor = .gray
+        currentStatus.textAlignment = .center
+        currentStatus.translatesAutoresizingMaskIntoConstraints = false
+        return currentStatus
+        }()
+    
+    let userNameLabel: UILabel = {
+        let userName = UILabel()
+        userName.font = UIFont.systemFont(ofSize: 18, weight: .bold)
+        userName.text = "Ice Cream"
+        userName.textAlignment = .center
+        userName.textColor = .black
+        userName.translatesAutoresizingMaskIntoConstraints = false
+        return userName
+        }()
+    
     lazy var avatar: UIImageView = {
         let avatar = UIImageView()
         avatar.contentMode = .scaleAspectFill
-        avatar.image = #imageLiteral(resourceName: "эко-мороженое 1")
+        avatar.image = UIImage(named: "эко-мороженое 1")
         avatar.layer.borderWidth = 3
         avatar.layer.borderColor = UIColor.white.cgColor
         avatar.translatesAutoresizingMaskIntoConstraints = false
@@ -70,19 +109,30 @@ class ProfileViewController: UIViewController {
         
         self.view.bringSubviewToFront(avatar)
         
-        #if DEBUG
-        self.view.backgroundColor = .red
-        #else
-        self.view.backgroundColor = .green
-        #endif
+        let user = userService.getUser(userName: userName)
+        avatar.image = user.avatar
+        userNameLabel.text = user.name
+        currentStatusLabel.text = user.status
         
-        //MARK: Setup Avatar constraints
+        
+        //MARK: Setup constraints
         var avatarTopAnchor =
             avatar.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 16)
         var avatarLeadingAnchor = avatar.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16)
             
         var avatarHeight = avatar.heightAnchor.constraint(equalToConstant: 100)
         var avatarWidth =  avatar.widthAnchor.constraint(equalToConstant: 100)
+        
+        userNameLabel.snp.makeConstraints { make in
+            make.top.equalTo(view.safeAreaLayoutGuide).inset(15)
+            make.centerX.equalToSuperview()
+            make.height.equalTo(40)
+        }
+        
+        currentStatusLabel.snp.makeConstraints { make in
+            make.top.equalTo(userNameLabel.snp.bottom).offset(20)
+            make.left.equalTo(userNameLabel.snp.left).offset(0)
+        }
         
         howToConstraint.append(avatarTopAnchor)
         howToConstraint.append(avatarLeadingAnchor)
@@ -141,6 +191,8 @@ class ProfileViewController: UIViewController {
         view.addSubview(avatar)
         view.addSubview(greyViewForAction)
         view.addSubview(closeButton)
+        view.addSubview(userNameLabel)
+        view.addSubview(currentStatusLabel)
         
         let tapVC = UITapGestureRecognizer(target: self, action: #selector(tap))
         avatar.addGestureRecognizer(tapVC)
