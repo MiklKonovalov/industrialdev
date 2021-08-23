@@ -88,3 +88,59 @@ struct RugbyFlow {
     )
 }
 
+//Добавить класс User для хранения информации о пользователе: полное имя, аватар, статус.
+class User {
+    var name: String
+    var avatar: UIImage
+    var status: String
+    
+    init(name: String, avatar: UIImage, status: String) {
+        self.name = name
+        self.avatar = avatar
+        self.status = status
+    }
+    
+}
+
+//var userOne = User(name: "Mike", avatar: UIImage(named: "эко-мороженое 1") ?? UIImage(), status: "work")
+
+//Добавить протокол UserService с функцией, которая принимает имя пользователя и возвращает объект класса User.
+protocol UserService {
+    
+    func getUser(userName: String) -> User
+    
+}
+
+//Добавить класс CurrentUserService, который поддерживает протокол UserService. Класс должен хранить объект класса User и возвращать его в реализации протокола, если переданное имя соответствует имени пользователя.
+
+class CurrentUserService: UserService {
+        
+    var user: User
+    
+    func getUser(userName: String) -> User {
+        if userName == user.name {
+            return user
+        }
+        return user
+    }
+    
+    init() {
+        user = User(name: "Mike", avatar: UIImage(named: "gratis") ?? UIImage(), status: "work")
+        }
+    
+}
+
+//Добавить класс TestUserService, который поддерживает протокол UserService. Класс должен хранить объект класса User с тестовыми данными и возвращать его в реализации протокола.
+
+class TestUserService: UserService {
+    
+    var user = User(name: "Test", avatar: UIImage(named: "gratis") ?? UIImage(), status: "Test")
+    
+    func getUser(userName: String) -> User {
+        if userName == "Test" {
+            return user
+        }
+        return user
+    }
+    
+}
