@@ -86,7 +86,7 @@ class LogInViewController: UIViewController {
         logInButton.setTitleColor(.darkGray, for: .selected)
         logInButton.setTitleColor(.darkGray, for: .highlighted)
         logInButton.setTitle("Log In", for: .normal)
-        logInButton.addTarget(ProfileViewController(), action: #selector(logInButtonPressed), for: .touchUpInside)
+        logInButton.addTarget(self, action: #selector(logInButtonPressed), for: .touchUpInside)
         logInButton.translatesAutoresizingMaskIntoConstraints = false
         return logInButton
     }()
@@ -104,8 +104,14 @@ class LogInViewController: UIViewController {
         }
     
     @objc private func logInButtonPressed() {
-        let newController = ProfileViewController()
-        self.navigationController?.pushViewController(newController, animated: true)
+        guard let userName = userNameTextField.text else { return }
+    #if DEBUG
+        let userService = TestUserService()
+    #else
+        let userService = CurrentUserService()
+    #endif
+        let profileViewController = ProfileViewController(userService: userService, userName: userName ?? " ")
+        self.navigationController?.pushViewController(profileViewController, animated: true)
     }
     
     // MARK: Keyboard notifications
