@@ -1,15 +1,14 @@
 //
-//  StorageServiceTests.swift
-//  StorageServiceTests
+//  NavigationTests.swift
+//  NavigationTests
 //
-//  Created by Misha on 04.06.2021.
-//  Copyright © 2021 Artem Novichkov. All rights reserved.
+//  Created by Misha on 23.08.2021.
 //
 
 import XCTest
-//@testable import StorageService
+@testable import Navigation
 
-class StorageServiceTests: XCTestCase {
+class NavigationTests: XCTestCase {
 
     override func setUpWithError() throws {
         // Put setup code here. This method is called before the invocation of each test method in the class.
