@@ -30,6 +30,8 @@ class LogInViewController: UIViewController {
     //Фабрика: Внедрите зависимость контроллера от LoginInspector, создав инспектора с помощью фабричного метода.
     //В контроллере у нас есть зависимость от фабрики. Она жёсткая, так как мы внедряем её через инициализатор
     
+    private var factory: LoginInspetor?
+    
 //    var factory: MyLoginFactory
 //
 //    init(factory: MyLoginFactory) {

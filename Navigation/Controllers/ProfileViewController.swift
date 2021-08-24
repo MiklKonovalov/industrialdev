@@ -332,10 +332,9 @@ extension UIColor {
     //создаём ячейку
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: collectionId, for: indexPath)
-        if indexPath.section == 0 {
+        if indexPath.section == 0 { 
             let collection = Flow.photos.imageArray[indexPath.row]
             (cell as! PhotosTableViewCell).images = collection
-            //cell.accessoryType = .disclosureIndicator
             return cell
         }
         let cellTwo = tableView.dequeueReusableCell(withIdentifier: reuseId, for: indexPath)
