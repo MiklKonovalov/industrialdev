@@ -83,7 +83,6 @@ struct RugbyFlow {
             RugbyPhotos(rugbyImage: UIImage(named: "18")!),
             RugbyPhotos(rugbyImage: UIImage(named: "19")!),
             RugbyPhotos(rugbyImage: UIImage(named: "20")!),
-    
     ]
     )
 }
@@ -101,8 +100,6 @@ class User {
     }
     
 }
-
-//var userOne = User(name: "Mike", avatar: UIImage(named: "эко-мороженое 1") ?? UIImage(), status: "work")
 
 //Добавить протокол UserService с функцией, которая принимает имя пользователя и возвращает объект класса User.
 protocol UserService {
@@ -144,7 +141,6 @@ class TestUserService: UserService {
     }
     
 }
-
 
 //Создаем сервис для проверки логина и пароля Checker или любым другим названием, у сервиса (это Singleton) будет 1 интерфейсный метод для проверки логина и пароля
 class Checker {
