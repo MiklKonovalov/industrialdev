@@ -26,6 +26,8 @@ protocol LoginFactory {
 
 class LogInViewController: UIViewController {
     
+    let brutForce = BrutForce()
+    
     //1.2 Объявляем делегата для использования. В контроллере мы создаем instance протокола и называем его делегат
     var delegate: LogInViewControllerDelegate?
     
@@ -106,6 +108,18 @@ class LogInViewController: UIViewController {
         return button
     }()
     
+    private lazy var pickUpPass: CustomButton = {
+        let button = CustomButton(title: "Pick up", titleColor: .red ) {
+            //self.generatePassword(passwordLength: 10)
+        }
+        button.layer.cornerRadius = 10
+        button.clipsToBounds = true
+        button.setBackgroundImage(#imageLiteral(resourceName: "blue_pixel"), for: .normal)
+        button.addTarget(self, action: #selector(generatePassword), for: .touchUpInside)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
+    
     private var separator: UIView = {
         let separator = UIView()
         separator.layer.backgroundColor = UIColor.lightGray.cgColor
@@ -129,6 +143,24 @@ class LogInViewController: UIViewController {
 //        super.init(coder: coder)
 //    }
     
+    func createSpinnerView() {
+        let child = SpinnerViewController()
+
+        // add the spinner view controller
+        addChild(child)
+        child.view.frame = view.frame
+        view.addSubview(child.view)
+        child.didMove(toParent: self)
+
+        // wait two seconds to simulate some work happening
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+            // then remove the spinner view controller
+            child.willMove(toParent: nil)
+            child.view.removeFromSuperview()
+            child.removeFromParent()
+        }
+    }
+    
     @objc private func logInButtonPressed() {
         
         //guard let userName = userNameTextField.text, let _ = passwordTextField.text else { return }
@@ -141,12 +173,55 @@ class LogInViewController: UIViewController {
         self.navigationController?.pushViewController(profileViewController, animated: true)
     }
     
-    // MARK: Keyboard notifications
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
+    @objc private func generatePassword(passwordLength: Int) -> String {
         
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+        //Создаём очередь на побочном потоке
+        let queue = DispatchQueue(label: "my_queue",
+                                  attributes: .concurrent)
+        
+        //let queue2 = DispatchQueue(label: "my_queue2",
+        //                           qos: .userInteractive,
+        //                           attributes: .concurrent)
+        
+        let taskGroup1 = DispatchGroup()
+        let taskGroup2 = DispatchGroup()
+        
+        taskGroup1.enter()
+        //First create an array with your password allowed characters
+        let passwordCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+        //then choose the password lenght
+        let len = 10
+        //define and empty string password
+        var password = ""
+
+        //create a loop to gennerate your random characters
+        for _ in 0 ..< len {
+            password.append(passwordCharacters.randomElement()!)
+        }
+        print("Генерация пароля завершена")
+        taskGroup1.leave()
+        
+        taskGroup2.enter()
+            queue.async {
+                print("Начат подбор пароля")
+                self.brutForce.bruteForce(passwordToUnlock: password)
+            }
+        taskGroup2.leave()
+        
+        taskGroup1.enter()
+            self.createSpinnerView()
+            print("работает activityIndicator")
+        taskGroup1.leave()
+        
+        taskGroup2.wait()
+        
+        self.passwordTextField.text = password
+        
+        taskGroup1.notify(queue: DispatchQueue.main) {
+            print("Подбор закончен")
+        }
+        
+        return password
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -170,12 +245,38 @@ class LogInViewController: UIViewController {
         scrollView.verticalScrollIndicatorInsets = .zero
     }
     
+    // MARK: Keyboard notifications
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+    
     //MARK: Add subviews
     override func viewDidLoad() {
         super.viewDidLoad()
         
         self.navigationController?.isNavigationBarHidden = true
         view.backgroundColor = .white
+        
+        //.concurrent - делает возможным запустить потоки параллельно
+//        let queue = DispatchQueue(label: "my_queue", qos: .default, attributes: .concurrent)
+//        let queue2 = DispatchQueue(label: "my_queue", qos: .userInteractive, attributes: .concurrent)
+//
+//        queue.async {
+//            print("queue.async")
+//            self.brutForce.bruteForce(passwordToUnlock: self.pass)
+//        }
+//
+//        queue2.async {
+//            print("queue2.async")
+//            self.passwordTextField.text = self.pass
+//        }
+        
+//        DispatchQueue.main.async {
+//            print("123")
+//        }
         
         self.view.addSubview(scrollView)
         scrollView.addSubview(myView)
@@ -191,8 +292,9 @@ class LogInViewController: UIViewController {
         myView.addSubview(passwordTextField)
         myView.addSubview(separator)
         myView.addSubview(logInButton)
+        myView.addSubview(pickUpPass)
         
-        passwordTextField.isSecureTextEntry = true
+        passwordTextField.isSecureTextEntry = false
         
     //MARK: Create constraints
        
@@ -250,8 +352,14 @@ class LogInViewController: UIViewController {
             logInButton.leadingAnchor.constraint(equalTo: myView.leadingAnchor, constant: 16),
             logInButton.trailingAnchor.constraint(equalTo: myView.trailingAnchor, constant: -16),
             logInButton.topAnchor.constraint(equalTo: passwordTextField.bottomAnchor, constant: 16),
-            logInButton.bottomAnchor.constraint(equalTo: myView.bottomAnchor),
-            logInButton.heightAnchor.constraint(equalToConstant: 50.0)
+            //logInButton.bottomAnchor.constraint(equalTo: myView.bottomAnchor),
+            logInButton.heightAnchor.constraint(equalToConstant: 50.0),
+            
+            pickUpPass.topAnchor.constraint(equalTo: logInButton.bottomAnchor, constant: 16),
+            pickUpPass.leadingAnchor.constraint(equalTo: myView.leadingAnchor, constant: 16),
+            pickUpPass.trailingAnchor.constraint(equalTo: myView.trailingAnchor, constant: -16),
+            pickUpPass.bottomAnchor.constraint(equalTo: myView.bottomAnchor),
+            pickUpPass.heightAnchor.constraint(equalToConstant: 50.0)
             
         ]
 
@@ -259,18 +367,19 @@ class LogInViewController: UIViewController {
     }
     
 }
+    
+
 
 //LoginInspector - это реализация делегата.
 //4. Создаем произвольный класс/структуру LoginInspector (или придумайте свое название), который подписывается на протокол LoginViewControllerDelegate, реализуем в нем протокольный метод.
 //5. LoginInspector проверяет точность введенного пароля с помощью синглтона Checker.
 class LoginInspetor: LogInViewControllerDelegate {
-    
+
     func checkValue(login: String, password: String) -> User? {
-        
+
         let user = Checker.shared.user
-        
+
         _ = Checker.shared.checkLoginAndPassword(param: login, param: password)
-            
             if login == "1" && password == "2" {
                 return user
             } else {
@@ -278,7 +387,7 @@ class LoginInspetor: LogInViewControllerDelegate {
             }
             return user
     }
-    
+
 }
 
 //Фабрика п2: Вынесите генерацию LoginInspector из SceneDelegate (или AppDelegate) в фабрику: создайте объект MyLoginFactory (название на ваше усмотрение), подпишите на протокол.

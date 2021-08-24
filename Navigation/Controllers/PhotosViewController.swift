@@ -68,11 +68,14 @@ class PhotosViewController: UIViewController, ImageLibrarySubscriber {
         imagePublisherFacade?.subscribe(self)
         
         imagePublisherFacade?.addImagesWithTimer(time: 1, repeat: 10, userImages: RugbyFlow.rugbySections.imageArrayOfRugbyPhotos as? [UIImage])
- 
+
 // *СПОСОБ 1*
         //Для выполнения загрузки данных, что может занять значительное время и заблокировать Main queue, мы АСИНХРОННО переключаем выполнение этого ресурса-емкого задания на глобальную параллельную очередь с качеством обслуживания qos, равным .utility
+       
+        //Очередь, которая будет работать в фоне
         let queue = DispatchQueue.global(qos: .utility)
 
+        // DispatchQueue.main - это очередь с самым высоким приоритетом. Добавляем в очердь queue ещё одну задачу
         queue.async {
             DispatchQueue.main.async {
                 self.imageProcessor?.processImagesOnThread(
