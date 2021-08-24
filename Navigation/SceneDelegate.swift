@@ -11,27 +11,33 @@ import UIKit
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
-    
-    //Внедрите зависимость контроллера от LoginInspector, то есть присвойте значение свойству делегата в SceneDelegate или AppDelegate
-
     let myLoginFactory = MyLoginFactory()
+    let mainCoordinator = MainCoordinator()
     
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         
         guard let windowScene = (scene as? UIWindowScene) else { return }
-        //Создаём UIWindow используя
+
         let window = UIWindow(windowScene: windowScene)
-        //Создаём программно новую иерархию вью
-        let loginViewController = LogInViewController()
         
-        let navigationController = UINavigationController(rootViewController: loginViewController)
+        window.rootViewController = mainCoordinator.tabBarController
+         
+//        guard let navigationController = tabBarController.viewControllers?.first as? UINavigationController, let viewController = navigationController.viewControllers.first as? ProfileViewController else { fatalError() }
+//        viewController.viewModel = viewModel
+        
+        //Создаём программно новую иерархию вью, инициализируем feedViewController с фабрикой
+//        let feedViewController = FeedViewController(viewModel: viewModel, factory: factory) { _ in
+//            
+//        }
+        
         //Устанавливаем главный вью контроллер окну с нашим вью контроллером
-        window.rootViewController = navigationController
+        //window.rootViewController = feedViewController
+        window.makeKeyAndVisible()
         
         self.window = window
-        window.makeKeyAndVisible()
-        //3. Инициализируйте в SceneDelegate / AppDelegate только фабрику
-        loginViewController.delegate = myLoginFactory.checkLoginByFactory()
+        
+        //let fvc = factory.makeSettings()
+        //loginViewController.delegate = myLoginFactory.checkLoginByFactory()
 
     }
 

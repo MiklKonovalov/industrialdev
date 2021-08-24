@@ -10,18 +10,20 @@ import UIKit
 
 class ProfileViewController: UIViewController {
     
-    //Зависимость: В классе ProfileViewController добавить свойство с типом UserService и инициализатор, который принимает объект UserService и имя пользователя, введённое на экране LogInViewController. При инициализации объекта ProfileViewController передать объект CurrentUserService.
-    //var userService: UserService
+    //В классе ProfileViewController добавить свойство с типом UserService и инициализатор, который принимает объект UserService и имя пользователя, введённое на экране LogInViewController. При инициализации объекта ProfileViewController передать объект CurrentUserService.
+//    var userService: UserService
+//
+//    var userName: String
     
-    //var userName: String
-      
     var user: User
+    
+    let viewModel = CheckModel()
     
     init(user: User) {
         self.user = user
         super.init(nibName: nil, bundle: nil)
     }
-    
+        
     //Создаём инициализатор, который будет принимать userService и userName
     //init(userService: UserService, userName: String) {
         //self.userService = userService

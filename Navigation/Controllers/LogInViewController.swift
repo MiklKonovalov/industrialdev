@@ -22,31 +22,12 @@ protocol LoginFactory {
     func checkLoginByFactory() -> LoginInspetor
 }
 
+// Слой Presentation: M-V-C (V + C)
+
 class LogInViewController: UIViewController {
     
     //1.2 Объявляем делегата для использования. В контроллере мы создаем instance протокола и называем его делегат
     var delegate: LogInViewControllerDelegate?
-    
-    //Фабрика: Внедрите зависимость контроллера от LoginInspector, создав инспектора с помощью фабричного метода.
-    //В контроллере у нас есть зависимость от фабрики. Она жёсткая, так как мы внедряем её через инициализатор
-    
-    private var factory: LoginInspetor?
-    
-//    var factory: MyLoginFactory
-//
-//    init(factory: MyLoginFactory) {
-//        self.factory = factory
-//
-//        factory.checkLoginByFactory()
-        
-//        super.init(nibName: nil, bundle: nil)
-//    }
-    
-//    required init?(coder: NSCoder) {
-//        fatalError("init(coder:) has not been implemented")
-//    }
-    
-
     
     //MARK: Create subviews
     let substrate: UIView = {
@@ -112,18 +93,17 @@ class LogInViewController: UIViewController {
         return passwordTextField
     }()
     
-    private var logInButton: UIButton = {
-        let logInButton = UIButton(type: .system)
-        logInButton.layer.cornerRadius = 10
-        logInButton.clipsToBounds = true
-        logInButton.setBackgroundImage(#imageLiteral(resourceName: "blue_pixel"), for: .normal)
-        logInButton.setTitleColor(.white, for: .normal)
-        logInButton.setTitleColor(.darkGray, for: .selected)
-        logInButton.setTitleColor(.darkGray, for: .highlighted)
-        logInButton.setTitle("Log In", for: .normal)
-        logInButton.addTarget(self, action: #selector(logInButtonPressed), for: .touchUpInside)
-        logInButton.translatesAutoresizingMaskIntoConstraints = false
-        return logInButton
+    private lazy var logInButton: CustomButton = {
+        let button = CustomButton(title: "Login", titleColor: .yellow ) {
+            print("Custom Button Closure")
+            self.logInButtonPressed()
+        }
+        button.layer.cornerRadius = 10
+        button.clipsToBounds = true
+        button.setBackgroundImage(#imageLiteral(resourceName: "blue_pixel"), for: .normal)
+        button.addTarget(self, action: #selector(logInButtonPressed), for: .touchUpInside)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
     }()
     
     private var separator: UIView = {
@@ -133,17 +113,31 @@ class LogInViewController: UIViewController {
         return separator
     }()
     
+    private var model: SettingsViewOutput?
+    
+    init(model: SettingsViewOutput) {
+        self.model = model
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+//Используется, если есть storyboard
+//    required init?(coder: NSCoder) {
+//        super.init(coder: coder)
+//    }
+    
     @objc private func logInButtonPressed() {
         
-        
-        //guard let userName = userNameTextField.text, let  passValue = passwordTextField.text else { return }
+        //guard let userName = userNameTextField.text, let _ = passwordTextField.text else { return }
     #if DEBUG
     let user = delegate?.checkValue(login: userNameTextField.text ?? "", password: passwordTextField.text ?? "") ?? User(name: "Нет данных", avatar: UIImage(named: "gratis") ?? UIImage(), status: "Нет данных")
     #else
         let userService = CurrentUserService()
     #endif
-        let profileViewController = ProfileViewController(user: user)
-        //var profileViewController = ProfileViewController(userService: userService, userName: userName)
+        var profileViewController = ProfileViewController(user: user)
         self.navigationController?.pushViewController(profileViewController, animated: true)
     }
     
@@ -282,8 +276,7 @@ class LoginInspetor: LogInViewControllerDelegate {
             } else {
                 print("Login not correct")
             }
-        
-        return user
+            return user
     }
     
 }
