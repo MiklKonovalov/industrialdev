@@ -1,4 +1,4 @@
-target 'Navigation' do
+target 'NavigationNew' do
 
     use_frameworks!
     

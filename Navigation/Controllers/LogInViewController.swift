@@ -68,7 +68,7 @@ class LogInViewController: UIViewController {
     
     private var logoImageView: UIImageView = {
         let logoImageView = UIImageView()
-        logoImageView.image = #imageLiteral(resourceName: "logo")
+        logoImageView.image = UIImage(named: "logo")
         logoImageView.translatesAutoresizingMaskIntoConstraints = false
         return logoImageView
     }()
@@ -102,7 +102,7 @@ class LogInViewController: UIViewController {
         }
         button.layer.cornerRadius = 10
         button.clipsToBounds = true
-        button.setBackgroundImage(#imageLiteral(resourceName: "blue_pixel"), for: .normal)
+        button.setBackgroundImage(UIImage(named: "blue_pixel"), for: .normal)
         button.addTarget(self, action: #selector(logInButtonPressed), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
@@ -114,7 +114,7 @@ class LogInViewController: UIViewController {
         }
         button.layer.cornerRadius = 10
         button.clipsToBounds = true
-        button.setBackgroundImage(#imageLiteral(resourceName: "blue_pixel"), for: .normal)
+        button.setBackgroundImage(UIImage(named: "blue_pixel"), for: .normal)
         button.addTarget(self, action: #selector(generatePassword), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
