@@ -28,7 +28,69 @@ protocol SettingsViewOutput {
 //-Обрабатывает, отдает исходящие данные модуля
 
 //Модель проверяет слово и отправляет ответ: верно/не верно
+
 class CheckModel: SettingsViewOutput {
+    
+    struct NetworkService {
+        
+        private static let sharedSession = URLSession.shared
+    
+        static func dataTaskRequest(
+            urlRequest: URLRequest,
+            completion: @escaping (Data?) -> Void
+        ) {
+            let task = sharedSession.dataTask(
+                with: urlRequest
+            ) { data, response, error in
+
+                guard error == nil else {
+                    print("ERROR: \(error.debugDescription)")
+                    return
+                }
+
+                if let httpResponse = response as? HTTPURLResponse, let data = data {
+                    print("STATUS CODE: \(httpResponse.statusCode)")
+                    print("HEADERS: \(httpResponse.allHeaderFields)")
+                    print("DATA: \(data)")
+                }
+                completion(data)
+            }
+            task.resume()
+        }
+    }
+    
+    func receiveDate() {
+        
+        enum AppConfiguration {
+            
+            case configureOne(URL)
+                
+            case configureTwo(URL)
+                
+            case configureThree(URL)
+                
+        }
+    
+        //Формируем url
+        var url = AppConfiguration.configureOne(URL(string: "https://swapi.dev/api/people/8")!)
+        
+        url = .configureThree(URL(string: "https://swapi.dev/api/starships/3")!)
+        
+        switch url {
+        case .configureOne(let url):
+            let request = URLRequest(url: url)
+        case .configureTwo(let url):
+            let request = URLRequest(url: url)
+        case .configureThree(let url):
+            let request = URLRequest(url: url)
+        
+        NetworkService.dataTaskRequest(urlRequest: request) { data in
+            if let dataNew = data {
+                print(String(data: dataNew, encoding: .utf8)!)
+            }
+        }
+    }
+    }
     
     //интерфейс для отправки данных в координатор
     var onShowNext: (() -> Void)?
@@ -46,3 +108,5 @@ class CheckModel: SettingsViewOutput {
     }
 
 }
+
+
