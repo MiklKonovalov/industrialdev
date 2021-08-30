@@ -8,12 +8,9 @@
 import Foundation
 import UIKit
 
-class Constants {
-    
-    public enum Constants: String {
+public enum Constants {
         
-        static let localURL = "http://localhost:5050"
+    static let localURL = "http://localhost:5050/Server.json"
 
-    }
-    
 }
+    

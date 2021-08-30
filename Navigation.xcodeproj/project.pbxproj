@@ -12,6 +12,10 @@
 		060782C6250CEB0A00A87020 /* InfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 060782C5250CEB0A00A87020 /* InfoViewController.swift */; };
 		060782C8250CEE5D00A87020 /* PostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 060782C7250CEE5D00A87020 /* PostViewController.swift */; };
 		2EEF5C7836EA1A334EC0C32D /* Pods_NavigationNew.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 14DBFFAF4EFC24A3DA236EB0 /* Pods_NavigationNew.framework */; };
+		C62F2E9E26DCEBA40029897F /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = C62F2E9D26DCEBA40029897F /* Constants.swift */; };
+		C634AF3726DCF37A0001B516 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = C62F2E9D26DCEBA40029897F /* Constants.swift */; };
+		C634AF3926DD059F0001B516 /* Planet.swift in Sources */ = {isa = PBXBuildFile; fileRef = C634AF3826DD059F0001B516 /* Planet.swift */; };
+		C634AF3A26DD18ED0001B516 /* Planet.swift in Sources */ = {isa = PBXBuildFile; fileRef = C634AF3826DD059F0001B516 /* Planet.swift */; };
 		C63AD35126BAA00500C55030 /* BrutForce.swift in Sources */ = {isa = PBXBuildFile; fileRef = C63AD35026BAA00500C55030 /* BrutForce.swift */; };
 		C667BB2026D64E9200FEA1AC /* iOSIntPackage in Frameworks */ = {isa = PBXBuildFile; productRef = C617ADCB26D42FD2005DB681 /* iOSIntPackage */; };
 		C667BB4626D6501F00FEA1AC /* Header.xib in Resources */ = {isa = PBXBuildFile; fileRef = C667BB2926D6501F00FEA1AC /* Header.xib */; };
@@ -146,6 +150,8 @@
 		C610D3F6269F1B110035B24F /* CheckViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckViewModel.swift; sourceTree = "<group>"; };
 		C610D3F826A093250035B24F /* TextInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextInput.swift; sourceTree = "<group>"; };
 		C6295C56261CEBA900CA7154 /* LogInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInViewController.swift; sourceTree = "<group>"; };
+		C62F2E9D26DCEBA40029897F /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		C634AF3826DD059F0001B516 /* Planet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Planet.swift; sourceTree = "<group>"; };
 		C63AD35026BAA00500C55030 /* BrutForce.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrutForce.swift; sourceTree = "<group>"; };
 		C63AD35226BBF71700C55030 /* SpinnerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpinnerViewController.swift; sourceTree = "<group>"; };
 		C649D01826274B080024113E /* PhotosTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosTableViewCell.swift; sourceTree = "<group>"; };
@@ -301,6 +307,7 @@
 				060782C5250CEB0A00A87020 /* InfoViewController.swift */,
 				060782C7250CEE5D00A87020 /* PostViewController.swift */,
 				C63AD35026BAA00500C55030 /* BrutForce.swift */,
+				C62F2E9D26DCEBA40029897F /* Constants.swift */,
 			);
 			path = Navigation;
 			sourceTree = "<group>";
@@ -422,6 +429,7 @@
 			isa = PBXGroup;
 			children = (
 				C667BB3F26D6501F00FEA1AC /* ControllerFactory.swift */,
+				C634AF3826DD059F0001B516 /* Planet.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -823,6 +831,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C634AF3A26DD18ED0001B516 /* Planet.swift in Sources */,
+				C634AF3726DCF37A0001B516 /* Constants.swift in Sources */,
 				C6A0FA1926D6840E004FE33A /* SceneDelegate.swift in Sources */,
 				C6A0FA1826D683A0004FE33A /* BrutForce.swift in Sources */,
 				C6A0FA1726D68398004FE33A /* PostViewController.swift in Sources */,
@@ -916,6 +926,7 @@
 				C667BB6526D6562400FEA1AC /* PhotoCollectionViewCell.swift in Sources */,
 				C667BB6426D6561D00FEA1AC /* ProfileTableHederView.swift in Sources */,
 				C667BB6326D6561500FEA1AC /* PhotosTableViewCell.swift in Sources */,
+				C634AF3926DD059F0001B516 /* Planet.swift in Sources */,
 				C667BB6226D6560D00FEA1AC /* FeedCoordinator.swift in Sources */,
 				C667BB6126D6560400FEA1AC /* Header.swift in Sources */,
 				C667BB6026D655FF00FEA1AC /* NextViewModel.swift in Sources */,
@@ -925,6 +936,7 @@
 				C667BB5C26D655E200FEA1AC /* MainCoordinator.swift in Sources */,
 				C667BB5B26D655DC00FEA1AC /* Storage.swift in Sources */,
 				C667BB5A26D655D500FEA1AC /* FlowTableViewCell.swift in Sources */,
+				C62F2E9E26DCEBA40029897F /* Constants.swift in Sources */,
 				C667BB5926D655CE00FEA1AC /* CheckViewModel.swift in Sources */,
 				060782B2250CE27700A87020 /* AppDelegate.swift in Sources */,
 				060782C6250CEB0A00A87020 /* InfoViewController.swift in Sources */,

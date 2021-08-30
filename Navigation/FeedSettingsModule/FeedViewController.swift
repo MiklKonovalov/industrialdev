@@ -11,7 +11,7 @@ import UIKit
 //Контроллер отвечает за то, как будут отображаться данные из модели.
 //Контроллер не зависит от модели (не обращается к ней)
 final class FeedViewController: UIViewController {
-     
+    
     //так как у нас есть паттерн Фабрика, то мы прописываем зависимость от неё
     public var factory: ControllerFactory?
     
@@ -72,6 +72,24 @@ final class FeedViewController: UIViewController {
         return label
     }()
     
+    private lazy var jsonNameLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.systemFont(ofSize: 25, weight: .regular)
+        label.textColor = .blue
+        label.textAlignment = .center
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    private lazy var jsonOrbitalLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.systemFont(ofSize: 25, weight: .regular)
+        label.textColor = .blue
+        label.textAlignment = .center
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
     @objc private func buttonPressed() {
         guard let text = textField.text, text.count > 0 else { return }
         
@@ -95,13 +113,23 @@ final class FeedViewController: UIViewController {
             self.label.alpha = 0
             }
         }
-        
+        viewModel.getRequest { string in
+            DispatchQueue.main.async {
+                self.jsonNameLabel.text = "Title: " + string
+            }
+        }
+        viewModel.receiveData { string in
+            DispatchQueue.main.async {
+                self.jsonOrbitalLabel.text = "Orbital Period: " + string
+            }
+        }
     }
 
     private func showNextModule() {
         //Мы попросим viewModel передать touch event о том, что нужно показать другой модуль
         print("Должен показаться другой вью контроллер")
         viewModel.onTapShowNextModel()
+        
     }
     
     override func viewDidLoad() {
@@ -110,6 +138,8 @@ final class FeedViewController: UIViewController {
         self.view.addSubview(button)
         self.view.addSubview(label)
         self.view.addSubview(showModuleButton)
+        self.view.addSubview(jsonOrbitalLabel)
+        self.view.addSubview(jsonNameLabel)
         //устанавливаем непрозрачность для label 100%
         label.alpha = 0
         
@@ -133,6 +163,16 @@ final class FeedViewController: UIViewController {
             showModuleButton.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
             showModuleButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
             showModuleButton.heightAnchor.constraint(equalToConstant: 50),
+            
+            jsonOrbitalLabel.topAnchor.constraint(equalTo: showModuleButton.bottomAnchor, constant: 20),
+            jsonOrbitalLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
+            jsonOrbitalLabel.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
+            jsonOrbitalLabel.heightAnchor.constraint(equalToConstant: 50),
+            
+            jsonNameLabel.topAnchor.constraint(equalTo: jsonOrbitalLabel.bottomAnchor, constant: 20),
+            jsonNameLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
+            jsonNameLabel.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
+            jsonNameLabel.heightAnchor.constraint(equalToConstant: 50),
             
         ]
         NSLayoutConstraint.activate(constraints)
