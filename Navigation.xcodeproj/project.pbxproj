@@ -12,6 +12,8 @@
 		060782C6250CEB0A00A87020 /* InfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 060782C5250CEB0A00A87020 /* InfoViewController.swift */; };
 		060782C8250CEE5D00A87020 /* PostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 060782C7250CEE5D00A87020 /* PostViewController.swift */; };
 		2EEF5C7836EA1A334EC0C32D /* Pods_NavigationNew.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 14DBFFAF4EFC24A3DA236EB0 /* Pods_NavigationNew.framework */; };
+		C638DC7A26DFA21C00AB6F61 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C638DC7926DFA21C00AB6F61 /* GoogleService-Info.plist */; };
+		C638DC7B26DFA21C00AB6F61 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C638DC7926DFA21C00AB6F61 /* GoogleService-Info.plist */; };
 		C63AD35126BAA00500C55030 /* BrutForce.swift in Sources */ = {isa = PBXBuildFile; fileRef = C63AD35026BAA00500C55030 /* BrutForce.swift */; };
 		C667BB2026D64E9200FEA1AC /* iOSIntPackage in Frameworks */ = {isa = PBXBuildFile; productRef = C617ADCB26D42FD2005DB681 /* iOSIntPackage */; };
 		C667BB4626D6501F00FEA1AC /* Header.xib in Resources */ = {isa = PBXBuildFile; fileRef = C667BB2926D6501F00FEA1AC /* Header.xib */; };
@@ -36,6 +38,9 @@
 		C667BB6B26D6570500FEA1AC /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C667BB3926D6501F00FEA1AC /* ProfileViewController.swift */; };
 		C667BB6C26D6571B00FEA1AC /* PhotosViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C667BB3726D6501F00FEA1AC /* PhotosViewController.swift */; };
 		C667BB6D26D6573200FEA1AC /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C667BB3A26D6501F00FEA1AC /* TabBarController.swift */; };
+		C67E0F6C26DFD09E0066064A /* FirebaseAuth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C67E0F6B26DFD09E0066064A /* FirebaseAuth.framework */; };
+		C67E0F6E26DFE7690066064A /* RegisterUserController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C67E0F6D26DFE7690066064A /* RegisterUserController.swift */; };
+		C67E0F6F26DFE8260066064A /* RegisterUserController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C67E0F6D26DFE7690066064A /* RegisterUserController.swift */; };
 		C6A0F9B026D68088004FE33A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C6A0F9AE26D68088004FE33A /* Main.storyboard */; };
 		C6A0F9B526D6808F004FE33A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C6A0F9B326D6808F004FE33A /* LaunchScreen.storyboard */; };
 		C6A0F9C026D68090004FE33A /* NavigationNewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6A0F9BF26D68090004FE33A /* NavigationNewTests.swift */; };
@@ -146,6 +151,7 @@
 		C610D3F6269F1B110035B24F /* CheckViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckViewModel.swift; sourceTree = "<group>"; };
 		C610D3F826A093250035B24F /* TextInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextInput.swift; sourceTree = "<group>"; };
 		C6295C56261CEBA900CA7154 /* LogInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInViewController.swift; sourceTree = "<group>"; };
+		C638DC7926DFA21C00AB6F61 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		C63AD35026BAA00500C55030 /* BrutForce.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrutForce.swift; sourceTree = "<group>"; };
 		C63AD35226BBF71700C55030 /* SpinnerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpinnerViewController.swift; sourceTree = "<group>"; };
 		C649D01826274B080024113E /* PhotosTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosTableViewCell.swift; sourceTree = "<group>"; };
@@ -181,6 +187,8 @@
 		C667BB3D26D6501F00FEA1AC /* FeedViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedViewController.swift; sourceTree = "<group>"; };
 		C667BB3F26D6501F00FEA1AC /* ControllerFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ControllerFactory.swift; sourceTree = "<group>"; };
 		C667BB4126D6501F00FEA1AC /* Storage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Storage.swift; sourceTree = "<group>"; };
+		C67E0F6B26DFD09E0066064A /* FirebaseAuth.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = FirebaseAuth.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C67E0F6D26DFE7690066064A /* RegisterUserController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterUserController.swift; sourceTree = "<group>"; };
 		C68D1DB4262245710047C976 /* Storage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Storage.swift; sourceTree = "<group>"; };
 		C68D1DB626224C5E0047C976 /* FlowTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlowTableViewCell.swift; sourceTree = "<group>"; };
 		C6A0F9A626D68088004FE33A /* NavigationNew.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NavigationNew.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -210,6 +218,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C67E0F6C26DFD09E0066064A /* FirebaseAuth.framework in Frameworks */,
 				C6A0FA1F26D6853A004FE33A /* SnapKit.framework in Frameworks */,
 				C6A0FA1B26D68529004FE33A /* iOSIntPackage in Frameworks */,
 				2EEF5C7836EA1A334EC0C32D /* Pods_NavigationNew.framework in Frameworks */,
@@ -275,6 +284,7 @@
 		29502A268D146D314787AC8F /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				C67E0F6B26DFD09E0066064A /* FirebaseAuth.framework */,
 				C6A0FA1E26D6853A004FE33A /* SnapKit.framework */,
 				614E6886B992B8415D02A20E /* Pods_Navigation.framework */,
 				14DBFFAF4EFC24A3DA236EB0 /* Pods_NavigationNew.framework */,
@@ -285,6 +295,7 @@
 		C617AD8526D42F44005DB681 /* Navigation */ = {
 			isa = PBXGroup;
 			children = (
+				C638DC7926DFA21C00AB6F61 /* GoogleService-Info.plist */,
 				C667BB2226D6501F00FEA1AC /* Collection */,
 				C667BB3526D6501F00FEA1AC /* Controllers */,
 				C667BB3126D6501F00FEA1AC /* Coordinators */,
@@ -405,6 +416,7 @@
 				C667BB3826D6501F00FEA1AC /* LogInViewController.swift */,
 				C667BB3926D6501F00FEA1AC /* ProfileViewController.swift */,
 				C667BB3A26D6501F00FEA1AC /* TabBarController.swift */,
+				C67E0F6D26DFE7690066064A /* RegisterUserController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -724,6 +736,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C6A0FA2426D68D06004FE33A /* Assets.xcassets in Resources */,
+				C638DC7B26DFA21C00AB6F61 /* GoogleService-Info.plist in Resources */,
 				C6A0F9B526D6808F004FE33A /* LaunchScreen.storyboard in Resources */,
 				C6A0F9B026D68088004FE33A /* Main.storyboard in Resources */,
 			);
@@ -757,6 +770,7 @@
 			files = (
 				C6A0FA2326D68C20004FE33A /* Assets.xcassets in Resources */,
 				C667BB4626D6501F00FEA1AC /* Header.xib in Resources */,
+				C638DC7A26DFA21C00AB6F61 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -823,6 +837,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C67E0F6F26DFE8260066064A /* RegisterUserController.swift in Sources */,
 				C6A0FA1926D6840E004FE33A /* SceneDelegate.swift in Sources */,
 				C6A0FA1826D683A0004FE33A /* BrutForce.swift in Sources */,
 				C6A0FA1726D68398004FE33A /* PostViewController.swift in Sources */,
@@ -923,6 +938,7 @@
 				C667BB5E26D655F100FEA1AC /* ControllerFactory.swift in Sources */,
 				C667BB5D26D655E900FEA1AC /* TextInput.swift in Sources */,
 				C667BB5C26D655E200FEA1AC /* MainCoordinator.swift in Sources */,
+				C67E0F6E26DFE7690066064A /* RegisterUserController.swift in Sources */,
 				C667BB5B26D655DC00FEA1AC /* Storage.swift in Sources */,
 				C667BB5A26D655D500FEA1AC /* FlowTableViewCell.swift in Sources */,
 				C667BB5926D655CE00FEA1AC /* CheckViewModel.swift in Sources */,
@@ -1003,12 +1019,8 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 34VCU6GX65;
 				INFOPLIST_FILE = NavigationNew/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
-				OTHER_SWIFT_FLAGS = "";
-				"OTHER_SWIFT_FLAGS[arch=*]" = "";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited)";
+				OTHER_SWIFT_FLAGS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = com.miklKonovalov.NavigationNew;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -1026,10 +1038,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 34VCU6GX65;
 				INFOPLIST_FILE = NavigationNew/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited)";
 				OTHER_SWIFT_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.miklKonovalov.NavigationNew;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1163,6 +1172,7 @@
 		C6F3BBF426D42E5D00D120D7 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
@@ -1224,6 +1234,7 @@
 		C6F3BBF526D42E5D00D120D7 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
