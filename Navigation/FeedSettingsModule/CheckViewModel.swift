@@ -74,8 +74,8 @@ class CheckModel: SettingsViewOutput {
         NetworkService.dataTaskRequest(urlRequest: request) { data in
             if let dataNew = data {
                 print(String(data: dataNew, encoding: .utf8)!)
+                completion(dataNew)
             }
-            completion(data!)
         }
         }
     }
