@@ -59,37 +59,25 @@ class CheckModel: SettingsViewOutput {
         }
     }
     
-    func receiveDate() {
-        
-        enum AppConfiguration {
-            
-            case configureOne(URL)
-                
-            case configureTwo(URL)
-                
-            case configureThree(URL)
-                
-        }
+    func receiveDate(appConfiguration: AppConfiguration, completion: @escaping (Data) -> Void) {
     
         //Формируем url
-        var url = AppConfiguration.configureOne(URL(string: "https://swapi.dev/api/people/8")!)
         
-        url = .configureThree(URL(string: "https://swapi.dev/api/starships/3")!)
-        
-        switch url {
+        switch appConfiguration {
         case .configureOne(let url):
             let request = URLRequest(url: url)
         case .configureTwo(let url):
             let request = URLRequest(url: url)
         case .configureThree(let url):
             let request = URLRequest(url: url)
-        
+            
         NetworkService.dataTaskRequest(urlRequest: request) { data in
             if let dataNew = data {
                 print(String(data: dataNew, encoding: .utf8)!)
             }
+            completion(data!)
         }
-    }
+        }
     }
     
     //интерфейс для отправки данных в координатор

@@ -98,6 +98,8 @@
 		C6A0FA1F26D6853A004FE33A /* SnapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C6A0FA1E26D6853A004FE33A /* SnapKit.framework */; };
 		C6A0FA2326D68C20004FE33A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C6A0FA2226D68C1F004FE33A /* Assets.xcassets */; };
 		C6A0FA2426D68D06004FE33A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C6A0FA2226D68C1F004FE33A /* Assets.xcassets */; };
+		C6C58F1C26E61C87009B250F /* AppConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6C58F1B26E61C87009B250F /* AppConfiguration.swift */; };
+		C6C58F1D26E61C95009B250F /* AppConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6C58F1B26E61C87009B250F /* AppConfiguration.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -202,6 +204,7 @@
 		C6A0FA1E26D6853A004FE33A /* SnapKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SnapKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C6A0FA2226D68C1F004FE33A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C6C1A7212609354C00B4FB14 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		C6C58F1B26E61C87009B250F /* AppConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppConfiguration.swift; sourceTree = "<group>"; };
 		C6F086662614CE7B004F76E7 /* Header.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Header.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -430,6 +433,7 @@
 			isa = PBXGroup;
 			children = (
 				C667BB4126D6501F00FEA1AC /* Storage.swift */,
+				C6C58F1B26E61C87009B250F /* AppConfiguration.swift */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -823,6 +827,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C6C58F1D26E61C95009B250F /* AppConfiguration.swift in Sources */,
 				C6A0FA1926D6840E004FE33A /* SceneDelegate.swift in Sources */,
 				C6A0FA1826D683A0004FE33A /* BrutForce.swift in Sources */,
 				C6A0FA1726D68398004FE33A /* PostViewController.swift in Sources */,
@@ -914,6 +919,7 @@
 				C667BB6726D6562F00FEA1AC /* Coordinator.swift in Sources */,
 				C667BB6626D6562A00FEA1AC /* NextController.swift in Sources */,
 				C667BB6526D6562400FEA1AC /* PhotoCollectionViewCell.swift in Sources */,
+				C6C58F1C26E61C87009B250F /* AppConfiguration.swift in Sources */,
 				C667BB6426D6561D00FEA1AC /* ProfileTableHederView.swift in Sources */,
 				C667BB6326D6561500FEA1AC /* PhotosTableViewCell.swift in Sources */,
 				C667BB6226D6560D00FEA1AC /* FeedCoordinator.swift in Sources */,

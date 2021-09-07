@@ -12,6 +12,8 @@ import UIKit
 //Контроллер не зависит от модели (не обращается к ней)
 final class FeedViewController: UIViewController {
     
+    var appConfiguration: AppConfiguration?
+    
     //так как у нас есть паттерн Фабрика, то мы прописываем зависимость от неё
     public var factory: ControllerFactory?
     
@@ -95,7 +97,7 @@ final class FeedViewController: UIViewController {
             self.label.alpha = 0
             }
         }
-        viewModel.receiveDate()
+        
     }
     
     private func showNextModule() {

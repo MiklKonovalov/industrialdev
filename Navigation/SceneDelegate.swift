@@ -13,12 +13,20 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     var window: UIWindow?
     let myLoginFactory = MyLoginFactory()
     let mainCoordinator = MainCoordinator()
+    let viewModel = CheckModel()
+    let appConfiguration: AppConfiguration = AppConfiguration.configureOne(URL(string: "https://swapi.dev/api/people/8")!)
+    
     
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         
         guard let windowScene = (scene as? UIWindowScene) else { return }
 
         let window = UIWindow(windowScene: windowScene)
+
+        viewModel.receiveDate(appConfiguration: appConfiguration) { data in
+            
+            print(data)
+        }
         
         window.rootViewController = mainCoordinator.tabBarController
          
