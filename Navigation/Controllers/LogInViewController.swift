@@ -7,18 +7,18 @@
 //
 
 import UIKit
+import Firebase
 
 //Протокол делегирования проверки логинаи пароля. Он имеет несколько параметров, данных для передачи обратно вызвавшему контроллеру. В данном случае я передаю обратно контроллеру логин и пароль.
 protocol LogInViewControllerDelegate: AnyObject {
     //1.1 В методе делегата передаём экземпляр делегирующего объекта, чтобы вернуть результат работы
-    func checkValue(login: String, password: String) -> User?
-
+    func checkValue(login: String, password: String, completionHandler: @escaping(Result<User, Error>) -> Void)
 }
 
 //Фабрика 1: Создайте protocol LoginFactory с 1 методом без параметров, который возвращает LoginInspector.
 //Комментарий: Объявляем интерфейс, который будет играть роль «абстрактной фабрики»:
 protocol LoginFactory {
-    //Создаём фабричный метод (Фабричный метод - это метод, который что-то возвращает), который возвращает LoginInspector. Мы знаем, что фабрика должна проверять логин и пароль, по-этому, когда мы пишем общий интерфейс для фабрики, мы возвращаем LjginInspector. Интерфейс абстрактной фабрики содержит один метода: для проверки логина и пароля. Метод возвращает экземпляр общего базового класса? Таким образом, ограничивается область распространения знаний о конкретных типах пределами той области, в которой это действительно необходимо.
+    //Создаём фабричный метод (Фабричный метод - это метод, который что-то возвращает), который возвращает LoginInspector. Мы знаем, что фабрика должна проверять логин и пароль, по-этому, когда мы пишем общий интерфейс для фабрики, мы возвращаем LoginInspector. Интерфейс абстрактной фабрики содержит один метод: для проверки логина и пароля. Метод возвращает экземпляр общего базового класса? Таким образом, ограничивается область распространения знаний о конкретных типах пределами той области, в которой это действительно необходимо.
     func checkLoginByFactory() -> LoginInspetor
 }
 
@@ -120,6 +120,18 @@ class LogInViewController: UIViewController {
         return button
     }()
     
+    private lazy var signUpButton: CustomButton = {
+        let button = CustomButton(title: "Sign Up", titleColor: .black ) {
+            //self.generatePassword(passwordLength: 10)
+        }
+        button.layer.cornerRadius = 10
+        button.clipsToBounds = true
+        button.setBackgroundImage(UIImage(named: "blue_pixel"), for: .normal)
+        button.addTarget(self, action: #selector(registerUser), for: .touchUpInside)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
+    
     private var separator: UIView = {
         let separator = UIView()
         separator.layer.backgroundColor = UIColor.lightGray.cgColor
@@ -162,17 +174,30 @@ class LogInViewController: UIViewController {
     }
     
     @objc private func logInButtonPressed() {
+     
+        let factory = MyLoginFactory()
         
-        //guard let userName = userNameTextField.text, let _ = passwordTextField.text else { return }
-    #if DEBUG
-    let user = delegate?.checkValue(login: userNameTextField.text ?? "", password: passwordTextField.text ?? "") ?? User(name: "Нет данных", avatar: UIImage(named: "gratis") ?? UIImage(), status: "Нет данных")
-    #else
-        let userService = CurrentUserService()
-    #endif
-        var profileViewController = ProfileViewController(user: user)
-        self.navigationController?.pushViewController(profileViewController, animated: true)
+        let check = factory.checkLoginByFactory()
+        
+    guard let login = userNameTextField.text, let password = passwordTextField.text else { return }
+        
+        check.checkValue(login: login, password: password, completionHandler: { result in
+            switch result {
+            case .success(let user):
+                var profileViewController = ProfileViewController(user: user)
+                self.navigationController?.pushViewController(profileViewController, animated: true)
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        })
     }
     
+    @objc private func registerUser() {
+        
+        let registerUserController = RegisterUserController()
+        self.navigationController?.pushViewController(registerUserController, animated: true)
+    }
+
     @objc private func generatePassword(passwordLength: Int) -> String {
         
         //Создаём очередь на побочном потоке
@@ -260,24 +285,6 @@ class LogInViewController: UIViewController {
         self.navigationController?.isNavigationBarHidden = true
         view.backgroundColor = .white
         
-        //.concurrent - делает возможным запустить потоки параллельно
-//        let queue = DispatchQueue(label: "my_queue", qos: .default, attributes: .concurrent)
-//        let queue2 = DispatchQueue(label: "my_queue", qos: .userInteractive, attributes: .concurrent)
-//
-//        queue.async {
-//            print("queue.async")
-//            self.brutForce.bruteForce(passwordToUnlock: self.pass)
-//        }
-//
-//        queue2.async {
-//            print("queue2.async")
-//            self.passwordTextField.text = self.pass
-//        }
-        
-//        DispatchQueue.main.async {
-//            print("123")
-//        }
-        
         self.view.addSubview(scrollView)
         scrollView.addSubview(myView)
         
@@ -293,6 +300,7 @@ class LogInViewController: UIViewController {
         myView.addSubview(separator)
         myView.addSubview(logInButton)
         myView.addSubview(pickUpPass)
+        myView.addSubview(signUpButton)
         
         passwordTextField.isSecureTextEntry = false
         
@@ -358,8 +366,14 @@ class LogInViewController: UIViewController {
             pickUpPass.topAnchor.constraint(equalTo: logInButton.bottomAnchor, constant: 16),
             pickUpPass.leadingAnchor.constraint(equalTo: myView.leadingAnchor, constant: 16),
             pickUpPass.trailingAnchor.constraint(equalTo: myView.trailingAnchor, constant: -16),
-            pickUpPass.bottomAnchor.constraint(equalTo: myView.bottomAnchor),
-            pickUpPass.heightAnchor.constraint(equalToConstant: 50.0)
+            //pickUpPass.bottomAnchor.constraint(equalTo: myView.bottomAnchor),
+            pickUpPass.heightAnchor.constraint(equalToConstant: 50.0),
+            
+            signUpButton.topAnchor.constraint(equalTo: pickUpPass.bottomAnchor, constant: 16),
+            signUpButton.leadingAnchor.constraint(equalTo: myView.leadingAnchor, constant: 16),
+            signUpButton.trailingAnchor.constraint(equalTo: myView.trailingAnchor, constant: -16),
+            signUpButton.bottomAnchor.constraint(equalTo: myView.bottomAnchor),
+            signUpButton.heightAnchor.constraint(equalToConstant: 50.0)
             
         ]
 
@@ -372,22 +386,25 @@ class LogInViewController: UIViewController {
 
 //LoginInspector - это реализация делегата.
 //4. Создаем произвольный класс/структуру LoginInspector (или придумайте свое название), который подписывается на протокол LoginViewControllerDelegate, реализуем в нем протокольный метод.
-//5. LoginInspector проверяет точность введенного пароля с помощью синглтона Checker.
+//5. LoginInspector проверяет точность введенного пароля с помощью Firebase/Auth.
 class LoginInspetor: LogInViewControllerDelegate {
-
-    func checkValue(login: String, password: String) -> User? {
-
-        let user = Checker.shared.user
-
-        _ = Checker.shared.checkLoginAndPassword(param: login, param: password)
-            if login == "1" && password == "2" {
-                return user
-            } else {
-                print("Login not correct")
+    
+    func checkValue(login: String, password: String, completionHandler: @escaping (Result<User, Error>) -> Void) {
+        
+        Auth.auth().signIn(withEmail: login, password: password) { (user, error) in
+            
+            if let error = error {
+                print(error.localizedDescription)
+                return
             }
-            return user
+            
+            let user = User(name: "Misha",
+                            avatar: UIImage(named: "cosmos") ?? UIImage(),
+                            status: "I'm trying to male View Model")
+            completionHandler(.success(user))
+            print("Successfully logged in with email")
+        }
     }
-
 }
 
 //Фабрика п2: Вынесите генерацию LoginInspector из SceneDelegate (или AppDelegate) в фабрику: создайте объект MyLoginFactory (название на ваше усмотрение), подпишите на протокол.
