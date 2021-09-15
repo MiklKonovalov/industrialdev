@@ -14,15 +14,16 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     let myLoginFactory = MyLoginFactory()
     let mainCoordinator = MainCoordinator()
     let viewModel = CheckModel()
-    let appConfiguration: AppConfiguration = AppConfiguration.configureOne(URL(string: "https://swapi.dev/api/people/8")!)
-    
+    let url = URL(string: "https://swapi.dev/api/people/8")!
     
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         
         guard let windowScene = (scene as? UIWindowScene) else { return }
 
         let window = UIWindow(windowScene: windowScene)
-
+        
+        let appConfiguration: AppConfiguration = .configureOne(url)
+        
         viewModel.receiveDate(appConfiguration: appConfiguration) { data in
             
             print(data)
@@ -46,8 +47,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         //let fvc = factory.makeSettings()
         //loginViewController.delegate = myLoginFactory.checkLoginByFactory()
-
-    }
     
     func sceneDidDisconnect(_ scene: UIScene) {
         // Called as the scene is being released by the system.
@@ -79,4 +78,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
 
 }
+
+    
+    }
 

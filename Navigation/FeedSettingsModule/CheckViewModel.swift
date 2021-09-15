@@ -62,25 +62,31 @@ class CheckModel: SettingsViewOutput {
     func receiveDate(appConfiguration: AppConfiguration, completion: @escaping (Data) -> Void) {
     
         //Формируем url
+        var request: URLRequest?
         
         switch appConfiguration {
         case .configureOne(let url):
-            let request = URLRequest(url: url)
-        case .configureTwo(let url):
-            let request = URLRequest(url: url)
-        case .configureThree(let url):
-            let request = URLRequest(url: url)
+            request = URLRequest(url: url)
+        case .configureTwo:
+            print("Configure Two")
+        case .configureThree:
+            print("Configure Three")
+    
+            guard let request = request else { return }
             
-        NetworkService.dataTaskRequest(urlRequest: request) { data in
-            if let dataNew = data {
-                print(String(data: dataNew, encoding: .utf8)!)
-                completion(dataNew)
+            NetworkService.dataTaskRequest(urlRequest: request) { data in
+                if let dataNew = data {
+                    print(String(data: dataNew, encoding: .utf8)!)
+                    completion(dataNew)
+                }
             }
         }
-        }
     }
-    
+
+    //
+    //let currentUrl: AppConfiguration = .configureOne(URL(string: "https://swapi.dev/api/people/8")!)
     //интерфейс для отправки данных в координатор
+    
     var onShowNext: (() -> Void)?
     
     //интерфейс для приёма данных от вью контроллера

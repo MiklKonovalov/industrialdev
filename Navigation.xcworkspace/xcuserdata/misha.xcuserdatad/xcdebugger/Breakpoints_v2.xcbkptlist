@@ -55,24 +55,8 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "32FB8F0F-57E4-485E-90A9-F0A70F403A49"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Navigation/SceneDelegate.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "19"
-            endingLineNumber = "19"
-            landmarkName = "SceneDelegate"
-            landmarkType = "3">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             uuid = "69982D2A-21CC-4967-BD65-05902B98E365"
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Navigation/Data/AppConfiguration.swift"
@@ -87,63 +71,15 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "8AA94AB2-7944-40B4-A5C7-2624248BE12E"
+            uuid = "248613ED-F08C-417B-9FDA-82633D7BC31A"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Navigation/SceneDelegate.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "17"
-            endingLineNumber = "17"
-            landmarkName = "SceneDelegate"
-            landmarkType = "3">
-            <Locations>
-               <Location
-                  uuid = "8AA94AB2-7944-40B4-A5C7-2624248BE12E - 6b289e9390455d0b"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "NavigationNew.SceneDelegate.appConfiguration.getter : NavigationNew.AppConfiguration"
-                  moduleName = "NavigationNew"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/misha/Documents/XCode/Navigation/Navigation/SceneDelegate.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "17"
-                  endingLineNumber = "17"
-                  offsetFromSymbolStart = "40">
-               </Location>
-               <Location
-                  uuid = "8AA94AB2-7944-40B4-A5C7-2624248BE12E - f5e3f6287626f0a8"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "NavigationNew.SceneDelegate.init() -&gt; NavigationNew.SceneDelegate"
-                  moduleName = "NavigationNew"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/misha/Documents/XCode/Navigation/Navigation/SceneDelegate.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "17"
-                  endingLineNumber = "17"
-                  offsetFromSymbolStart = "345">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "248613ED-F08C-417B-9FDA-82633D7BC31A"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Navigation/SceneDelegate.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "26"
-            endingLineNumber = "26"
+            startingLineNumber = "27"
+            endingLineNumber = "27"
             landmarkName = "scene(_:willConnectTo:options:)"
             landmarkType = "7">
             <Locations>
@@ -184,7 +120,7 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "C45C8FF7-0CB0-46B7-8DF3-39113B23A152"
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Navigation/FeedSettingsModule/CheckViewModel.swift"
@@ -199,15 +135,15 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "60F14041-7BFC-4573-8AAF-69A86B4C2B83"
+            uuid = "90D7AE0C-54E4-4B05-A2D5-86767DDDE202"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Navigation/FeedSettingsModule/CheckViewModel.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "68"
-            endingLineNumber = "68"
+            startingLineNumber = "77"
+            endingLineNumber = "77"
             landmarkName = "receiveDate(appConfiguration:completion:)"
             landmarkType = "7">
          </BreakpointContent>
