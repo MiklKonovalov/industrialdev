@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import RealmSwift
 
 //Протокол делегирования проверки логинаи пароля. Он имеет несколько параметров, данных для передачи обратно вызвавшему контроллеру. В данном случае я передаю обратно контроллеру логин и пароль.
 protocol LogInViewControllerDelegate: AnyObject {
@@ -22,7 +23,26 @@ protocol LoginFactory {
     func checkLoginByFactory() -> LoginInspetor
 }
 
-// Слой Presentation: M-V-C (V + C)
+
+//REALM: 1. Создаём класс для создания модели
+class UserList: Object {
+    //1.1. Определяем свойства этой модели
+    @objc dynamic var login = ""
+    @objc dynamic var password = ""
+    
+    convenience init(login: String, password: String) {
+        self.init()
+        self.login = login
+        self.password = password
+    }
+ 
+    /*override static func primaryKey() -> String {
+        return "id"
+    }*/
+}
+
+
+
 
 class LogInViewController: UIViewController {
     
@@ -30,6 +50,8 @@ class LogInViewController: UIViewController {
     
     //1.2 Объявляем делегата для использования. В контроллере мы создаем instance протокола и называем его делегат
     var delegate: LogInViewControllerDelegate?
+    
+    var places: Results<UserList>!
     
     //MARK: Create subviews
     let substrate: UIView = {
@@ -137,12 +159,8 @@ class LogInViewController: UIViewController {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
-//Используется, если есть storyboard
-//    required init?(coder: NSCoder) {
-//        super.init(coder: coder)
-//    }
     
+    //MARK: FUNCTIONS
     func createSpinnerView() {
         let child = SpinnerViewController()
 
@@ -161,10 +179,33 @@ class LogInViewController: UIViewController {
         }
     }
     
+    
+    //MARK: SELECTORS
     @objc private func logInButtonPressed() {
+     
+        //let mike = UserList(login: userNameTextField.text ?? "", password: passwordTextField.text ?? "", _id: "0")
         
-        //guard let userName = userNameTextField.text, let _ = passwordTextField.text else { return }
+    let realm = try! Realm() //Создайм объект для доступа к базе данных
+    //var items: Results<UserList>! //Контейнер со свойствами объекта UserList
+        
     #if DEBUG
+    //REALM: 2. Создаём экземпляр класса модели
+    let userOne = UserList()
+    
+    //REALM: 3. Присваиваем значение свойствам
+    userOne.login = userNameTextField.text ?? ""
+    userOne.password = passwordTextField.text ?? ""
+
+    //REALM: 3. Присваиваем значение свойствам альтарнативым методом
+    //let userData = UserList(value: ["moscow","qwerty"])
+    
+    //REALM: 4. Сохраняем объект в базу
+    DispatchQueue.main.async {
+        try! realm.write {
+            realm.add([userOne])
+        }
+    }
+    
     let user = delegate?.checkValue(login: userNameTextField.text ?? "", password: passwordTextField.text ?? "") ?? User(name: "Нет данных", avatar: UIImage(named: "gratis") ?? UIImage(), status: "Нет данных")
     #else
         let userService = CurrentUserService()
@@ -253,13 +294,46 @@ class LogInViewController: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
-    //MARK: Add subviews
+    //MARK: VIEWDIDLOAD
     override func viewDidLoad() {
         super.viewDidLoad()
         
         self.navigationController?.isNavigationBarHidden = true
         view.backgroundColor = .white
         
+        let realm = try! Realm()
+        
+        print("Адрес БД: \(Realm.Configuration.defaultConfiguration.fileURL)")
+        
+        //REALM: 5. Обращаемся к базе данных (применяю фильтр для тренировки)
+        let results = try! Realm().objects(UserList.self).filter("login = '1234'")
+        
+        print("Пароли и явки: \(results)")
+        
+        print("Количество юзеров с логином: \(results.count)")
+        
+        userNameTextField.text = results[0].login
+        passwordTextField.text = results[0].password
+        
+        if userNameTextField.text == results[0].login {
+            let user = User(name: "Realm", avatar: UIImage(named: "регби") ?? UIImage(), status: "Я авторизовался без ввода данных")
+            var profileViewController = ProfileViewController(user: user)
+            self.navigationController?.pushViewController(profileViewController, animated: true)
+        }
+        
+        //Пытался авторизоваться с данным способом, но у меня не получилось
+        /*let email = results[0].login
+        let password = results[0].password
+        let app = App(id: "App ID")
+        app.login(credentials: Credentials.emailPassword(email: email, password: password)) { (results) in
+                switch results {
+                case .failure(let error):
+                    print("Login failed: \(error.localizedDescription)")
+                case .success:
+                    print("Success")
+                }
+        }*/
+                
         //.concurrent - делает возможным запустить потоки параллельно
 //        let queue = DispatchQueue(label: "my_queue", qos: .default, attributes: .concurrent)
 //        let queue2 = DispatchQueue(label: "my_queue", qos: .userInteractive, attributes: .concurrent)
