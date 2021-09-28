@@ -7,8 +7,9 @@
 //
 
 import UIKit
+import CoreData
 
-class ProfileViewController: UIViewController {
+class ProfileViewController: UIViewController, UIGestureRecognizerDelegate {
     
     //В классе ProfileViewController добавить свойство с типом UserService и инициализатор, который принимает объект UserService и имя пользователя, введённое на экране LogInViewController. При инициализации объекта ProfileViewController передать объект CurrentUserService.
 //    var userService: UserService
@@ -181,6 +182,7 @@ class ProfileViewController: UIViewController {
         var returnAvatarPosition = self.avatar.topAnchor.constraint(equalTo: self.tableView.topAnchor, constant: 16)
         
         deactivateAnimation.append(returnAvatarPosition)
+        
     }
     
     //MARK: Setup table
@@ -190,6 +192,38 @@ class ProfileViewController: UIViewController {
         tableView.register(PhotosTableViewCell.self, forCellReuseIdentifier: collectionId) //регистрируем секцию из одной ячейки с 4 фотографиями
         tableView.dataSource = self
         tableView.delegate = self
+        //Setup Gesture recognizer on double click
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(doubleTap))
+        //tapGesture.numberOfTapsRequired = 2
+        tableView.addGestureRecognizer(tapGesture)
+        tapGesture.delegate = self
+    }
+    
+    @objc func doubleTap(recognizer: UITapGestureRecognizer)  {
+        if recognizer.state == UIGestureRecognizer.State.ended {
+            let tapLocation = recognizer.location(in: self.tableView)
+            if let tapIndexPath = self.tableView.indexPathForRow(at: tapLocation) {
+                if (self.tableView.cellForRow(at: tapIndexPath) as? FlowTableViewCell) != nil {
+                    
+                    print("Tap-tap-tap")
+                    let coreDataStack = CoreDataStack.shared
+                    let context = coreDataStack.persistentContainer.viewContext
+                    guard let entity = NSEntityDescription.entity(forEntityName: "Manager", in: context) else { return }
+                    let managerObject = Manager(entity: entity, insertInto: context)
+                    let flowTableViewCell = FlowTableViewCell()
+                    managerObject.userName = flowTableViewCell.fasting?.autor
+
+                            do {
+                                try context.save()
+                                let likeTableViewCell = LikeTableViewCell()
+                                
+                            } catch let error as NSError {
+                                print(error.localizedDescription)
+                            }
+                    
+                }
+            }
+        }
     }
     
     func setupConstraints() {
@@ -351,8 +385,14 @@ extension UIColor {
     //MARK: pushViewController
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let photosViewController = PhotosViewController()
-        
         navigationController?.pushViewController(photosViewController, animated: true)
+        
+        /*if indexPath.section == 0 {
+            navigationController?.pushViewController(photosViewController, animated: true)
+        } else {
+            print("Section 1")
+        }*/
+        
     }
     
     //MARK: - Возвращаем UIView

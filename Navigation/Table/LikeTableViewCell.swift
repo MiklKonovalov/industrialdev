@@ -1,26 +1,26 @@
 //
-//  FlowTableViewCell.swift
+//  LikeTableViewCell.swift
 //  Navigation
 //
-//  Created by Misha on 11.04.2021.
-//  Copyright © 2021 Artem Novichkov. All rights reserved.
+//  Created by Misha on 25.09.2021.
 //
 
+import Foundation
 import UIKit
-import iOSIntPackage
+import CoreData
 
-final class FlowTableViewCell: UITableViewCell {
-    //создаём инстанс структуры ImageProcessor
-    let imageProcessor = ImageProcessor()
-    //Тут я буду применять фильтр, так как тут мы передаём изображение.
-    var fasting: Fasting? {
+class LikeTableViewCell: UITableViewCell {
+    
+    let coreDataStack = CoreDataStack.shared
+    
+    var posts: LikePost? {
         didSet {
-            userNameLable.text = fasting?.autor
-            descriptionLable.text = fasting?.description
-            likesLable.text = "Likes:" + String(fasting!.numberOfLikes)
-            viewsLable.text = "Views:" + String(fasting!.numberOfviews)
-            //вызываем функцию processImage и используем замыкание для передачи картинки с эффектом фильтра
-            imageProcessor.processImage(sourceImage: fasting?.image ?? UIImage() , filter: .colorInvert) { flowImageView.image = $0 }
+            userNameLable.text = posts?.autor
+            descriptionLable.text = posts?.description
+            likesLable.text = String(posts!.numberOfLikes)
+            viewsLable.text = String(posts!.numberOfviews)
+            flowImageView.image = posts?.image
+            
         }
     }
     
@@ -67,22 +67,33 @@ final class FlowTableViewCell: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
         setupViews()
+        
+        /*let context = coreDataStack.persistentContainer.viewContext
+        let fetchRequest: NSFetchRequest<Manager> = Manager.fetchRequest()
+        
+        do {
+            userName = try context.fetch(fetchRequest)
+            print(userName)
+        } catch let error as NSError {
+            print(error.localizedDescription)
+        }*/
     }
-    
-    required init?(coder: NSCoder) {
+        
+    required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    
     }
     
 }
 
-private extension FlowTableViewCell {
+private extension LikeTableViewCell {
     func setupViews() {
         contentView.addSubview(userNameLable)
         contentView.addSubview(descriptionLable)
         contentView.addSubview(likesLable)
         contentView.addSubview(viewsLable)
         contentView.addSubview(flowImageView)
+        
+        selectionStyle = .none
         
         let constraints = [
             userNameLable.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 10),
