@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreData
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
@@ -14,13 +15,22 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     let myLoginFactory = MyLoginFactory()
     let mainCoordinator = MainCoordinator()
     
+    //let coreDataStack = CoreDataStack()
+    
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         
         guard let windowScene = (scene as? UIWindowScene) else { return }
 
         let window = UIWindow(windowScene: windowScene)
         
+        //let nc = window.rootViewController as! UINavigationController
+        //let vc = nc.topViewController as! ProfileViewController
+        //let context = coreDataStack.persistentContainer.viewContext
+        //vc.context = context
+        
         window.rootViewController = mainCoordinator.tabBarController
+        
+        
          
 //        guard let navigationController = tabBarController.viewControllers?.first as? UINavigationController, let viewController = navigationController.viewControllers.first as? ProfileViewController else { fatalError() }
 //        viewController.viewModel = viewModel
@@ -64,9 +74,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
 
     func sceneDidEnterBackground(_ scene: UIScene) {
-        // Called as the scene transitions from the foreground to the background.
-        // Use this method to save data, release shared resources, and store enough scene-specific state information
-        // to restore the scene back to its current state.
+        (UIApplication.shared.delegate as? AppDelegate)?.saveContext()
     }
 
 

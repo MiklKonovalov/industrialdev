@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 import CoreData
 
-class LikePostsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class LikePostsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, ProfileViewControllerDelegate {
     
     let tableview: UITableView = {
             let tableview = UITableView()
@@ -18,15 +18,38 @@ class LikePostsViewController: UIViewController, UITableViewDelegate, UITableVie
             return tableview
         }()
     
+    //Проверяем, есть ли у нас какие-либо данные в CoreData и отображаем их
+    let fetchRequest: NSFetchRequest<Post> = Post.fetchRequest()
+    
     let cellId = "cellId"
     
-    var posts: [LikePost] = [LikePost]()
+    var context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
-    override func viewDidLoad() {
+    var postArray = [Post?]() {
+        didSet {
+            DispatchQueue.main.async {
+                self.tableview.reloadData()
+                self.reloadDataForPost()
+            }
+        }
+    }
+    
+    override func viewDidLoad(){
         super.viewDidLoad()
         view.backgroundColor = .white
-        createPostsArray()
+ 
         setupTableView()
+        
+        //Пробуем получить данные
+        do {
+            self.postArray = try context.fetch(fetchRequest)
+            DispatchQueue.main.async {
+                self.tableview.reloadData()
+                self.reloadDataForPost()
+            }
+        } catch let error as NSError {
+            print(error.localizedDescription)
+        }
         
     }
     
@@ -44,18 +67,17 @@ class LikePostsViewController: UIViewController, UITableViewDelegate, UITableVie
         tableview.dataSource = self
     }
     
-    
-    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return posts.count
+        return postArray.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableview.dequeueReusableCell(withIdentifier: cellId, for: indexPath) as! LikeTableViewCell
         cell.backgroundColor = UIColor.white
         
-        let currentLastItem = posts[indexPath.row]
-        cell.posts = currentLastItem
+        let post = self.postArray[indexPath.row]
+        
+        cell.post = post
         
         return cell
     }
@@ -64,10 +86,9 @@ class LikePostsViewController: UIViewController, UITableViewDelegate, UITableVie
         return 300
     }
     
-    func createPostsArray() {
-        posts.append(LikePost(autor: "1", description: "1", image: UIImage(named: "регби")!, numberOfLikes: 1, numberOfviews: 1))
-        posts.append(LikePost(autor: "2", description: "2", image: UIImage(named: "регби")!, numberOfLikes: 2, numberOfviews: 2))
-        posts.append(LikePost(autor: "3", description: "3", image: UIImage(named: "регби")!, numberOfLikes: 3, numberOfviews: 3))
+    func reloadDataForPost() {
+        tableview.reloadData()
     }
     
 }
+

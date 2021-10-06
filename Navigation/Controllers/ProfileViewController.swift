@@ -9,16 +9,30 @@
 import UIKit
 import CoreData
 
+protocol ProfileViewControllerDelegate: AnyObject {
+    func reloadDataForPost()
+}
+
 class ProfileViewController: UIViewController, UIGestureRecognizerDelegate {
     
-    //В классе ProfileViewController добавить свойство с типом UserService и инициализатор, который принимает объект UserService и имя пользователя, введённое на экране LogInViewController. При инициализации объекта ProfileViewController передать объект CurrentUserService.
-//    var userService: UserService
-//
-//    var userName: String
+    let viewModel = CheckModel()
+    
+    var items: [Post]?
     
     var user: User
     
-    let viewModel = CheckModel()
+    weak var delegate: ProfileViewControllerDelegate?
+    
+    var howToConstraint = [NSLayoutConstraint]()
+    var howToConstraintActivate = [NSLayoutConstraint]()
+    var deactivateAnimation = [NSLayoutConstraint]()
+    var buttonAnimation = [NSLayoutConstraint]()
+        
+    var header = ProfileTableHeaderView()
+    
+    private let tableView = UITableView(frame: .zero, style: .grouped)
+    private let reuseId = "cellid"
+    private let collectionId = "cellidTwo"
     
     init(user: User) {
         self.user = user
@@ -38,13 +52,6 @@ class ProfileViewController: UIViewController, UIGestureRecognizerDelegate {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    var howToConstraint = [NSLayoutConstraint]()
-    var howToConstraintActivate = [NSLayoutConstraint]()
-    var deactivateAnimation = [NSLayoutConstraint]()
-    var buttonAnimation = [NSLayoutConstraint]()
-    
-    var header = ProfileTableHeaderView()
     
     //MARK: -Create subview's for animation
     let currentStatusLabel: UILabel = {
@@ -103,10 +110,6 @@ class ProfileViewController: UIViewController, UIGestureRecognizerDelegate {
         self.navigationController?.navigationBar.isHidden = true
     }
     
-    private let tableView = UITableView(frame: .zero, style: .grouped)
-    private let reuseId = "cellid"
-    private let collectionId = "cellidTwo"
-    
     //MARK: viewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -122,7 +125,6 @@ class ProfileViewController: UIViewController, UIGestureRecognizerDelegate {
         avatar.image = user.avatar
         userNameLabel.text = user.name
         currentStatusLabel.text = user.status
-        
         
         //MARK: Setup constraints
         var avatarTopAnchor =
@@ -194,7 +196,6 @@ class ProfileViewController: UIViewController, UIGestureRecognizerDelegate {
         tableView.delegate = self
         //Setup Gesture recognizer on double click
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(doubleTap))
-        //tapGesture.numberOfTapsRequired = 2
         tableView.addGestureRecognizer(tapGesture)
         tapGesture.delegate = self
     }
@@ -206,24 +207,39 @@ class ProfileViewController: UIViewController, UIGestureRecognizerDelegate {
                 if (self.tableView.cellForRow(at: tapIndexPath) as? FlowTableViewCell) != nil {
                     
                     print("Tap-tap-tap")
-                    let coreDataStack = CoreDataStack.shared
-                    let context = coreDataStack.persistentContainer.viewContext
-                    guard let entity = NSEntityDescription.entity(forEntityName: "Manager", in: context) else { return }
-                    let managerObject = Manager(entity: entity, insertInto: context)
-                    let flowTableViewCell = FlowTableViewCell()
-                    managerObject.userName = flowTableViewCell.fasting?.autor
-
-                            do {
-                                try context.save()
-                                let likeTableViewCell = LikeTableViewCell()
-                                
-                            } catch let error as NSError {
-                                print(error.localizedDescription)
-                            }
+                    
+                    let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+                    
+                    //Создаём объект
+                    let newPost = Post(context: context)
+                    let posts = Flow.sections.fasting[tapIndexPath.row]
+                    newPost.userName = posts.autor
+                    newPost.likeCount = Int16(posts.numberOfLikes)
+                    newPost.viewCount = Int16(posts.numberOfviews)
+                    newPost.decription = posts.description
+                    
+                    let image = posts.image
+                    let imageData = image.pngData()
+                    newPost.image = imageData
+                    
+                    //Сохраняем данные
+                    do {
+                        try context.save()
+                        delegate?.reloadDataForPost()
+                    }
+                    catch {
+                        
+                    }
                     
                 }
             }
         }
+    }
+    
+    //MARK: Tap
+    @objc func tap() {
+        animateAnimatorVC()
+        animateButtonAnimatorVC()
     }
     
     func setupConstraints() {
@@ -248,12 +264,7 @@ class ProfileViewController: UIViewController, UIGestureRecognizerDelegate {
         
         NSLayoutConstraint.activate(constraintsTableView)
     }
-    //MARK: Tap
-    @objc func tap() {
-        animateAnimatorVC()
-        animateButtonAnimatorVC()
-    }
-    
+
     //MARK: Setup animation
     func animateAnimatorVC() {
         NSLayoutConstraint.activate(self.howToConstraintActivate)
@@ -314,6 +325,7 @@ class ProfileViewController: UIViewController, UIGestureRecognizerDelegate {
                     self.view.layoutIfNeeded()
             }, completion: nil)
     }
+    
 }
 
 //MARK: Создаём 'ColorSet' используя Hex-code

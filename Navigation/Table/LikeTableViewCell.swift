@@ -11,15 +11,17 @@ import CoreData
 
 class LikeTableViewCell: UITableViewCell {
     
-    let coreDataStack = CoreDataStack.shared
+    var context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
-    var posts: LikePost? {
+    var post: Post? {
         didSet {
-            userNameLable.text = posts?.autor
-            descriptionLable.text = posts?.description
-            likesLable.text = String(posts!.numberOfLikes)
-            viewsLable.text = String(posts!.numberOfviews)
-            flowImageView.image = posts?.image
+            userNameLable.text = post?.userName
+            descriptionLable.text = post?.description
+            likesLable.text = String(Int16(post?.likeCount ?? 0))
+            viewsLable.text = String(Int16(post?.viewCount ?? 0))
+            
+            let image = UIImage(data: post?.image ?? Data())
+            flowImageView.image = image
             
         }
     }
@@ -40,7 +42,7 @@ class LikeTableViewCell: UITableViewCell {
         return descriptionLable
     }()
     
-    private let likesLable: UILabel = {
+    private var likesLable: UILabel = {
         let likesLable = UILabel()
         likesLable.font = UIFont.systemFont(ofSize: 18, weight: .medium)
         likesLable.textColor = .black
@@ -63,20 +65,18 @@ class LikeTableViewCell: UITableViewCell {
         return flowImageView
     }()
     
+    /*func insertDataFrom(selectedPost post: Post) {
+        flowImageView.image = UIImage(data: post.imageData!)
+        userNameLable.text = post.userName
+        viewsLable.text = String(Int16(post.viewsCount))
+        likesLable.text = String(Int16(post.likeCount))
+    }*/
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
         setupViews()
         
-        /*let context = coreDataStack.persistentContainer.viewContext
-        let fetchRequest: NSFetchRequest<Manager> = Manager.fetchRequest()
-        
-        do {
-            userName = try context.fetch(fetchRequest)
-            print(userName)
-        } catch let error as NSError {
-            print(error.localizedDescription)
-        }*/
     }
         
     required init?(coder aDecoder: NSCoder) {

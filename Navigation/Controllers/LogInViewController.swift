@@ -169,7 +169,7 @@ class LogInViewController: UIViewController {
     #else
         let userService = CurrentUserService()
     #endif
-        var profileViewController = ProfileViewController(user: user)
+        let profileViewController = ProfileViewController(user: user)
         self.navigationController?.pushViewController(profileViewController, animated: true)
     }
     

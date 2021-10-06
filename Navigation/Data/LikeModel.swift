@@ -8,10 +8,10 @@
 import Foundation
 import UIKit
 
-struct LikePost {
+/*struct LikePost {
     var autor: String
     var description: String
     var image: UIImage
     var numberOfLikes: Int
     var numberOfviews: Int
-}
+}*/
