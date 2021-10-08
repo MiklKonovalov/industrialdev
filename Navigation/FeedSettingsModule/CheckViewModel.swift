@@ -61,17 +61,20 @@ class CheckModel: SettingsViewOutput {
     
     func receiveDate(appConfiguration: AppConfiguration, completion: @escaping (Data) -> Void) {
     
+        //Создаю переменную типа AppConfiguration с указанием ассоциированного параметра
+        let configureOneUrl = AppConfiguration.configureOne(URL(string:"https://swapi.dev/api/people/8")!)
+        
         //Формируем url
         var request: URLRequest?
         
-        switch appConfiguration {
-        case .configureOne(let url):
+        switch configureOneUrl {
+        case let .configureOne(url):
             request = URLRequest(url: url)
-        case .configureTwo:
-            print("Configure Two")
-        case .configureThree:
-            print("Configure Three")
-    
+        case let .configureTwo(url):
+            request = URLRequest(url: url)
+        case let .configureThree(url):
+            request = URLRequest(url: url)
+            
             guard let request = request else { return }
             
             NetworkService.dataTaskRequest(urlRequest: request) { data in

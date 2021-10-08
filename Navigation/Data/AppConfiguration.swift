@@ -11,9 +11,9 @@ enum AppConfiguration {
     
     case configureOne(URL)
         
-    case configureTwo
+    case configureTwo(URL)
         
-    case configureThree
+    case configureThree(URL)
     
 }
 
