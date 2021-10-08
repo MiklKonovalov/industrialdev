@@ -9,10 +9,6 @@
 import UIKit
 import CoreData
 
-protocol ProfileViewControllerDelegate: AnyObject {
-    func reloadDataForPost()
-}
-
 class ProfileViewController: UIViewController, UIGestureRecognizerDelegate {
     
     let viewModel = CheckModel()
@@ -20,8 +16,6 @@ class ProfileViewController: UIViewController, UIGestureRecognizerDelegate {
     var items: [Post]?
     
     var user: User
-    
-    weak var delegate: ProfileViewControllerDelegate?
     
     var howToConstraint = [NSLayoutConstraint]()
     var howToConstraintActivate = [NSLayoutConstraint]()
@@ -194,9 +188,10 @@ class ProfileViewController: UIViewController, UIGestureRecognizerDelegate {
         tableView.register(PhotosTableViewCell.self, forCellReuseIdentifier: collectionId) //регистрируем секцию из одной ячейки с 4 фотографиями
         tableView.dataSource = self
         tableView.delegate = self
-        //Setup Gesture recognizer on double click
+        
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(doubleTap))
         tableView.addGestureRecognizer(tapGesture)
+        tapGesture.numberOfTapsRequired = 2
         tapGesture.delegate = self
     }
     
@@ -225,7 +220,6 @@ class ProfileViewController: UIViewController, UIGestureRecognizerDelegate {
                     //Сохраняем данные
                     do {
                         try context.save()
-                        delegate?.reloadDataForPost()
                     }
                     catch {
                         
@@ -380,15 +374,21 @@ extension UIColor {
     //создаём ячейку
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: collectionId, for: indexPath)
-        if indexPath.section == 0 { 
+        
+        if indexPath.section == 0 {
+            
             let collection = Flow.photos.imageArray[indexPath.row]
             (cell as! PhotosTableViewCell).images = collection
             return cell
         }
         let cellTwo = tableView.dequeueReusableCell(withIdentifier: reuseId, for: indexPath)
         if indexPath.section == 1 {
+            
             let posts = Flow.sections.fasting[indexPath.row]
             (cellTwo as! FlowTableViewCell).fasting = posts
+            cellTwo.selectionStyle = .none
+            //tapGesture.numberOfTapsRequired = 2
+            
             return cellTwo
         }
 
@@ -396,14 +396,15 @@ extension UIColor {
         }
     //MARK: pushViewController
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let photosViewController = PhotosViewController()
-        navigationController?.pushViewController(photosViewController, animated: true)
         
-        /*if indexPath.section == 0 {
+        if indexPath.section == 0 {
+            let photosViewController = PhotosViewController()
             navigationController?.pushViewController(photosViewController, animated: true)
-        } else {
-            print("Section 1")
-        }*/
+        
+        } else if indexPath.section == 1 {
+            print("Sections 1")
+            
+        }
         
     }
     

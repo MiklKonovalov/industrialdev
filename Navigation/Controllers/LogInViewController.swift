@@ -163,7 +163,6 @@ class LogInViewController: UIViewController {
     
     @objc private func logInButtonPressed() {
         
-        //guard let userName = userNameTextField.text, let _ = passwordTextField.text else { return }
     #if DEBUG
     let user = delegate?.checkValue(login: userNameTextField.text ?? "", password: passwordTextField.text ?? "") ?? User(name: "Нет данных", avatar: UIImage(named: "gratis") ?? UIImage(), status: "Нет данных")
     #else

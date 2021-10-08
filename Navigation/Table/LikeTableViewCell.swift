@@ -16,9 +16,9 @@ class LikeTableViewCell: UITableViewCell {
     var post: Post? {
         didSet {
             userNameLable.text = post?.userName
-            descriptionLable.text = post?.description
-            likesLable.text = String(Int16(post?.likeCount ?? 0))
-            viewsLable.text = String(Int16(post?.viewCount ?? 0))
+            descriptionLable.text = post?.decription
+            likesLable.text = "Likes:" + String(Int16(post?.likeCount ?? 0))
+            viewsLable.text = "Views:" + String(Int16(post?.viewCount ?? 0))
             
             let image = UIImage(data: post?.image ?? Data())
             flowImageView.image = image

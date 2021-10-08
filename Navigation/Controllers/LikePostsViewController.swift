@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 import CoreData
 
-class LikePostsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, ProfileViewControllerDelegate {
+class LikePostsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     let tableview: UITableView = {
             let tableview = UITableView()
@@ -23,15 +23,31 @@ class LikePostsViewController: UIViewController, UITableViewDelegate, UITableVie
     
     let cellId = "cellId"
     
+    weak var coordinator: MainCoordinator?
+    
     var context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
     var postArray = [Post?]() {
         didSet {
             DispatchQueue.main.async {
                 self.tableview.reloadData()
-                self.reloadDataForPost()
             }
         }
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        //Пробуем получить данные
+        do {
+            self.postArray = try context.fetch(fetchRequest)
+            DispatchQueue.main.async {
+                self.tableview.reloadData()
+            }
+        } catch let error as NSError {
+            print(error.localizedDescription)
+        }
+        
     }
     
     override func viewDidLoad(){
@@ -39,17 +55,6 @@ class LikePostsViewController: UIViewController, UITableViewDelegate, UITableVie
         view.backgroundColor = .white
  
         setupTableView()
-        
-        //Пробуем получить данные
-        do {
-            self.postArray = try context.fetch(fetchRequest)
-            DispatchQueue.main.async {
-                self.tableview.reloadData()
-                self.reloadDataForPost()
-            }
-        } catch let error as NSError {
-            print(error.localizedDescription)
-        }
         
     }
     
@@ -80,14 +85,6 @@ class LikePostsViewController: UIViewController, UITableViewDelegate, UITableVie
         cell.post = post
         
         return cell
-    }
-    
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 300
-    }
-    
-    func reloadDataForPost() {
-        tableview.reloadData()
     }
     
 }

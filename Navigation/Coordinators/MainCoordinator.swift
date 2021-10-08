@@ -8,16 +8,10 @@
 
 import UIKit
 
-protocol ProfileViewControllerDelegateTwo {
-    func reloadDataForPost()
-}
-
 class MainCoordinator: Coordinator {
     
     var coordinators: [Coordinator] = []
     let tabBarController: TabBarController
-    
-    var delegate: ProfileViewControllerDelegateTwo?
     
     //Спомощью фабрики координатор будет публиковать контроллеры
     private let factory = ControllerFactoryImpl()
@@ -84,7 +78,6 @@ class MainCoordinator: Coordinator {
                 title: "Like",
                 image: UIImage(),
                 selectedImage: UIImage())
-            delegate?.reloadDataForPost()
             return navigationLikePostsController
         }
     
