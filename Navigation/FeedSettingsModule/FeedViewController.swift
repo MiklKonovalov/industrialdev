@@ -11,7 +11,9 @@ import UIKit
 //Контроллер отвечает за то, как будут отображаться данные из модели.
 //Контроллер не зависит от модели (не обращается к ней)
 final class FeedViewController: UIViewController {
-     
+    
+    var appConfiguration: AppConfiguration?
+    
     //так как у нас есть паттерн Фабрика, то мы прописываем зависимость от неё
     public var factory: ControllerFactory?
     
@@ -97,7 +99,7 @@ final class FeedViewController: UIViewController {
         }
         
     }
-
+    
     private func showNextModule() {
         //Мы попросим viewModel передать touch event о том, что нужно показать другой модуль
         print("Должен показаться другой вью контроллер")
