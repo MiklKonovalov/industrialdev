@@ -9,12 +9,11 @@ import Foundation
 
 enum AppConfiguration {
     
-    case configureOne(URL)
+    case configureOne(url: URL)
         
-    case configureTwo(URL)
+    case configureTwo(url: URL)
         
-    case configureThree(URL)
+    case configureThree(url: URL)
     
 }
-
 

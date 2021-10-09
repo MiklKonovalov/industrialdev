@@ -22,7 +22,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
         let window = UIWindow(windowScene: windowScene)
         
-        let appConfiguration: AppConfiguration = .configureOne(url)
+        let appConfiguration: AppConfiguration = .configureOne(url: url)
         
         viewModel.receiveDate(appConfiguration: appConfiguration) { data in
             
