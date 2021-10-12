@@ -3,11 +3,12 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 52;
+	objectVersion = 54;
 	objects = {
 
 /* Begin PBXBuildFile section */
 		2EEF5C7836EA1A334EC0C32D /* Pods_NavigationNew.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 14DBFFAF4EFC24A3DA236EB0 /* Pods_NavigationNew.framework */; };
+		C60861FF2715B29E0045689E /* iOSIntPackage in Frameworks */ = {isa = PBXBuildFile; productRef = C60861FE2715B29E0045689E /* iOSIntPackage */; };
 		C62422C627025E79008E865D /* LikeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C62422C427025E40008E865D /* LikeModel.swift */; };
 		C638E4342705FD06006831D9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C638E4322705FCBE006831D9 /* Assets.xcassets */; };
 		C687B854270B6F510074EB19 /* Navigation.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = C687B84C270B6EBD0074EB19 /* Navigation.xcdatamodeld */; };
@@ -41,7 +42,6 @@
 		C6A0FA1726D68398004FE33A /* PostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 060782C7250CEE5D00A87020 /* PostViewController.swift */; };
 		C6A0FA1826D683A0004FE33A /* BrutForce.swift in Sources */ = {isa = PBXBuildFile; fileRef = C63AD35026BAA00500C55030 /* BrutForce.swift */; };
 		C6A0FA1926D6840E004FE33A /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 060782B3250CE27700A87020 /* SceneDelegate.swift */; };
-		C6A0FA1B26D68529004FE33A /* iOSIntPackage in Frameworks */ = {isa = PBXBuildFile; productRef = C6A0FA1A26D68529004FE33A /* iOSIntPackage */; };
 		C6A0FA1F26D6853A004FE33A /* SnapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C6A0FA1E26D6853A004FE33A /* SnapKit.framework */; };
 		C6AC46FE26FFB1C900887EA2 /* LikePostsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6AC46FC26FFAE9400887EA2 /* LikePostsViewController.swift */; };
 		C6AC470126FFBCB000887EA2 /* LikeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6AC46FF26FFBC1900887EA2 /* LikeTableViewCell.swift */; };
@@ -150,8 +150,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C60861FF2715B29E0045689E /* iOSIntPackage in Frameworks */,
 				C6A0FA1F26D6853A004FE33A /* SnapKit.framework in Frameworks */,
-				C6A0FA1B26D68529004FE33A /* iOSIntPackage in Frameworks */,
 				2EEF5C7836EA1A334EC0C32D /* Pods_NavigationNew.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -476,7 +476,7 @@
 			);
 			name = NavigationNew;
 			packageProductDependencies = (
-				C6A0FA1A26D68529004FE33A /* iOSIntPackage */,
+				C60861FE2715B29E0045689E /* iOSIntPackage */,
 			);
 			productName = NavigationNew;
 			productReference = C6A0F9A626D68088004FE33A /* NavigationNew.app */;
@@ -541,7 +541,7 @@
 				};
 			};
 			buildConfigurationList = C6F3BBC726D42E5600D120D7 /* Build configuration list for PBXProject "Navigation" */;
-			compatibilityVersion = "Xcode 9.3";
+			compatibilityVersion = "Xcode 12.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -550,7 +550,7 @@
 			);
 			mainGroup = C6F3BBC326D42E5600D120D7;
 			packageReferences = (
-				C617ADCA26D42FD2005DB681 /* XCRemoteSwiftPackageReference "iOSIntPackage" */,
+				C60861FD2715B29E0045689E /* XCRemoteSwiftPackageReference "iOSIntPackage" */,
 			);
 			productRefGroup = C6F3BBCD26D42E5600D120D7 /* Products */;
 			projectDirPath = "";
@@ -1015,7 +1015,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		C617ADCA26D42FD2005DB681 /* XCRemoteSwiftPackageReference "iOSIntPackage" */ = {
+		C60861FD2715B29E0045689E /* XCRemoteSwiftPackageReference "iOSIntPackage" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/TrueMax/iOSIntPackage";
 			requirement = {
@@ -1026,9 +1026,9 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		C6A0FA1A26D68529004FE33A /* iOSIntPackage */ = {
+		C60861FE2715B29E0045689E /* iOSIntPackage */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = C617ADCA26D42FD2005DB681 /* XCRemoteSwiftPackageReference "iOSIntPackage" */;
+			package = C60861FD2715B29E0045689E /* XCRemoteSwiftPackageReference "iOSIntPackage" */;
 			productName = iOSIntPackage;
 		};
 /* End XCSwiftPackageProductDependency section */

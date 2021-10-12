@@ -203,8 +203,16 @@ class ProfileViewController: UIViewController, UIGestureRecognizerDelegate {
                     
                     print("Tap-tap-tap")
                     
+                    var persistentContainer = (UIApplication.shared.delegate as! AppDelegate).persistentContainer
+                    
+                    /*func newBackgroundContext() -> NSManagedObjectContext {
+                        return persistentContainer.newBackgroundContext()
+                    }*/
+                    
                     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
                     
+                    //Переносим в фоновый поток:
+                    //let context = newBackgroundContext()
                     //Создаём объект
                     let newPost = Post(context: context)
                     let posts = Flow.sections.fasting[tapIndexPath.row]
