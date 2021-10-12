@@ -56,6 +56,21 @@ class LikePostsViewController: UIViewController, UITableViewDelegate, UITableVie
  
         setupTableView()
         
+        /*let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+        let fetchRequest: NSFetchRequest<Post> = Post.fetchRequest()
+        if let objects = try? context.fetch(fetchRequest) {
+            for object in objects {
+                context.delete(object)
+            }
+        }
+        
+        do {
+            try context.save()
+        }
+        catch {
+            
+        }*/
+        
     }
     
     func setupTableView() {
@@ -87,5 +102,42 @@ class LikePostsViewController: UIViewController, UITableViewDelegate, UITableVie
         return cell
     }
     
-}
+    /*func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
+        return .delete
+    }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            tableview.beginUpdates()
+            postArray.remove(at: indexPath.row)
+            tableview.deleteRows(at: [indexPath], with: .fade)
+            
+            tableview.endUpdates()
+        }
+    }*/
+    
+    func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        
+        //Delete
+        let delete = UIContextualAction(style: .normal, title: "Delete") { (action, view, completionHandler) in
+            
+            guard let post = self.postArray[indexPath.row], self.postArray[indexPath.row] != nil else { return }
+            self.context.delete(post)
+            do {
+                try self.context.save()
+                self.postArray.remove(at: indexPath.row)
+                self.tableview.deleteRows(at: [indexPath], with: .automatic)
+            } catch let error as NSError {
+                print(error.localizedDescription)
+            }
+            
+            completionHandler(true)
+        }
+        
+        //Swipe
+        let swipe = UISwipeActionsConfiguration(actions: [delete])
+        return swipe
+        
+    }
 
+}
