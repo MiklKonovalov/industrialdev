@@ -21,6 +21,8 @@ class LikePostsViewController: UIViewController, UITableViewDelegate, UITableVie
     //Проверяем, есть ли у нас какие-либо данные в CoreData и отображаем их
     let fetchRequest: NSFetchRequest<Post> = Post.fetchRequest()
     
+    //let searchPostsViewController = SearchPostsViewController()
+    
     let cellId = "cellId"
     
     weak var coordinator: MainCoordinator?
@@ -56,20 +58,33 @@ class LikePostsViewController: UIViewController, UITableViewDelegate, UITableVie
  
         setupTableView()
         
-        /*let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
-        let fetchRequest: NSFetchRequest<Post> = Post.fetchRequest()
-        if let objects = try? context.fetch(fetchRequest) {
-            for object in objects {
-                context.delete(object)
-            }
-        }
+        navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .search, target: self, action: #selector(addFilter))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(cancelFilter))
         
-        do {
-            try context.save()
+        //reloadDataForFetch()
+        
+    }
+    
+    @objc func addFilter() {
+        print("addFilter")
+        
+        let searchPostsViewController = SearchPostsViewController()
+        searchPostsViewController.callback = { (value) in
+            DispatchQueue.main.async {
+                print(value)
+                self.fetchAuthor(userName: value)
+                self.tableview.reloadData()
+            }
+            print("CallBack")
         }
-        catch {
-            
-        }*/
+        present(searchPostsViewController, animated: true, completion: nil)
+        
+    }
+    
+    @objc func cancelFilter() {
+        print("cancelFilter")
+        
+        let request = Post.fetchRequest() as NSFetchRequest<Post>
         
     }
     
@@ -85,6 +100,24 @@ class LikePostsViewController: UIViewController, UITableViewDelegate, UITableVie
         NSLayoutConstraint.activate(constraints)
         tableview.delegate = self
         tableview.dataSource = self
+        //searchPostsViewController.delegate = self
+    }
+    
+    func fetchAuthor(userName: String) {
+            
+        let request = Post.fetchRequest() as NSFetchRequest<Post>
+        let author = userName
+        let predicate = NSPredicate(format: "%K = %@", #keyPath(Post.userName), author)
+        request.predicate = predicate
+            
+        do {
+            let result = try context.fetch(request)
+            self.postArray = result
+        }
+        catch let error as NSError {
+            print(error.localizedDescription)
+        }
+    
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -101,20 +134,6 @@ class LikePostsViewController: UIViewController, UITableViewDelegate, UITableVie
         
         return cell
     }
-    
-    /*func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
-        return .delete
-    }
-    
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            tableview.beginUpdates()
-            postArray.remove(at: indexPath.row)
-            tableview.deleteRows(at: [indexPath], with: .fade)
-            
-            tableview.endUpdates()
-        }
-    }*/
     
     func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         

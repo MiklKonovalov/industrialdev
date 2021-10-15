@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		2EEF5C7836EA1A334EC0C32D /* Pods_NavigationNew.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 14DBFFAF4EFC24A3DA236EB0 /* Pods_NavigationNew.framework */; };
 		C60861FF2715B29E0045689E /* iOSIntPackage in Frameworks */ = {isa = PBXBuildFile; productRef = C60861FE2715B29E0045689E /* iOSIntPackage */; };
+		C608620127183BEE0045689E /* SearchPostsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C608620027183BEE0045689E /* SearchPostsViewController.swift */; };
 		C62422C627025E79008E865D /* LikeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C62422C427025E40008E865D /* LikeModel.swift */; };
 		C638E4342705FD06006831D9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C638E4322705FCBE006831D9 /* Assets.xcassets */; };
 		C687B854270B6F510074EB19 /* Navigation.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = C687B84C270B6EBD0074EB19 /* Navigation.xcdatamodeld */; };
@@ -76,6 +77,7 @@
 		614E6886B992B8415D02A20E /* Pods_Navigation.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Navigation.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6551B47F6F91B7CFEC8933B0 /* Pods-NavigationNew.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NavigationNew.release.xcconfig"; path = "Target Support Files/Pods-NavigationNew/Pods-NavigationNew.release.xcconfig"; sourceTree = "<group>"; };
 		AE758B103A1F8CFD45A242D8 /* Pods-NavigationNew.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NavigationNew.debug.xcconfig"; path = "Target Support Files/Pods-NavigationNew/Pods-NavigationNew.debug.xcconfig"; sourceTree = "<group>"; };
+		C608620027183BEE0045689E /* SearchPostsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchPostsViewController.swift; sourceTree = "<group>"; };
 		C610D3F0269EEF500035B24F /* CustomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
 		C610D3F6269F1B110035B24F /* CheckViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckViewModel.swift; sourceTree = "<group>"; };
 		C610D3F826A093250035B24F /* TextInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextInput.swift; sourceTree = "<group>"; };
@@ -327,6 +329,7 @@
 				C667BB3A26D6501F00FEA1AC /* TabBarController.swift */,
 				C667BB3926D6501F00FEA1AC /* ProfileViewController.swift */,
 				C6AC46FC26FFAE9400887EA2 /* LikePostsViewController.swift */,
+				C608620027183BEE0045689E /* SearchPostsViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -641,6 +644,7 @@
 				C62422C627025E79008E865D /* LikeModel.swift in Sources */,
 				C6AC47042700CE7600887EA2 /* CoreDataStack.swift in Sources */,
 				C6AC470126FFBCB000887EA2 /* LikeTableViewCell.swift in Sources */,
+				C608620127183BEE0045689E /* SearchPostsViewController.swift in Sources */,
 				C6AC46FE26FFB1C900887EA2 /* LikePostsViewController.swift in Sources */,
 				C6A0FA1926D6840E004FE33A /* SceneDelegate.swift in Sources */,
 				C6A0FA1826D683A0004FE33A /* BrutForce.swift in Sources */,
