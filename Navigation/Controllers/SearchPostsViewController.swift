@@ -9,17 +9,11 @@ import Foundation
 import UIKit
 import CoreData
 
-/*protocol SearchPostsViewControllerDelegate {
-    func reloadDataForFetch()
-}*/
-
 class SearchPostsViewController: UIViewController {
     
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
     let likePostsViewController = LikePostsViewController()
-    
-    //var delegate: SearchPostsViewControllerDelegate?
     
     var callback : ((String) -> Void)?
     
@@ -61,7 +55,6 @@ class SearchPostsViewController: UIViewController {
     @objc func searchButtonPressed() {
         print("Search Button is tapped")
         
-        //fetchAuthor()
         callback?(authorTextField.text ?? "")
         dismiss(animated: true, completion: nil)
         

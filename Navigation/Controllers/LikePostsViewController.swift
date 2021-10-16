@@ -89,23 +89,9 @@ class LikePostsViewController: UIViewController, UITableViewDelegate, UITableVie
             print(error.localizedDescription)
         }
         
-        /*let request = Post.fetchRequest() as NSFetchRequest<Post>
-        
-        let predicate = NSPredicate(format: "%K == ALL", #keyPath(Post.userName))
-        request.predicate = predicate
-        
-        do {
-            let result = try context.fetch(request)
-            self.postArray = result
-        }
-        catch let error as NSError {
-            print(error.localizedDescription)
-        }*/
-        
         DispatchQueue.main.async {
             self.tableview.reloadData()
         }
-        
         
     }
     
