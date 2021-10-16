@@ -21,8 +21,6 @@ class LikePostsViewController: UIViewController, UITableViewDelegate, UITableVie
     //Проверяем, есть ли у нас какие-либо данные в CoreData и отображаем их
     let fetchRequest: NSFetchRequest<Post> = Post.fetchRequest()
     
-    //let searchPostsViewController = SearchPostsViewController()
-    
     let cellId = "cellId"
     
     weak var coordinator: MainCoordinator?
@@ -61,8 +59,6 @@ class LikePostsViewController: UIViewController, UITableViewDelegate, UITableVie
         navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .search, target: self, action: #selector(addFilter))
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(cancelFilter))
         
-        //reloadDataForFetch()
-        
     }
     
     @objc func addFilter() {
@@ -84,7 +80,32 @@ class LikePostsViewController: UIViewController, UITableViewDelegate, UITableVie
     @objc func cancelFilter() {
         print("cancelFilter")
         
-        let request = Post.fetchRequest() as NSFetchRequest<Post>
+        do {
+            self.postArray = try context.fetch(fetchRequest)
+            DispatchQueue.main.async {
+                self.tableview.reloadData()
+            }
+        } catch let error as NSError {
+            print(error.localizedDescription)
+        }
+        
+        /*let request = Post.fetchRequest() as NSFetchRequest<Post>
+        
+        let predicate = NSPredicate(format: "%K == ALL", #keyPath(Post.userName))
+        request.predicate = predicate
+        
+        do {
+            let result = try context.fetch(request)
+            self.postArray = result
+        }
+        catch let error as NSError {
+            print(error.localizedDescription)
+        }*/
+        
+        DispatchQueue.main.async {
+            self.tableview.reloadData()
+        }
+        
         
     }
     
@@ -100,7 +121,6 @@ class LikePostsViewController: UIViewController, UITableViewDelegate, UITableVie
         NSLayoutConstraint.activate(constraints)
         tableview.delegate = self
         tableview.dataSource = self
-        //searchPostsViewController.delegate = self
     }
     
     func fetchAuthor(userName: String) {
