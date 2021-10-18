@@ -12,6 +12,7 @@ class MainCoordinator: Coordinator {
     
     var coordinators: [Coordinator] = []
     let tabBarController: TabBarController
+    
     //Спомощью фабрики координатор будет публиковать контроллеры
     private let factory = ControllerFactoryImpl()
     
@@ -21,10 +22,11 @@ class MainCoordinator: Coordinator {
         let feed = configureFeed()
         let logInCoordinator = configureLogIn()
         let photos = configurePhotosController()
+        let likePosts = configureLikePostsController()
         coordinators.append(feed)
         
         //В главном координаторе (MainCoordinator) запускаем дочерний координатор (FeedCoordinator)
-        tabBarController.viewControllers = [feed.navigationController, logInCoordinator, photos]
+        tabBarController.viewControllers = [feed.navigationController, logInCoordinator, photos, likePosts]
         
         feed.start()
     }
@@ -68,6 +70,15 @@ class MainCoordinator: Coordinator {
             return navigationPhotosController
         }
     
-    }
+        func configureLikePostsController() -> UINavigationController {
+            
+            let likePostsViewController = LikePostsViewController()
+            let navigationLikePostsController = UINavigationController(rootViewController: likePostsViewController)
+            navigationLikePostsController.tabBarItem = UITabBarItem(
+                title: "Like",
+                image: UIImage(),
+                selectedImage: UIImage())
+            return navigationLikePostsController
+        }
     
-
+}

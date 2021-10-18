@@ -1,26 +1,28 @@
 //
-//  FlowTableViewCell.swift
+//  LikeTableViewCell.swift
 //  Navigation
 //
-//  Created by Misha on 11.04.2021.
-//  Copyright © 2021 Artem Novichkov. All rights reserved.
+//  Created by Misha on 25.09.2021.
 //
 
+import Foundation
 import UIKit
-import iOSIntPackage
+import CoreData
 
-final class FlowTableViewCell: UITableViewCell {
-    //создаём инстанс структуры ImageProcessor
-    let imageProcessor = ImageProcessor()
-    //Тут я буду применять фильтр, так как тут мы передаём изображение.
-    var fasting: Fasting? {
+class LikeTableViewCell: UITableViewCell {
+    
+    var context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+    
+    var post: Post? {
         didSet {
-            userNameLable.text = fasting?.autor
-            descriptionLable.text = fasting?.description
-            likesLable.text = "Likes:" + String(fasting!.numberOfLikes)
-            viewsLable.text = "Views:" + String(fasting!.numberOfviews)
-            //вызываем функцию processImage и используем замыкание для передачи картинки с эффектом фильтра
-            imageProcessor.processImage(sourceImage: fasting?.image ?? UIImage() , filter: .colorInvert) { flowImageView.image = $0 }
+            userNameLable.text = post?.userName
+            descriptionLable.text = post?.decription
+            likesLable.text = "Likes:" + String(Int16(post?.likeCount ?? 0))
+            viewsLable.text = "Views:" + String(Int16(post?.viewCount ?? 0))
+            
+            let image = UIImage(data: post?.image ?? Data())
+            flowImageView.image = image
+            
         }
     }
     
@@ -40,7 +42,7 @@ final class FlowTableViewCell: UITableViewCell {
         return descriptionLable
     }()
     
-    private let likesLable: UILabel = {
+    private var likesLable: UILabel = {
         let likesLable = UILabel()
         likesLable.font = UIFont.systemFont(ofSize: 18, weight: .medium)
         likesLable.textColor = .black
@@ -63,26 +65,35 @@ final class FlowTableViewCell: UITableViewCell {
         return flowImageView
     }()
     
+    /*func insertDataFrom(selectedPost post: Post) {
+        flowImageView.image = UIImage(data: post.imageData!)
+        userNameLable.text = post.userName
+        viewsLable.text = String(Int16(post.viewsCount))
+        likesLable.text = String(Int16(post.likeCount))
+    }*/
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
         setupViews()
+        
     }
-    
-    required init?(coder: NSCoder) {
+        
+    required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    
     }
     
 }
 
-private extension FlowTableViewCell {
+private extension LikeTableViewCell {
     func setupViews() {
         contentView.addSubview(userNameLable)
         contentView.addSubview(descriptionLable)
         contentView.addSubview(likesLable)
         contentView.addSubview(viewsLable)
         contentView.addSubview(flowImageView)
+        
+        selectionStyle = .none
         
         let constraints = [
             userNameLable.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 10),

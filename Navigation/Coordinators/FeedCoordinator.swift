@@ -26,7 +26,6 @@ final class FeedCoordinator: Coordinator {
     }
     
     func start() {
-        
         //обратная связь SettingsModule
         //координатор знает о вью моделе
         feedModule.viewModel.onShowNext = { [weak self] in

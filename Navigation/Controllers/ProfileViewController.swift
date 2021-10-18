@@ -7,17 +7,26 @@
 //
 
 import UIKit
+import CoreData
 
-class ProfileViewController: UIViewController {
+class ProfileViewController: UIViewController, UIGestureRecognizerDelegate {
     
-    //В классе ProfileViewController добавить свойство с типом UserService и инициализатор, который принимает объект UserService и имя пользователя, введённое на экране LogInViewController. При инициализации объекта ProfileViewController передать объект CurrentUserService.
-//    var userService: UserService
-//
-//    var userName: String
+    let viewModel = CheckModel()
+    
+    var items: [Post]?
     
     var user: User
     
-    let viewModel = CheckModel()
+    var howToConstraint = [NSLayoutConstraint]()
+    var howToConstraintActivate = [NSLayoutConstraint]()
+    var deactivateAnimation = [NSLayoutConstraint]()
+    var buttonAnimation = [NSLayoutConstraint]()
+        
+    var header = ProfileTableHeaderView()
+    
+    private let tableView = UITableView(frame: .zero, style: .grouped)
+    private let reuseId = "cellid"
+    private let collectionId = "cellidTwo"
     
     init(user: User) {
         self.user = user
@@ -37,13 +46,6 @@ class ProfileViewController: UIViewController {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    var howToConstraint = [NSLayoutConstraint]()
-    var howToConstraintActivate = [NSLayoutConstraint]()
-    var deactivateAnimation = [NSLayoutConstraint]()
-    var buttonAnimation = [NSLayoutConstraint]()
-    
-    var header = ProfileTableHeaderView()
     
     //MARK: -Create subview's for animation
     let currentStatusLabel: UILabel = {
@@ -102,10 +104,6 @@ class ProfileViewController: UIViewController {
         self.navigationController?.navigationBar.isHidden = true
     }
     
-    private let tableView = UITableView(frame: .zero, style: .grouped)
-    private let reuseId = "cellid"
-    private let collectionId = "cellidTwo"
-    
     //MARK: viewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -121,7 +119,6 @@ class ProfileViewController: UIViewController {
         avatar.image = user.avatar
         userNameLabel.text = user.name
         currentStatusLabel.text = user.status
-        
         
         //MARK: Setup constraints
         var avatarTopAnchor =
@@ -181,6 +178,7 @@ class ProfileViewController: UIViewController {
         var returnAvatarPosition = self.avatar.topAnchor.constraint(equalTo: self.tableView.topAnchor, constant: 16)
         
         deactivateAnimation.append(returnAvatarPosition)
+        
     }
     
     //MARK: Setup table
@@ -190,6 +188,60 @@ class ProfileViewController: UIViewController {
         tableView.register(PhotosTableViewCell.self, forCellReuseIdentifier: collectionId) //регистрируем секцию из одной ячейки с 4 фотографиями
         tableView.dataSource = self
         tableView.delegate = self
+        
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(doubleTap))
+        tableView.addGestureRecognizer(tapGesture)
+        tapGesture.numberOfTapsRequired = 2
+        tapGesture.delegate = self
+    }
+    
+    @objc func doubleTap(recognizer: UITapGestureRecognizer)  {
+        if recognizer.state == UIGestureRecognizer.State.ended {
+            let tapLocation = recognizer.location(in: self.tableView)
+            if let tapIndexPath = self.tableView.indexPathForRow(at: tapLocation) {
+                if (self.tableView.cellForRow(at: tapIndexPath) as? FlowTableViewCell) != nil {
+                    
+                    print("Tap-tap-tap")
+                    
+                    var persistentContainer = (UIApplication.shared.delegate as! AppDelegate).persistentContainer
+                    
+                    /*func newBackgroundContext() -> NSManagedObjectContext {
+                        return persistentContainer.newBackgroundContext()
+                    }*/
+                    
+                    let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+                    
+                    //Переносим в фоновый поток:
+                    //let context = newBackgroundContext()
+                    //Создаём объект
+                    let newPost = Post(context: context)
+                    let posts = Flow.sections.fasting[tapIndexPath.row]
+                    newPost.userName = posts.autor
+                    newPost.likeCount = Int16(posts.numberOfLikes)
+                    newPost.viewCount = Int16(posts.numberOfviews)
+                    newPost.decription = posts.description
+                    
+                    let image = posts.image
+                    let imageData = image.pngData()
+                    newPost.image = imageData
+                    
+                    //Сохраняем данные
+                    do {
+                        try context.save()
+                    }
+                    catch {
+                        
+                    }
+                    
+                }
+            }
+        }
+    }
+    
+    //MARK: Tap
+    @objc func tap() {
+        animateAnimatorVC()
+        animateButtonAnimatorVC()
     }
     
     func setupConstraints() {
@@ -214,12 +266,7 @@ class ProfileViewController: UIViewController {
         
         NSLayoutConstraint.activate(constraintsTableView)
     }
-    //MARK: Tap
-    @objc func tap() {
-        animateAnimatorVC()
-        animateButtonAnimatorVC()
-    }
-    
+
     //MARK: Setup animation
     func animateAnimatorVC() {
         NSLayoutConstraint.activate(self.howToConstraintActivate)
@@ -280,6 +327,7 @@ class ProfileViewController: UIViewController {
                     self.view.layoutIfNeeded()
             }, completion: nil)
     }
+    
 }
 
 //MARK: Создаём 'ColorSet' используя Hex-code
@@ -334,15 +382,21 @@ extension UIColor {
     //создаём ячейку
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: collectionId, for: indexPath)
-        if indexPath.section == 0 { 
+        
+        if indexPath.section == 0 {
+            
             let collection = Flow.photos.imageArray[indexPath.row]
             (cell as! PhotosTableViewCell).images = collection
             return cell
         }
         let cellTwo = tableView.dequeueReusableCell(withIdentifier: reuseId, for: indexPath)
         if indexPath.section == 1 {
+            
             let posts = Flow.sections.fasting[indexPath.row]
             (cellTwo as! FlowTableViewCell).fasting = posts
+            cellTwo.selectionStyle = .none
+            //tapGesture.numberOfTapsRequired = 2
+            
             return cellTwo
         }
 
@@ -350,9 +404,16 @@ extension UIColor {
         }
     //MARK: pushViewController
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let photosViewController = PhotosViewController()
         
-        navigationController?.pushViewController(photosViewController, animated: true)
+        if indexPath.section == 0 {
+            let photosViewController = PhotosViewController()
+            navigationController?.pushViewController(photosViewController, animated: true)
+        
+        } else if indexPath.section == 1 {
+            print("Sections 1")
+            
+        }
+        
     }
     
     //MARK: - Возвращаем UIView
