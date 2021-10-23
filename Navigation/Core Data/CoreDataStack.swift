@@ -8,12 +8,12 @@
 import UIKit
 import CoreData
 
-/*public class CoreDataStack {
+public class PersistanceManager {
     
-    static let shared = CoreDataStack()
+    private init() {}
+    static let shared = PersistanceManager()
     
     //Объявляем, чтобы нельзя было создать ещё одну сущность такого же класса
-    //private init() {}
     
     lazy var persistentContainer: NSPersistentContainer = {
         
@@ -63,6 +63,6 @@ import CoreData
         }
     }
     
-}*/
+}
     
 

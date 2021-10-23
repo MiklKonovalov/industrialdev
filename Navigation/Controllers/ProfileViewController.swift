@@ -13,9 +13,13 @@ class ProfileViewController: UIViewController, UIGestureRecognizerDelegate {
     
     let viewModel = CheckModel()
     
-    var items: [Post]?
+    //let persistanceManager: PersistanceManager
+    
+    let persistanceManager = PersistanceManager.shared
     
     var user: User
+    
+    var items: [Post]?
     
     var howToConstraint = [NSLayoutConstraint]()
     var howToConstraintActivate = [NSLayoutConstraint]()
@@ -203,7 +207,7 @@ class ProfileViewController: UIViewController, UIGestureRecognizerDelegate {
                     
                     print("Tap-tap-tap")
                     
-                    var persistentContainer = (UIApplication.shared.delegate as! AppDelegate).persistentContainer
+                    let persistentContainer = persistanceManager.persistentContainer
                     
                     func newBackgroundContext() -> NSManagedObjectContext {
                         return persistentContainer.newBackgroundContext()

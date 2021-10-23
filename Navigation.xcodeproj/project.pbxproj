@@ -10,7 +10,6 @@
 		2EEF5C7836EA1A334EC0C32D /* Pods_NavigationNew.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 14DBFFAF4EFC24A3DA236EB0 /* Pods_NavigationNew.framework */; };
 		C60861FF2715B29E0045689E /* iOSIntPackage in Frameworks */ = {isa = PBXBuildFile; productRef = C60861FE2715B29E0045689E /* iOSIntPackage */; };
 		C608620127183BEE0045689E /* SearchPostsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C608620027183BEE0045689E /* SearchPostsViewController.swift */; };
-		C62422C627025E79008E865D /* LikeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C62422C427025E40008E865D /* LikeModel.swift */; };
 		C638E4342705FD06006831D9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C638E4322705FCBE006831D9 /* Assets.xcassets */; };
 		C687B854270B6F510074EB19 /* Navigation.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = C687B84C270B6EBD0074EB19 /* Navigation.xcdatamodeld */; };
 		C687B855270B6F5A0074EB19 /* Post+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = C687B850270B6F440074EB19 /* Post+CoreDataClass.swift */; };
@@ -81,7 +80,6 @@
 		C610D3F0269EEF500035B24F /* CustomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
 		C610D3F6269F1B110035B24F /* CheckViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckViewModel.swift; sourceTree = "<group>"; };
 		C610D3F826A093250035B24F /* TextInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextInput.swift; sourceTree = "<group>"; };
-		C62422C427025E40008E865D /* LikeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikeModel.swift; sourceTree = "<group>"; };
 		C6295C56261CEBA900CA7154 /* LogInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInViewController.swift; sourceTree = "<group>"; };
 		C638E4322705FCBE006831D9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = Navigation/Data/Assets.xcassets; sourceTree = "<group>"; };
 		C63AD35026BAA00500C55030 /* BrutForce.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrutForce.swift; sourceTree = "<group>"; };
@@ -206,6 +204,7 @@
 				C667BB3E26D6501F00FEA1AC /* Model */,
 				C667BB2426D6501F00FEA1AC /* NextModule */,
 				C667BB2A26D6501F00FEA1AC /* Table */,
+				C6AC47022700C55D00887EA2 /* Core Data */,
 				C667BB2E26D6501F00FEA1AC /* Views */,
 				060782B1250CE27700A87020 /* AppDelegate.swift */,
 				060782B3250CE27700A87020 /* SceneDelegate.swift */,
@@ -213,7 +212,6 @@
 				060782C5250CEB0A00A87020 /* InfoViewController.swift */,
 				060782C7250CEE5D00A87020 /* PostViewController.swift */,
 				C63AD35026BAA00500C55030 /* BrutForce.swift */,
-				C6AC47022700C55D00887EA2 /* Core Data */,
 			);
 			path = Navigation;
 			sourceTree = "<group>";
@@ -355,7 +353,6 @@
 			isa = PBXGroup;
 			children = (
 				C667BB4126D6501F00FEA1AC /* Storage.swift */,
-				C62422C427025E40008E865D /* LikeModel.swift */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -641,7 +638,6 @@
 				C687B855270B6F5A0074EB19 /* Post+CoreDataClass.swift in Sources */,
 				C687B856270B6F5A0074EB19 /* Post+CoreDataProperties.swift in Sources */,
 				C687B854270B6F510074EB19 /* Navigation.xcdatamodeld in Sources */,
-				C62422C627025E79008E865D /* LikeModel.swift in Sources */,
 				C6AC47042700CE7600887EA2 /* CoreDataStack.swift in Sources */,
 				C6AC470126FFBCB000887EA2 /* LikeTableViewCell.swift in Sources */,
 				C608620127183BEE0045689E /* SearchPostsViewController.swift in Sources */,

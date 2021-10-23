@@ -10,9 +10,9 @@ import UIKit
 
 class MainCoordinator: Coordinator {
     
-    var coordinators: [Coordinator] = []
     let tabBarController: TabBarController
-    
+    var coordinators: [Coordinator] = []
+
     //Спомощью фабрики координатор будет публиковать контроллеры
     private let factory = ControllerFactoryImpl()
     
@@ -72,6 +72,7 @@ class MainCoordinator: Coordinator {
     
         func configureLikePostsController() -> UINavigationController {
             
+            let persistanceManager = PersistanceManager()
             let likePostsViewController = LikePostsViewController()
             let navigationLikePostsController = UINavigationController(rootViewController: likePostsViewController)
             navigationLikePostsController.tabBarItem = UITabBarItem(

@@ -18,14 +18,14 @@ class LikePostsViewController: UIViewController, UITableViewDelegate, UITableVie
             return tableview
         }()
     
+    let persistanceManager = PersistanceManager.shared
+    
     //Проверяем, есть ли у нас какие-либо данные в CoreData и отображаем их
     let fetchRequest: NSFetchRequest<Post> = Post.fetchRequest()
     
     let cellId = "cellId"
     
     weak var coordinator: MainCoordinator?
-    
-    var context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
     var postArray = [Post?]() {
         didSet {
@@ -40,7 +40,7 @@ class LikePostsViewController: UIViewController, UITableViewDelegate, UITableVie
         
         //Пробуем получить данные
         do {
-            self.postArray = try context.fetch(fetchRequest)
+            self.postArray = try persistanceManager.context.fetch(fetchRequest)
             DispatchQueue.main.async {
                 self.tableview.reloadData()
             }
@@ -53,7 +53,7 @@ class LikePostsViewController: UIViewController, UITableViewDelegate, UITableVie
     override func viewDidLoad(){
         super.viewDidLoad()
         view.backgroundColor = .white
- 
+        
         setupTableView()
         
         navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .search, target: self, action: #selector(addFilter))
@@ -81,7 +81,7 @@ class LikePostsViewController: UIViewController, UITableViewDelegate, UITableVie
         print("cancelFilter")
         
         do {
-            self.postArray = try context.fetch(fetchRequest)
+            self.postArray = try persistanceManager.context.fetch(fetchRequest)
             DispatchQueue.main.async {
                 self.tableview.reloadData()
             }
@@ -115,9 +115,9 @@ class LikePostsViewController: UIViewController, UITableViewDelegate, UITableVie
         let author = userName
         let predicate = NSPredicate(format: "%K = %@", #keyPath(Post.userName), author)
         request.predicate = predicate
-            
+        
         do {
-            let result = try context.fetch(request)
+            let result = try persistanceManager.context.fetch(request)
             self.postArray = result
         }
         catch let error as NSError {
@@ -147,9 +147,10 @@ class LikePostsViewController: UIViewController, UITableViewDelegate, UITableVie
         let delete = UIContextualAction(style: .normal, title: "Delete") { (action, view, completionHandler) in
             
             guard let post = self.postArray[indexPath.row], self.postArray[indexPath.row] != nil else { return }
-            self.context.delete(post)
+            
+            self.persistanceManager.context.delete(post)
             do {
-                try self.context.save()
+                try self.persistanceManager.context.save()
                 self.postArray.remove(at: indexPath.row)
                 self.tableview.deleteRows(at: [indexPath], with: .automatic)
             } catch let error as NSError {

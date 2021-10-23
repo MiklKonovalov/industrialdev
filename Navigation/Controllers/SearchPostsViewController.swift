@@ -11,10 +11,6 @@ import CoreData
 
 class SearchPostsViewController: UIViewController {
     
-    let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
-    
-    let likePostsViewController = LikePostsViewController()
-    
     var callback : ((String) -> Void)?
     
     var authorTextField: UITextField = {

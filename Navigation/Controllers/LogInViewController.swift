@@ -28,6 +28,8 @@ class LogInViewController: UIViewController {
     
     let brutForce = BrutForce()
     
+    let persistanceManager = PersistanceManager.shared
+    
     //1.2 Объявляем делегата для использования. В контроллере мы создаем instance протокола и называем его делегат
     var delegate: LogInViewControllerDelegate?
     
