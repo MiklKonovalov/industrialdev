@@ -72,7 +72,6 @@ class MainCoordinator: Coordinator {
     
         func configureLikePostsController() -> UINavigationController {
             
-            let persistanceManager = PersistanceManager()
             let likePostsViewController = LikePostsViewController()
             let navigationLikePostsController = UINavigationController(rootViewController: likePostsViewController)
             navigationLikePostsController.tabBarItem = UITabBarItem(

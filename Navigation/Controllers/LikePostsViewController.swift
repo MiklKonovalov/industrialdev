@@ -38,15 +38,16 @@ class LikePostsViewController: UIViewController, UITableViewDelegate, UITableVie
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        //Пробуем получить данные
-        do {
-            self.postArray = try persistanceManager.context.fetch(fetchRequest)
-            DispatchQueue.main.async {
-                self.tableview.reloadData()
+        //Чтение данных проходит в основном потоке
+            //Пробуем получить данные
+            do {
+                self.postArray = try self.persistanceManager.context.fetch(self.fetchRequest)
+                DispatchQueue.main.async {
+                    self.tableview.reloadData()
+                }
+            } catch let error as NSError {
+                print(error.localizedDescription)
             }
-        } catch let error as NSError {
-            print(error.localizedDescription)
-        }
         
     }
     
@@ -80,17 +81,21 @@ class LikePostsViewController: UIViewController, UITableViewDelegate, UITableVie
     @objc func cancelFilter() {
         print("cancelFilter")
         
-        do {
-            self.postArray = try persistanceManager.context.fetch(fetchRequest)
+        let context = persistanceManager.persistentContainer.newBackgroundContext()
+        //Запускаем потокобезопасную функцию, которая запустит код асинхронно
+        context.perform {
+            do {
+                self.postArray = try self.persistanceManager.context.fetch(self.fetchRequest)
+                DispatchQueue.main.async {
+                    self.tableview.reloadData()
+                }
+            } catch let error as NSError {
+                print(error.localizedDescription)
+            }
+            
             DispatchQueue.main.async {
                 self.tableview.reloadData()
             }
-        } catch let error as NSError {
-            print(error.localizedDescription)
-        }
-        
-        DispatchQueue.main.async {
-            self.tableview.reloadData()
         }
         
     }
@@ -110,20 +115,24 @@ class LikePostsViewController: UIViewController, UITableViewDelegate, UITableVie
     }
     
     func fetchAuthor(userName: String) {
-            
+        
         let request = Post.fetchRequest() as NSFetchRequest<Post>
         let author = userName
         let predicate = NSPredicate(format: "%K = %@", #keyPath(Post.userName), author)
         request.predicate = predicate
         
-        do {
-            let result = try persistanceManager.context.fetch(request)
-            self.postArray = result
+        let context = persistanceManager.persistentContainer.newBackgroundContext()
+        //Запускаем потокобезопасную функцию, которая запустит код в асинхронно
+        context.perform {
+            do {
+                let result = try self.persistanceManager.context.fetch(request)
+                self.postArray = result
+            }
+            catch let error as NSError {
+                print(error.localizedDescription)
+            }
         }
-        catch let error as NSError {
-            print(error.localizedDescription)
-        }
-    
+        
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -148,13 +157,18 @@ class LikePostsViewController: UIViewController, UITableViewDelegate, UITableVie
             
             guard let post = self.postArray[indexPath.row], self.postArray[indexPath.row] != nil else { return }
             
-            self.persistanceManager.context.delete(post)
-            do {
-                try self.persistanceManager.context.save()
-                self.postArray.remove(at: indexPath.row)
-                self.tableview.deleteRows(at: [indexPath], with: .automatic)
-            } catch let error as NSError {
-                print(error.localizedDescription)
+            let context = self.persistanceManager.persistentContainer.newBackgroundContext()
+            context.automaticallyMergesChangesFromParent = true
+            //Запускаем потокобезопасную функцию, которая запустит код асинхронно и дожидается результата перед тем, как отобразить в UI
+            context.performAndWait {
+                self.persistanceManager.context.delete(post)
+                do {
+                    try self.persistanceManager.context.save()
+                    self.postArray.remove(at: indexPath.row)
+                    self.tableview.deleteRows(at: [indexPath], with: .automatic)
+                } catch let error as NSError {
+                    print(error.localizedDescription)
+                }
             }
             
             completionHandler(true)
@@ -165,5 +179,5 @@ class LikePostsViewController: UIViewController, UITableViewDelegate, UITableVie
         return swipe
         
     }
-
+    
 }

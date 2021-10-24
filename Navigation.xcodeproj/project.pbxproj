@@ -45,7 +45,7 @@
 		C6A0FA1F26D6853A004FE33A /* SnapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C6A0FA1E26D6853A004FE33A /* SnapKit.framework */; };
 		C6AC46FE26FFB1C900887EA2 /* LikePostsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6AC46FC26FFAE9400887EA2 /* LikePostsViewController.swift */; };
 		C6AC470126FFBCB000887EA2 /* LikeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6AC46FF26FFBC1900887EA2 /* LikeTableViewCell.swift */; };
-		C6AC47042700CE7600887EA2 /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = C689CBEC26FE4EF10042B344 /* CoreDataStack.swift */; };
+		C6AC47042700CE7600887EA2 /* PersistanceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C689CBEC26FE4EF10042B344 /* PersistanceManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -121,7 +121,7 @@
 		C687B84E270B6EBD0074EB19 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
 		C687B850270B6F440074EB19 /* Post+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Post+CoreDataClass.swift"; sourceTree = "<group>"; };
 		C687B851270B6F440074EB19 /* Post+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Post+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		C689CBEC26FE4EF10042B344 /* CoreDataStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataStack.swift; sourceTree = "<group>"; };
+		C689CBEC26FE4EF10042B344 /* PersistanceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistanceManager.swift; sourceTree = "<group>"; };
 		C68D1DB4262245710047C976 /* Storage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Storage.swift; sourceTree = "<group>"; };
 		C68D1DB626224C5E0047C976 /* FlowTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlowTableViewCell.swift; sourceTree = "<group>"; };
 		C6A0F9A626D68088004FE33A /* NavigationNew.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NavigationNew.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -391,7 +391,7 @@
 		C6AC47022700C55D00887EA2 /* Core Data */ = {
 			isa = PBXGroup;
 			children = (
-				C689CBEC26FE4EF10042B344 /* CoreDataStack.swift */,
+				C689CBEC26FE4EF10042B344 /* PersistanceManager.swift */,
 			);
 			path = "Core Data";
 			sourceTree = "<group>";
@@ -638,7 +638,7 @@
 				C687B855270B6F5A0074EB19 /* Post+CoreDataClass.swift in Sources */,
 				C687B856270B6F5A0074EB19 /* Post+CoreDataProperties.swift in Sources */,
 				C687B854270B6F510074EB19 /* Navigation.xcdatamodeld in Sources */,
-				C6AC47042700CE7600887EA2 /* CoreDataStack.swift in Sources */,
+				C6AC47042700CE7600887EA2 /* PersistanceManager.swift in Sources */,
 				C6AC470126FFBCB000887EA2 /* LikeTableViewCell.swift in Sources */,
 				C608620127183BEE0045689E /* SearchPostsViewController.swift in Sources */,
 				C6AC46FE26FFB1C900887EA2 /* LikePostsViewController.swift in Sources */,
