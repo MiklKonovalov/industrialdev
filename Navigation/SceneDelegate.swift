@@ -23,25 +23,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
         let window = UIWindow(windowScene: windowScene)
         
-        //let nc = window.rootViewController as! UINavigationController
-        //let vc = nc.topViewController as! ProfileViewController
-        //let context = coreDataStack.persistentContainer.viewContext
-        //vc.context = context
+        let persistanceManager = PersistanceManager.shared
         
         window.rootViewController = mainCoordinator.tabBarController
         
-        
-         
-//        guard let navigationController = tabBarController.viewControllers?.first as? UINavigationController, let viewController = navigationController.viewControllers.first as? ProfileViewController else { fatalError() }
-//        viewController.viewModel = viewModel
-        
-        //Создаём программно новую иерархию вью, инициализируем feedViewController с фабрикой
-//        let feedViewController = FeedViewController(viewModel: viewModel, factory: factory) { _ in
-//            
-//        }
-        
         //Устанавливаем главный вью контроллер окну с нашим вью контроллером
-        //window.rootViewController = feedViewController
         window.makeKeyAndVisible()
         
         self.window = window
@@ -74,7 +60,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
 
     func sceneDidEnterBackground(_ scene: UIScene) {
-        (UIApplication.shared.delegate as? AppDelegate)?.saveContext()
+        //(UIApplication.shared.delegate as? AppDelegate)?.saveContext()
     }
 
 
