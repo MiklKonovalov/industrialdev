@@ -13,9 +13,11 @@ class ProfileViewController: UIViewController, UIGestureRecognizerDelegate {
     
     let viewModel = CheckModel()
     
-    var items: [Post]?
+    let persistanceManager = PersistanceManager.shared
     
     var user: User
+    
+    var items: [Post]?
     
     var howToConstraint = [NSLayoutConstraint]()
     var howToConstraintActivate = [NSLayoutConstraint]()
@@ -32,16 +34,6 @@ class ProfileViewController: UIViewController, UIGestureRecognizerDelegate {
         self.user = user
         super.init(nibName: nil, bundle: nil)
     }
-        
-    //Создаём инициализатор, который будет принимать userService и userName
-    //init(userService: UserService, userName: String) {
-        //self.userService = userService
-        //self.userName = userName
-        //Получаем именно того пользователя, имя которого мы передаём в инициализаторе (получаем объект пользователя)
-        //self.userService.getUser(userName: self.userName)
-
-        //super.init(nibName: nil, bundle: nil)
-    //}
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -115,7 +107,6 @@ class ProfileViewController: UIViewController, UIGestureRecognizerDelegate {
         
         self.view.bringSubviewToFront(avatar)
         
-        //let user = userService.getUser(userName: userName)
         avatar.image = user.avatar
         userNameLabel.text = user.name
         currentStatusLabel.text = user.status
@@ -203,16 +194,14 @@ class ProfileViewController: UIViewController, UIGestureRecognizerDelegate {
                     
                     print("Tap-tap-tap")
                     
-                    var persistentContainer = (UIApplication.shared.delegate as! AppDelegate).persistentContainer
+                    let persistentContainer = persistanceManager.persistentContainer
                     
-                    /*func newBackgroundContext() -> NSManagedObjectContext {
+                    func newBackgroundContext() -> NSManagedObjectContext {
                         return persistentContainer.newBackgroundContext()
-                    }*/
-                    
-                    let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+                    }
                     
                     //Переносим в фоновый поток:
-                    //let context = newBackgroundContext()
+                    let context = newBackgroundContext()
                     //Создаём объект
                     let newPost = Post(context: context)
                     let posts = Flow.sections.fasting[tapIndexPath.row]

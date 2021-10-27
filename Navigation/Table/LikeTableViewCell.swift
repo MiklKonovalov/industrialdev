@@ -11,8 +11,6 @@ import CoreData
 
 class LikeTableViewCell: UITableViewCell {
     
-    var context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
-    
     var post: Post? {
         didSet {
             userNameLable.text = post?.userName

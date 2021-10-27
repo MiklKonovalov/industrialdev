@@ -14,8 +14,8 @@
             filePath = "Navigation/Controllers/LogInViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "187"
-            endingLineNumber = "187"
+            startingLineNumber = "189"
+            endingLineNumber = "189"
             landmarkName = "generatePassword(passwordLength:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -30,8 +30,8 @@
             filePath = "Navigation/Controllers/LogInViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "308"
-            endingLineNumber = "308"
+            startingLineNumber = "310"
+            endingLineNumber = "310"
             landmarkName = "viewDidLoad()"
             landmarkType = "7">
          </BreakpointContent>
@@ -46,8 +46,8 @@
             filePath = "Navigation/Controllers/LogInViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "207"
-            endingLineNumber = "207"
+            startingLineNumber = "209"
+            endingLineNumber = "209"
             landmarkName = "generatePassword(passwordLength:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -62,8 +62,8 @@
             filePath = "Navigation/Controllers/LogInViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "354"
-            endingLineNumber = "354"
+            startingLineNumber = "356"
+            endingLineNumber = "356"
             landmarkName = "viewDidLoad()"
             landmarkType = "7">
          </BreakpointContent>
@@ -78,8 +78,8 @@
             filePath = "Navigation/Controllers/LogInViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "327"
-            endingLineNumber = "327"
+            startingLineNumber = "329"
+            endingLineNumber = "329"
             landmarkName = "viewDidLoad()"
             landmarkType = "7">
             <Locations>
@@ -126,10 +126,10 @@
             filePath = "Navigation/Controllers/ProfileViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "198"
-            endingLineNumber = "198"
-            landmarkName = "unknown"
-            landmarkType = "0">
+            startingLineNumber = "189"
+            endingLineNumber = "189"
+            landmarkName = "ProfileViewController"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -151,69 +151,6 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "7F6507E3-B8F4-47EA-A698-7AAF6D77244F"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Navigation/Controllers/LikePostsViewController.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "22"
-            endingLineNumber = "22"
-            landmarkName = "unknown"
-            landmarkType = "0">
-            <Locations>
-               <Location
-                  uuid = "7F6507E3-B8F4-47EA-A698-7AAF6D77244F - 97257ed0fc96c8ea"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "NavigationNew.LikePostsViewController.fetchRequest.getter : __C.NSFetchRequest&lt;NavigationNew.Post&gt;"
-                  moduleName = "NavigationNew"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/misha/Documents/XCode/Navigation/Navigation/Controllers/LikePostsViewController.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "22"
-                  endingLineNumber = "22"
-                  offsetFromSymbolStart = "56">
-               </Location>
-               <Location
-                  uuid = "7F6507E3-B8F4-47EA-A698-7AAF6D77244F - 530636f594146648"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "NavigationNew.LikePostsViewController.init(nibName: Swift.Optional&lt;Swift.String&gt;, bundle: Swift.Optional&lt;__C.NSBundle&gt;) -&gt; NavigationNew.LikePostsViewController"
-                  moduleName = "NavigationNew"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/misha/Documents/XCode/Navigation/Navigation/Controllers/LikePostsViewController.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "22"
-                  endingLineNumber = "22"
-                  offsetFromSymbolStart = "269">
-               </Location>
-               <Location
-                  uuid = "7F6507E3-B8F4-47EA-A698-7AAF6D77244F - 2d1118735183eaf"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "NavigationNew.LikePostsViewController.init(coder: __C.NSCoder) -&gt; Swift.Optional&lt;NavigationNew.LikePostsViewController&gt;"
-                  moduleName = "NavigationNew"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/misha/Documents/XCode/Navigation/Navigation/Controllers/LikePostsViewController.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "22"
-                  endingLineNumber = "22"
-                  offsetFromSymbolStart = "213">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             uuid = "2A17AD80-73D7-441D-BD25-3CBD27412B3F"
             shouldBeEnabled = "No"
             ignoreCount = "0"
@@ -221,26 +158,10 @@
             filePath = "Navigation/Controllers/ProfileViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "217"
-            endingLineNumber = "217"
-            landmarkName = "unknown"
-            landmarkType = "0">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "3A6BBA25-B849-49EA-9362-5E47B0B8E099"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Navigation/Controllers/ProfileViewController.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "212"
-            endingLineNumber = "212"
-            landmarkName = "unknown"
-            landmarkType = "0">
+            startingLineNumber = "206"
+            endingLineNumber = "206"
+            landmarkName = "doubleTap(recognizer:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -253,10 +174,10 @@
             filePath = "Navigation/Controllers/ProfileViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "397"
-            endingLineNumber = "397"
-            landmarkName = "unknown"
-            landmarkType = "0">
+            startingLineNumber = "386"
+            endingLineNumber = "386"
+            landmarkName = "tableView(_:cellForRowAt:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -269,10 +190,10 @@
             filePath = "Navigation/Controllers/ProfileViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "394"
-            endingLineNumber = "394"
-            landmarkName = "unknown"
-            landmarkType = "0">
+            startingLineNumber = "383"
+            endingLineNumber = "383"
+            landmarkName = "tableView(_:cellForRowAt:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -285,10 +206,10 @@
             filePath = "Navigation/Controllers/ProfileViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "408"
-            endingLineNumber = "408"
-            landmarkName = "unknown"
-            landmarkType = "0">
+            startingLineNumber = "397"
+            endingLineNumber = "397"
+            landmarkName = "tableView(_:didSelectRowAt:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -301,10 +222,10 @@
             filePath = "Navigation/Controllers/ProfileViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "192"
-            endingLineNumber = "192"
-            landmarkName = "unknown"
-            landmarkType = "0">
+            startingLineNumber = "183"
+            endingLineNumber = "183"
+            landmarkName = "setupTableView()"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -317,10 +238,10 @@
             filePath = "Navigation/Controllers/ProfileViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "414"
-            endingLineNumber = "414"
-            landmarkName = "unknown"
-            landmarkType = "0">
+            startingLineNumber = "403"
+            endingLineNumber = "403"
+            landmarkName = "tableView(_:didSelectRowAt:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -358,22 +279,6 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "C700F390-1C7C-426E-A426-64D4463CA4A2"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Navigation/SceneDelegate.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "25"
-            endingLineNumber = "25"
-            landmarkName = "scene(_:willConnectTo:options:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             uuid = "4424C4B9-2225-4439-963E-2C41927CD62A"
             shouldBeEnabled = "No"
             ignoreCount = "0"
@@ -384,6 +289,333 @@
             startingLineNumber = "72"
             endingLineNumber = "72"
             landmarkName = "receiveDate(appConfiguration:completion:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "A72B5F6B-1EEA-4196-A66B-F03F3D0592E9"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Navigation/Controllers/SearchPostsViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "51"
+            endingLineNumber = "51"
+            landmarkName = "searchButtonPressed()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "A7A09D43-AD36-4241-892A-1BF2F99B9CFC"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Navigation/Controllers/SearchPostsViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "14"
+            endingLineNumber = "14"
+            landmarkName = "SearchPostsViewController"
+            landmarkType = "3">
+            <Locations>
+               <Location
+                  uuid = "A7A09D43-AD36-4241-892A-1BF2F99B9CFC - 5611bbb1b6b592a8"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "NavigationNew.SearchPostsViewController.callback.getter : Swift.Optional&lt;() -&gt; ()&gt;"
+                  moduleName = "NavigationNew"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/misha/Documents/XCode/Navigation/Navigation/Controllers/SearchPostsViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "16"
+                  endingLineNumber = "16"
+                  offsetFromSymbolStart = "131">
+               </Location>
+               <Location
+                  uuid = "A7A09D43-AD36-4241-892A-1BF2F99B9CFC - 96f978eb1e2712dc"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "NavigationNew.SearchPostsViewController.callback.setter : Swift.Optional&lt;() -&gt; ()&gt;"
+                  moduleName = "NavigationNew"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/misha/Documents/XCode/Navigation/Navigation/Controllers/SearchPostsViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "16"
+                  endingLineNumber = "16"
+                  offsetFromSymbolStart = "166">
+               </Location>
+               <Location
+                  uuid = "A7A09D43-AD36-4241-892A-1BF2F99B9CFC - 1fe556051de460bd"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "NavigationNew.SearchPostsViewController.callback.modify : Swift.Optional&lt;() -&gt; ()&gt;"
+                  moduleName = "NavigationNew"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/misha/Documents/XCode/Navigation/Navigation/Controllers/SearchPostsViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "0"
+                  endingLineNumber = "0"
+                  offsetFromSymbolStart = "18">
+               </Location>
+               <Location
+                  uuid = "A7A09D43-AD36-4241-892A-1BF2F99B9CFC - f8404e742a75d5cc"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "NavigationNew.SearchPostsViewController.callback.modify : Swift.Optional&lt;() -&gt; ()&gt; with unmangled suffix &quot;.resume.0&quot;"
+                  moduleName = "NavigationNew"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/misha/Documents/XCode/Navigation/Navigation/Controllers/SearchPostsViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "16"
+                  endingLineNumber = "16"
+                  offsetFromSymbolStart = "8">
+               </Location>
+               <Location
+                  uuid = "A7A09D43-AD36-4241-892A-1BF2F99B9CFC - 7afb47ffd0fbe2a0"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "NavigationNew.SearchPostsViewController.init(nibName: Swift.Optional&lt;Swift.String&gt;, bundle: Swift.Optional&lt;__C.NSBundle&gt;) -&gt; NavigationNew.SearchPostsViewController"
+                  moduleName = "NavigationNew"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/misha/Documents/XCode/Navigation/Navigation/Controllers/SearchPostsViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "16"
+                  endingLineNumber = "16"
+                  offsetFromSymbolStart = "577">
+               </Location>
+               <Location
+                  uuid = "A7A09D43-AD36-4241-892A-1BF2F99B9CFC - ec2d078cf0f21e02"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "NavigationNew.SearchPostsViewController.init(coder: __C.NSCoder) -&gt; Swift.Optional&lt;NavigationNew.SearchPostsViewController&gt;"
+                  moduleName = "NavigationNew"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/misha/Documents/XCode/Navigation/Navigation/Controllers/SearchPostsViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "16"
+                  endingLineNumber = "16"
+                  offsetFromSymbolStart = "515">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "FB4044FA-58AE-44EA-A4E9-5D4EE3C24B06"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Navigation/Controllers/LikePostsViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "82"
+            endingLineNumber = "82"
+            landmarkName = "addFilter()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "0C2B15DC-19EF-44ED-9662-7E258F078300"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Navigation/Controllers/LikePostsViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "81"
+            endingLineNumber = "81"
+            landmarkName = "addFilter()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "F91DC050-12D0-4310-8C23-702E11DEDCE8"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Navigation/Controllers/LikePostsViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "90"
+            endingLineNumber = "90"
+            landmarkName = "cancelFilter()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "219FC526-7B90-4432-8B90-F3F65EB36DFF"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Navigation/Controllers/ProfileViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "204"
+            endingLineNumber = "204"
+            landmarkName = "doubleTap(recognizer:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "F0E158EC-29B5-4771-898A-BAE2FB8F7678"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Navigation/Controllers/LikePostsViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "35"
+            endingLineNumber = "35"
+            landmarkName = "fetchResultController"
+            landmarkType = "24">
+            <Locations>
+               <Location
+                  uuid = "F0E158EC-29B5-4771-898A-BAE2FB8F7678 - d09a1cc63f9faef9"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "NavigationNew.LikePostsViewController.fetchResultController.getter : __C.NSFetchedResultsController&lt;NavigationNew.Post&gt;"
+                  moduleName = "NavigationNew"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/misha/Documents/XCode/Navigation/Navigation/Controllers/LikePostsViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "38"
+                  endingLineNumber = "38"
+                  offsetFromSymbolStart = "221">
+               </Location>
+               <Location
+                  uuid = "F0E158EC-29B5-4771-898A-BAE2FB8F7678 - c977895fd1c3a3cf"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 () -&gt; __C.NSFetchedResultsController&lt;NavigationNew.Post&gt; in NavigationNew.LikePostsViewController.fetchResultController.getter : __C.NSFetchedResultsController&lt;NavigationNew.Post&gt;"
+                  moduleName = "NavigationNew"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/misha/Documents/XCode/Navigation/Navigation/Controllers/LikePostsViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "40"
+                  endingLineNumber = "40"
+                  offsetFromSymbolStart = "49">
+               </Location>
+               <Location
+                  uuid = "F0E158EC-29B5-4771-898A-BAE2FB8F7678 - b463a32a651946cd"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "NavigationNew.LikePostsViewController.fetchResultController.setter : __C.NSFetchedResultsController&lt;NavigationNew.Post&gt;"
+                  moduleName = "NavigationNew"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/misha/Documents/XCode/Navigation/Navigation/Controllers/LikePostsViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "38"
+                  endingLineNumber = "38"
+                  offsetFromSymbolStart = "164">
+               </Location>
+               <Location
+                  uuid = "F0E158EC-29B5-4771-898A-BAE2FB8F7678 - 46e0a49a95442c10"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "NavigationNew.LikePostsViewController.fetchResultController.modify : __C.NSFetchedResultsController&lt;NavigationNew.Post&gt;"
+                  moduleName = "NavigationNew"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/misha/Documents/XCode/Navigation/Navigation/Controllers/LikePostsViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "0"
+                  endingLineNumber = "0"
+                  offsetFromSymbolStart = "16">
+               </Location>
+               <Location
+                  uuid = "F0E158EC-29B5-4771-898A-BAE2FB8F7678 - 1928c9cd6285fe83"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "NavigationNew.LikePostsViewController.fetchResultController.modify : __C.NSFetchedResultsController&lt;NavigationNew.Post&gt; with unmangled suffix &quot;.resume.0&quot;"
+                  moduleName = "NavigationNew"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/misha/Documents/XCode/Navigation/Navigation/Controllers/LikePostsViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "38"
+                  endingLineNumber = "38"
+                  offsetFromSymbolStart = "26">
+               </Location>
+               <Location
+                  uuid = "F0E158EC-29B5-4771-898A-BAE2FB8F7678 - 530636f594146478"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "NavigationNew.LikePostsViewController.init(nibName: Swift.Optional&lt;Swift.String&gt;, bundle: Swift.Optional&lt;__C.NSBundle&gt;) -&gt; NavigationNew.LikePostsViewController"
+                  moduleName = "NavigationNew"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/misha/Documents/XCode/Navigation/Navigation/Controllers/LikePostsViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "38"
+                  endingLineNumber = "38"
+                  offsetFromSymbolStart = "529">
+               </Location>
+               <Location
+                  uuid = "F0E158EC-29B5-4771-898A-BAE2FB8F7678 - 2d1118735183c9f"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "NavigationNew.LikePostsViewController.init(coder: __C.NSCoder) -&gt; Swift.Optional&lt;NavigationNew.LikePostsViewController&gt;"
+                  moduleName = "NavigationNew"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/misha/Documents/XCode/Navigation/Navigation/Controllers/LikePostsViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "38"
+                  endingLineNumber = "38"
+                  offsetFromSymbolStart = "467">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "931300C1-E0E4-474A-9C97-684E36551DCE"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Navigation/Controllers/LikePostsViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "56"
+            endingLineNumber = "56"
+            landmarkName = "viewWillAppear(_:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
