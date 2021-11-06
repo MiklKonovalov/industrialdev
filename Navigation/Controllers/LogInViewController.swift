@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import RealmSwift
+import Locksmith
 
 //Протокол делегирования проверки логинаи пароля. Он имеет несколько параметров, данных для передачи обратно вызвавшему контроллеру. В данном случае я передаю обратно контроллеру логин и пароль.
 protocol LogInViewControllerDelegate: AnyObject {
@@ -22,14 +24,40 @@ protocol LoginFactory {
     func checkLoginByFactory() -> LoginInspetor
 }
 
-// Слой Presentation: M-V-C (V + C)
+
+//REALM: 1. Создаём класс для создания модели
+class UserList: Object {
+    //1.1. Определяем свойства этой модели
+    @objc dynamic var login: String = ""
+    @objc dynamic var password: String = ""
+    
+    convenience init(login: String, password: String) {
+        self.init()
+        self.login = login
+        self.password = password
+    }
+ 
+    /*override static func primaryKey() -> String {
+        return "id"
+    }*/
+}
+
+
+
 
 class LogInViewController: UIViewController {
+    
+    var key = Data(count: 64)
+    
+    //Создаём экземпляр класса UserDefaults
+    let defaults = UserDefaults.standard
     
     let brutForce = BrutForce()
     
     //1.2 Объявляем делегата для использования. В контроллере мы создаем instance протокола и называем его делегат
     var delegate: LogInViewControllerDelegate?
+    
+    var places: Results<UserList>!
     
     //MARK: Create subviews
     let substrate: UIView = {
@@ -137,12 +165,8 @@ class LogInViewController: UIViewController {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
-//Используется, если есть storyboard
-//    required init?(coder: NSCoder) {
-//        super.init(coder: coder)
-//    }
     
+    //MARK: FUNCTIONS
     func createSpinnerView() {
         let child = SpinnerViewController()
 
@@ -161,16 +185,56 @@ class LogInViewController: UIViewController {
         }
     }
     
+    
+    //MARK: SELECTORS
     @objc private func logInButtonPressed() {
-        
-        //guard let userName = userNameTextField.text, let _ = passwordTextField.text else { return }
-    #if DEBUG
-    let user = delegate?.checkValue(login: userNameTextField.text ?? "", password: passwordTextField.text ?? "") ?? User(name: "Нет данных", avatar: UIImage(named: "gratis") ?? UIImage(), status: "Нет данных")
-    #else
-        let userService = CurrentUserService()
-    #endif
-        var profileViewController = ProfileViewController(user: user)
-        self.navigationController?.pushViewController(profileViewController, animated: true)
+        //Проверяем, есть ли в БД значения
+        let realm = try? Realm()
+        let results = realm?.objects(UserList.self)
+        print(results)
+        if results != nil {
+            //Загружаем ключ шифрования, чтобы расшифровать данные
+            let dictionary = Locksmith.loadDataForUserAccount(userAccount: "QwertAccount")
+            print("Dictionary is: \(dictionary)")
+            guard userNameTextField.text == results?[0].login else { return }
+            let user = User(name: "Realm", avatar: UIImage(named: "регби") ?? UIImage(), status: "Я авторизовался без ввода данных")
+            let profileViewController = ProfileViewController(user: user)
+            self.navigationController?.pushViewController(profileViewController, animated: true)
+        } else {
+            //Если в Keychain нет сохранённых данных, то сохраняем ввёдённые данные в поля логин и пароль
+            
+            //REALM: Создаём экземпляр класса модели
+            let userOne = UserList()
+            //REALM: Присваиваю значения свойствам
+            userOne.login = userNameTextField.text ?? ""
+            userOne.password = passwordTextField.text ?? ""
+            //Создайм объект для доступа к базе данных
+            do {
+                //Генерируем ключ
+                _ = key.withUnsafeMutableBytes { (pointer: UnsafeMutableRawBufferPointer) in
+                    SecRandomCopyBytes(kSecRandomDefault, 64, pointer.baseAddress!) }
+                //Создаем конфигурацию для зашифрованной базы данных. Шифруем БД с ключом key
+                let config = Realm.Configuration(encryptionKey: key)
+                //Сохраняем ключ в Локсмит
+                do {
+                    try Locksmith.saveData(data: ["key" : key], forUserAccount: "QwertAccount")
+                }
+                catch {
+                    print("Не удалось сохранть ключ")
+                }
+                //Получаем доступ к базе
+                let realm = try Realm(configuration: config)
+                //Сохраняем объект в базу
+                DispatchQueue.main.async {
+                    try! realm.write {
+                        realm.add([userOne])
+                    }
+                }
+            }
+            catch {
+                print(error)
+            }
+        }
     }
     
     @objc private func generatePassword(passwordLength: Int) -> String {
@@ -178,10 +242,6 @@ class LogInViewController: UIViewController {
         //Создаём очередь на побочном потоке
         let queue = DispatchQueue(label: "my_queue",
                                   attributes: .concurrent)
-        
-        //let queue2 = DispatchQueue(label: "my_queue2",
-        //                           qos: .userInteractive,
-        //                           attributes: .concurrent)
         
         let taskGroup1 = DispatchGroup()
         let taskGroup2 = DispatchGroup()
@@ -206,6 +266,7 @@ class LogInViewController: UIViewController {
                 print("Начат подбор пароля")
                 self.brutForce.bruteForce(passwordToUnlock: password)
             }
+        
         taskGroup2.leave()
         
         taskGroup1.enter()
@@ -251,32 +312,38 @@ class LogInViewController: UIViewController {
         
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+        
     }
     
-    //MARK: Add subviews
+    //MARK: VIEWDIDLOAD
     override func viewDidLoad() {
         super.viewDidLoad()
         
         self.navigationController?.isNavigationBarHidden = true
         view.backgroundColor = .white
         
-        //.concurrent - делает возможным запустить потоки параллельно
-//        let queue = DispatchQueue(label: "my_queue", qos: .default, attributes: .concurrent)
-//        let queue2 = DispatchQueue(label: "my_queue", qos: .userInteractive, attributes: .concurrent)
-//
-//        queue.async {
-//            print("queue.async")
-//            self.brutForce.bruteForce(passwordToUnlock: self.pass)
-//        }
-//
-//        queue2.async {
-//            print("queue2.async")
-//            self.passwordTextField.text = self.pass
-//        }
-        
-//        DispatchQueue.main.async {
-//            print("123")
-//        }
+        //Проверяем, есть ли ключ в Keychain
+        let dictionary = Locksmith.loadDataForUserAccount(userAccount: "QwertAccount")
+        if dictionary != nil {
+            //Если ключ есть, то достаём его и читаем данные из БД
+            print("There is key in Keychain")
+            if let key = dictionary?["key"] {
+                let config = Realm.Configuration(encryptionKey: key as? Data)
+                do {
+                    let realm = try Realm(configuration: config)
+                    let results = realm.objects(UserList.self)
+                    print("Пароли и явки: \(results)")
+                }
+                catch {
+                    print("No realm")
+                }
+            } else {
+                print("Can't find a key")
+            }
+        } else {
+            //Если ключа нет, то предлагаем зарегистрироваться
+            logInButton.setTitle("Sign In", for: .normal)
+        }
         
         self.view.addSubview(scrollView)
         scrollView.addSubview(myView)

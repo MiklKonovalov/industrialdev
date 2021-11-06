@@ -145,6 +145,8 @@
 		C610D3F0269EEF500035B24F /* CustomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
 		C610D3F6269F1B110035B24F /* CheckViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckViewModel.swift; sourceTree = "<group>"; };
 		C610D3F826A093250035B24F /* TextInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextInput.swift; sourceTree = "<group>"; };
+		C61E4084272F05D900EB79C1 /* RealmSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = RealmSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C61E4086272F05EE00EB79C1 /* Realm.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Realm.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C6295C56261CEBA900CA7154 /* LogInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInViewController.swift; sourceTree = "<group>"; };
 		C63AD35026BAA00500C55030 /* BrutForce.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrutForce.swift; sourceTree = "<group>"; };
 		C63AD35226BBF71700C55030 /* SpinnerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpinnerViewController.swift; sourceTree = "<group>"; };
@@ -275,6 +277,8 @@
 		29502A268D146D314787AC8F /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				C61E4086272F05EE00EB79C1 /* Realm.framework */,
+				C61E4084272F05D900EB79C1 /* RealmSwift.framework */,
 				C6A0FA1E26D6853A004FE33A /* SnapKit.framework */,
 				614E6886B992B8415D02A20E /* Pods_Navigation.framework */,
 				14DBFFAF4EFC24A3DA236EB0 /* Pods_NavigationNew.framework */,
