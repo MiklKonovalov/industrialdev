@@ -4,5 +4,6 @@ target 'NavigationNew' do
     
     pod 'SnapKit', '~> 5.0.0'
     pod 'RealmSwift'
+    pod 'Locksmith'
     
 end

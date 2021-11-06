@@ -8,6 +8,7 @@
 
 import UIKit
 import RealmSwift
+import Locksmith
 
 //Протокол делегирования проверки логинаи пароля. Он имеет несколько параметров, данных для передачи обратно вызвавшему контроллеру. В данном случае я передаю обратно контроллеру логин и пароль.
 protocol LogInViewControllerDelegate: AnyObject {
@@ -27,8 +28,8 @@ protocol LoginFactory {
 //REALM: 1. Создаём класс для создания модели
 class UserList: Object {
     //1.1. Определяем свойства этой модели
-    @objc dynamic var login = ""
-    @objc dynamic var password = ""
+    @objc dynamic var login: String = ""
+    @objc dynamic var password: String = ""
     
     convenience init(login: String, password: String) {
         self.init()
@@ -45,6 +46,11 @@ class UserList: Object {
 
 
 class LogInViewController: UIViewController {
+    
+    var key = Data(count: 64)
+    
+    //Создаём экземпляр класса UserDefaults
+    let defaults = UserDefaults.standard
     
     let brutForce = BrutForce()
     
@@ -182,36 +188,53 @@ class LogInViewController: UIViewController {
     
     //MARK: SELECTORS
     @objc private func logInButtonPressed() {
-     
-        //let mike = UserList(login: userNameTextField.text ?? "", password: passwordTextField.text ?? "", _id: "0")
-        
-    let realm = try! Realm() //Создайм объект для доступа к базе данных
-    //var items: Results<UserList>! //Контейнер со свойствами объекта UserList
-        
-    #if DEBUG
-    //REALM: 2. Создаём экземпляр класса модели
-    let userOne = UserList()
-    
-    //REALM: 3. Присваиваем значение свойствам
-    userOne.login = userNameTextField.text ?? ""
-    userOne.password = passwordTextField.text ?? ""
-
-    //REALM: 3. Присваиваем значение свойствам альтарнативым методом
-    //let userData = UserList(value: ["moscow","qwerty"])
-    
-    //REALM: 4. Сохраняем объект в базу
-    DispatchQueue.main.async {
-        try! realm.write {
-            realm.add([userOne])
+        //Проверяем, есть ли в БД значения
+        let realm = try? Realm()
+        let results = realm?.objects(UserList.self)
+        print(results)
+        if results != nil {
+            //Загружаем ключ шифрования, чтобы расшифровать данные
+            let dictionary = Locksmith.loadDataForUserAccount(userAccount: "QwertAccount")
+            print("Dictionary is: \(dictionary)")
+            guard userNameTextField.text == results?[0].login else { return }
+            let user = User(name: "Realm", avatar: UIImage(named: "регби") ?? UIImage(), status: "Я авторизовался без ввода данных")
+            let profileViewController = ProfileViewController(user: user)
+            self.navigationController?.pushViewController(profileViewController, animated: true)
+        } else {
+            //Если в Keychain нет сохранённых данных, то сохраняем ввёдённые данные в поля логин и пароль
+            
+            //REALM: Создаём экземпляр класса модели
+            let userOne = UserList()
+            //REALM: Присваиваю значения свойствам
+            userOne.login = userNameTextField.text ?? ""
+            userOne.password = passwordTextField.text ?? ""
+            //Создайм объект для доступа к базе данных
+            do {
+                //Генерируем ключ
+                _ = key.withUnsafeMutableBytes { (pointer: UnsafeMutableRawBufferPointer) in
+                    SecRandomCopyBytes(kSecRandomDefault, 64, pointer.baseAddress!) }
+                //Создаем конфигурацию для зашифрованной базы данных. Шифруем БД с ключом key
+                let config = Realm.Configuration(encryptionKey: key)
+                //Сохраняем ключ в Локсмит
+                do {
+                    try Locksmith.saveData(data: ["key" : key], forUserAccount: "QwertAccount")
+                }
+                catch {
+                    print("Не удалось сохранть ключ")
+                }
+                //Получаем доступ к базе
+                let realm = try Realm(configuration: config)
+                //Сохраняем объект в базу
+                DispatchQueue.main.async {
+                    try! realm.write {
+                        realm.add([userOne])
+                    }
+                }
+            }
+            catch {
+                print(error)
+            }
         }
-    }
-    
-    let user = delegate?.checkValue(login: userNameTextField.text ?? "", password: passwordTextField.text ?? "") ?? User(name: "Нет данных", avatar: UIImage(named: "gratis") ?? UIImage(), status: "Нет данных")
-    #else
-        let userService = CurrentUserService()
-    #endif
-        var profileViewController = ProfileViewController(user: user)
-        self.navigationController?.pushViewController(profileViewController, animated: true)
     }
     
     @objc private func generatePassword(passwordLength: Int) -> String {
@@ -219,10 +242,6 @@ class LogInViewController: UIViewController {
         //Создаём очередь на побочном потоке
         let queue = DispatchQueue(label: "my_queue",
                                   attributes: .concurrent)
-        
-        //let queue2 = DispatchQueue(label: "my_queue2",
-        //                           qos: .userInteractive,
-        //                           attributes: .concurrent)
         
         let taskGroup1 = DispatchGroup()
         let taskGroup2 = DispatchGroup()
@@ -247,6 +266,7 @@ class LogInViewController: UIViewController {
                 print("Начат подбор пароля")
                 self.brutForce.bruteForce(passwordToUnlock: password)
             }
+        
         taskGroup2.leave()
         
         taskGroup1.enter()
@@ -292,6 +312,7 @@ class LogInViewController: UIViewController {
         
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+        
     }
     
     //MARK: VIEWDIDLOAD
@@ -301,56 +322,28 @@ class LogInViewController: UIViewController {
         self.navigationController?.isNavigationBarHidden = true
         view.backgroundColor = .white
         
-        let realm = try! Realm()
-        
-        print("Адрес БД: \(Realm.Configuration.defaultConfiguration.fileURL)")
-        
-        //REALM: 5. Обращаемся к базе данных (применяю фильтр для тренировки)
-        let results = try! Realm().objects(UserList.self).filter("login = '1234'")
-        
-        print("Пароли и явки: \(results)")
-        
-        print("Количество юзеров с логином: \(results.count)")
-        
-        userNameTextField.text = results[0].login
-        passwordTextField.text = results[0].password
-        
-        if userNameTextField.text == results[0].login {
-            let user = User(name: "Realm", avatar: UIImage(named: "регби") ?? UIImage(), status: "Я авторизовался без ввода данных")
-            var profileViewController = ProfileViewController(user: user)
-            self.navigationController?.pushViewController(profileViewController, animated: true)
-        }
-        
-        //Пытался авторизоваться с данным способом, но у меня не получилось
-        /*let email = results[0].login
-        let password = results[0].password
-        let app = App(id: "App ID")
-        app.login(credentials: Credentials.emailPassword(email: email, password: password)) { (results) in
-                switch results {
-                case .failure(let error):
-                    print("Login failed: \(error.localizedDescription)")
-                case .success:
-                    print("Success")
+        //Проверяем, есть ли ключ в Keychain
+        let dictionary = Locksmith.loadDataForUserAccount(userAccount: "QwertAccount")
+        if dictionary != nil {
+            //Если ключ есть, то достаём его и читаем данные из БД
+            print("There is key in Keychain")
+            if let key = dictionary?["key"] {
+                let config = Realm.Configuration(encryptionKey: key as? Data)
+                do {
+                    let realm = try Realm(configuration: config)
+                    let results = realm.objects(UserList.self)
+                    print("Пароли и явки: \(results)")
                 }
-        }*/
-                
-        //.concurrent - делает возможным запустить потоки параллельно
-//        let queue = DispatchQueue(label: "my_queue", qos: .default, attributes: .concurrent)
-//        let queue2 = DispatchQueue(label: "my_queue", qos: .userInteractive, attributes: .concurrent)
-//
-//        queue.async {
-//            print("queue.async")
-//            self.brutForce.bruteForce(passwordToUnlock: self.pass)
-//        }
-//
-//        queue2.async {
-//            print("queue2.async")
-//            self.passwordTextField.text = self.pass
-//        }
-        
-//        DispatchQueue.main.async {
-//            print("123")
-//        }
+                catch {
+                    print("No realm")
+                }
+            } else {
+                print("Can't find a key")
+            }
+        } else {
+            //Если ключа нет, то предлагаем зарегистрироваться
+            logInButton.setTitle("Sign In", for: .normal)
+        }
         
         self.view.addSubview(scrollView)
         scrollView.addSubview(myView)
