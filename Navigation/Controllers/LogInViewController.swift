@@ -258,25 +258,7 @@ class LogInViewController: UIViewController {
         super.viewDidLoad()
         
         self.navigationController?.isNavigationBarHidden = true
-        view.backgroundColor = .white
-        
-        //.concurrent - делает возможным запустить потоки параллельно
-//        let queue = DispatchQueue(label: "my_queue", qos: .default, attributes: .concurrent)
-//        let queue2 = DispatchQueue(label: "my_queue", qos: .userInteractive, attributes: .concurrent)
-//
-//        queue.async {
-//            print("queue.async")
-//            self.brutForce.bruteForce(passwordToUnlock: self.pass)
-//        }
-//
-//        queue2.async {
-//            print("queue2.async")
-//            self.passwordTextField.text = self.pass
-//        }
-        
-//        DispatchQueue.main.async {
-//            print("123")
-//        }
+        view.backgroundColor = .systemBackground
         
         self.view.addSubview(scrollView)
         scrollView.addSubview(myView)
@@ -296,8 +278,7 @@ class LogInViewController: UIViewController {
         
         passwordTextField.isSecureTextEntry = false
         
-    //MARK: Create constraints
-       
+        //MARK: Create constraints
         let constraints = [
             
             scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
