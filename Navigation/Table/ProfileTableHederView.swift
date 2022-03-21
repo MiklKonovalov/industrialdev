@@ -11,9 +11,9 @@ import SnapKit
 
 class ProfileTableHeaderView: UITableViewHeaderFooterView {
     
+    //MARK: -Properties
     private var statusText: String?
     
-    //MARK: Create elements
     private let spaceView: UIView = {
         let spaceView = UIView()
         spaceView.translatesAutoresizingMaskIntoConstraints = false
@@ -28,12 +28,13 @@ class ProfileTableHeaderView: UITableViewHeaderFooterView {
         newStatus.layer.cornerRadius = 12
         newStatus.addTarget(self, action: #selector(statusTextChange), for: .editingChanged)
         newStatus.leftViewMode = .always
+        newStatus.layer.backgroundColor = UIColor.systemGray6.cgColor
         newStatus.translatesAutoresizingMaskIntoConstraints = false
         return newStatus
         }()
     
     private let actionButton: CustomButton = {
-        let button = CustomButton(title: "Обновить статус", titleColor: .green) {
+        let button = CustomButton(title: "Обновить статус", titleColor: .white) {
             print("change status")
         }
         button.layer.shadowRadius = 4
@@ -42,15 +43,15 @@ class ProfileTableHeaderView: UITableViewHeaderFooterView {
         button.layer.shadowOpacity = 0.7
         button.layer.cornerRadius = 4
         button.clipsToBounds = false
-        button.backgroundColor = .systemBlue
+        button.backgroundColor = UIColor.appColor(.buttoncolor)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: #selector(actionButtonPressed), for: .touchUpInside)
         return button
         }()
         
-    //MARK: Create Actions
+    //MARK: Selectors
     @objc private func actionButtonPressed() {
-        print("change status pressed")
+        statusText = newStatus.text
     }
     
     @objc private func statusTextChange(_ newStatus: UITextField) {
@@ -58,7 +59,7 @@ class ProfileTableHeaderView: UITableViewHeaderFooterView {
            print(statusText ?? " ")
     }
     
-    //MARK: Initials for reusable raws
+    //MARK: -Inicializations
     override init(reuseIdentifier: String?) {
         super.init(reuseIdentifier: reuseIdentifier)
         setupViews()
@@ -68,7 +69,14 @@ class ProfileTableHeaderView: UITableViewHeaderFooterView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    //MARK: Add subviews
+    //MARK: -Functions
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+
+        newStatus.layer.backgroundColor = UIColor.systemGray6.cgColor
+        
+    }
+    
     fileprivate func setupViews() {
         contentView.addSubview(newStatus)
 

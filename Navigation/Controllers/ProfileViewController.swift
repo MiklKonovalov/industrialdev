@@ -15,42 +15,17 @@ class ProfileViewController: UIViewController {
 //
 //    var userName: String
     
+    //MARK: -Properties
+    
     var user: User
     
     let viewModel = CheckModel()
     
-    init(user: User) {
-        self.user = user
-        super.init(nibName: nil, bundle: nil)
-    }
-        
-    //Создаём инициализатор, который будет принимать userService и userName
-    //init(userService: UserService, userName: String) {
-        //self.userService = userService
-        //self.userName = userName
-        //Получаем именно того пользователя, имя которого мы передаём в инициализаторе (получаем объект пользователя)
-        //self.userService.getUser(userName: self.userName)
-
-        //super.init(nibName: nil, bundle: nil)
-    //}
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    var howToConstraint = [NSLayoutConstraint]()
-    var howToConstraintActivate = [NSLayoutConstraint]()
-    var deactivateAnimation = [NSLayoutConstraint]()
-    var buttonAnimation = [NSLayoutConstraint]()
-    
-    var header = ProfileTableHeaderView()
-    
-    //MARK: -Create subview's for animation
     let currentStatusLabel: UILabel = {
         let currentStatus = UILabel()
         currentStatus.font = UIFont.systemFont(ofSize: 14, weight: .regular)
         currentStatus.text = "Waiting for something..."
-        currentStatus.textColor = .gray
+        currentStatus.textColor = UIColor.appColor(.titlecolor)
         currentStatus.textAlignment = .center
         currentStatus.translatesAutoresizingMaskIntoConstraints = false
         return currentStatus
@@ -61,7 +36,7 @@ class ProfileViewController: UIViewController {
         userName.font = UIFont.systemFont(ofSize: 18, weight: .bold)
         userName.text = "Ice Cream"
         userName.textAlignment = .center
-        userName.textColor = .black
+        userName.textColor = UIColor.appColor(.titlecolor)
         userName.translatesAutoresizingMaskIntoConstraints = false
         return userName
         }()
@@ -91,24 +66,61 @@ class ProfileViewController: UIViewController {
         closeButton.addTarget(self, action: #selector(closeButtonPressed), for: .touchUpInside)
         return closeButton
     }()
+    
+    var howToConstraint = [NSLayoutConstraint]()
+    var howToConstraintActivate = [NSLayoutConstraint]()
+    var deactivateAnimation = [NSLayoutConstraint]()
+    var buttonAnimation = [NSLayoutConstraint]()
+    
+    var header = ProfileTableHeaderView()
+    
+    private let tableView = UITableView(frame: .zero, style: .grouped)
+    private let reuseId = "cellid"
+    private let collectionId = "cellidTwo"
 
+    //MARK: -Inicialization
+    
+    init(user: User) {
+        self.user = user
+        super.init(nibName: nil, bundle: nil)
+    }
+        
+    //Создаём инициализатор, который будет принимать userService и userName
+    //init(userService: UserService, userName: String) {
+        //self.userService = userService
+        //self.userName = userName
+        //Получаем именно того пользователя, имя которого мы передаём в инициализаторе (получаем объект пользователя)
+        //self.userService.getUser(userName: self.userName)
+
+        //super.init(nibName: nil, bundle: nil)
+    //}
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    //MARK: -Selectors
+    
     @objc private func closeButtonPressed() {
         closeAnimate()
         closeButtonAnimation()
     }
+    
+    @objc func tap() {
+        animateAnimatorVC()
+        animateButtonAnimatorVC()
+    }
+    
+    //MARK: -Lifecycle
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationController?.navigationBar.isHidden = true
     }
     
-    private let tableView = UITableView(frame: .zero, style: .grouped)
-    private let reuseId = "cellid"
-    private let collectionId = "cellidTwo"
-    
-    //MARK: viewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         setupConstraints()
         setupTableView()
         
@@ -122,14 +134,15 @@ class ProfileViewController: UIViewController {
         userNameLabel.text = user.name
         currentStatusLabel.text = user.status
         
+        tableView.backgroundColor = .systemBackground
         
         //MARK: Setup constraints
-        var avatarTopAnchor =
+        let avatarTopAnchor =
             avatar.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 16)
-        var avatarLeadingAnchor = avatar.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16)
+        let avatarLeadingAnchor = avatar.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16)
             
-        var avatarHeight = avatar.heightAnchor.constraint(equalToConstant: 100)
-        var avatarWidth =  avatar.widthAnchor.constraint(equalToConstant: 100)
+        let avatarHeight = avatar.heightAnchor.constraint(equalToConstant: 100)
+        let avatarWidth =  avatar.widthAnchor.constraint(equalToConstant: 100)
         
         userNameLabel.snp.makeConstraints { make in
             make.top.equalTo(view.safeAreaLayoutGuide).inset(15)
@@ -150,15 +163,15 @@ class ProfileViewController: UIViewController {
         NSLayoutConstraint.activate(howToConstraint)
         
         //MARK: Setup Animate constraints
-        var greyViewForActionTopAnchor = greyViewForAction.topAnchor.constraint(equalTo: view.topAnchor)
-        var greyViewForActionLeadingAnchor = greyViewForAction.leadingAnchor.constraint(equalTo: view.leadingAnchor)
-        var greyViewForActionBottomAnchor = greyViewForAction.bottomAnchor.constraint(equalTo: view.bottomAnchor)
-        var greyViewForActionTrailingAnchor = greyViewForAction.trailingAnchor.constraint(equalTo: view.trailingAnchor)
+        let greyViewForActionTopAnchor = greyViewForAction.topAnchor.constraint(equalTo: view.topAnchor)
+        let greyViewForActionLeadingAnchor = greyViewForAction.leadingAnchor.constraint(equalTo: view.leadingAnchor)
+        let greyViewForActionBottomAnchor = greyViewForAction.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+        let greyViewForActionTrailingAnchor = greyViewForAction.trailingAnchor.constraint(equalTo: view.trailingAnchor)
             
-        var avatarNewTopPosition = avatar.topAnchor.constraint(equalTo: view.topAnchor, constant: 200)
-        var avatarNewCenterPosition = avatar.centerXAnchor.constraint(equalTo: view.centerXAnchor)
-        var avatarNewWidthPosition = avatar.widthAnchor.constraint(equalTo: view.widthAnchor)
-        var avatarNewHeighPosition = avatar.heightAnchor.constraint(equalTo: view.widthAnchor)
+        let avatarNewTopPosition = avatar.topAnchor.constraint(equalTo: view.topAnchor, constant: 200)
+        let avatarNewCenterPosition = avatar.centerXAnchor.constraint(equalTo: view.centerXAnchor)
+        let avatarNewWidthPosition = avatar.widthAnchor.constraint(equalTo: view.widthAnchor)
+        let avatarNewHeighPosition = avatar.heightAnchor.constraint(equalTo: view.widthAnchor)
         
         howToConstraintActivate.append(greyViewForActionTopAnchor)
         howToConstraintActivate.append(greyViewForActionLeadingAnchor)
@@ -171,14 +184,14 @@ class ProfileViewController: UIViewController {
         howToConstraintActivate.append(avatarNewHeighPosition)
         
         //MARK: Setup Button Animation
-        var closeButtonTop = closeButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 10)
-        var closeButtonTrailing = closeButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -10)
+        let closeButtonTop = closeButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 10)
+        let closeButtonTrailing = closeButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -10)
         
         buttonAnimation.append(closeButtonTop)
         buttonAnimation.append(closeButtonTrailing)
         
         //MARK: Setup Return Animation constraints
-        var returnAvatarPosition = self.avatar.topAnchor.constraint(equalTo: self.tableView.topAnchor, constant: 16)
+        let returnAvatarPosition = self.avatar.topAnchor.constraint(equalTo: self.tableView.topAnchor, constant: 16)
         
         deactivateAnimation.append(returnAvatarPosition)
     }
@@ -213,11 +226,6 @@ class ProfileViewController: UIViewController {
         ]
         
         NSLayoutConstraint.activate(constraintsTableView)
-    }
-    //MARK: Tap
-    @objc func tap() {
-        animateAnimatorVC()
-        animateButtonAnimatorVC()
     }
     
     //MARK: Setup animation
@@ -283,34 +291,34 @@ class ProfileViewController: UIViewController {
 }
 
 //MARK: Создаём 'ColorSet' используя Hex-code
-extension UIColor {
-    public convenience init?(hex: String) {
-        let r, g, b, a: CGFloat
-        if hex.hasPrefix("#") {
-            let start = hex.index(hex.startIndex, offsetBy: 1)
-            let hexColor = String(hex[start...])
+//extension UIColor {
+//    public convenience init?(hex: String) {
+//        let r, g, b, a: CGFloat
+//        if hex.hasPrefix("#") {
+//            let start = hex.index(hex.startIndex, offsetBy: 1)
+//            let hexColor = String(hex[start...])
+//
+//            if hexColor.count == 8 {
+//                let scanner = Scanner(string: hexColor)
+//                var hexNumber: UInt64 = 0
+//
+//                if scanner.scanHexInt64(&hexNumber) {
+//                    r = CGFloat((hexNumber & 0xff000000) >> 24) / 255
+//                    g = CGFloat((hexNumber & 0x00ff0000) >> 16) / 255
+//                    b = CGFloat((hexNumber & 0x0000ff00) >> 8) / 255
+//                    a = CGFloat(hexNumber & 0x000000ff) / 255
+//
+//                        self.init(red: r, green: g, blue: b, alpha: a)
+//                        return
+//                }
+//            }
+//        }
+//
+//        return nil
+//    }
+//}
 
-            if hexColor.count == 8 {
-                let scanner = Scanner(string: hexColor)
-                var hexNumber: UInt64 = 0
-
-                if scanner.scanHexInt64(&hexNumber) {
-                    r = CGFloat((hexNumber & 0xff000000) >> 24) / 255
-                    g = CGFloat((hexNumber & 0x00ff0000) >> 16) / 255
-                    b = CGFloat((hexNumber & 0x0000ff00) >> 8) / 255
-                    a = CGFloat(hexNumber & 0x000000ff) / 255
-
-                        self.init(red: r, green: g, blue: b, alpha: a)
-                        return
-                }
-            }
-        }
-
-        return nil
-    }
-}
-
-    let color = UIColor(hex: "#4885CC")
+    //let color = UIColor(hex: "#4885CC")
 
     //MARK: DataSource
     extension ProfileViewController: UITableViewDataSource {

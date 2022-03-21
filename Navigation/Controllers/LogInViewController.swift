@@ -26,6 +26,8 @@ protocol LoginFactory {
 
 class LogInViewController: UIViewController {
     
+    let aColor = UIColor(named: "background")
+    
     let brutForce = BrutForce()
     
     //1.2 Объявляем делегата для использования. В контроллере мы создаем instance протокола и называем его делегат
@@ -34,10 +36,9 @@ class LogInViewController: UIViewController {
     //MARK: Create subviews
     let substrate: UIView = {
         let substrate = UIView()
-        substrate.layer.borderColor = UIColor.lightGray.cgColor
+        substrate.layer.borderColor = UIColor.systemGray2.cgColor
         substrate.layer.borderWidth = 0.5
         substrate.layer.cornerRadius = 10
-        substrate.layer.backgroundColor = UIColor.systemGray6.cgColor
         substrate.translatesAutoresizingMaskIntoConstraints = false
         return substrate
     }()
@@ -96,25 +97,25 @@ class LogInViewController: UIViewController {
     }()
     
     private lazy var logInButton: CustomButton = {
-        let button = CustomButton(title: "Login", titleColor: .yellow ) {
+        let button = CustomButton(title: "Login", titleColor: .white ) {
             print("Custom Button Closure")
             self.logInButtonPressed()
         }
         button.layer.cornerRadius = 10
         button.clipsToBounds = true
-        button.setBackgroundImage(UIImage(named: "blue_pixel"), for: .normal)
+        button.layer.backgroundColor = UIColor.appColor(.buttoncolor)?.cgColor
         button.addTarget(self, action: #selector(logInButtonPressed), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
     
     private lazy var pickUpPass: CustomButton = {
-        let button = CustomButton(title: "Pick up", titleColor: .red ) {
+        let button = CustomButton(title: "Pick up", titleColor: .white ) {
             //self.generatePassword(passwordLength: 10)
         }
         button.layer.cornerRadius = 10
         button.clipsToBounds = true
-        button.setBackgroundImage(UIImage(named: "blue_pixel"), for: .normal)
+        button.layer.backgroundColor = UIColor.appColor(.buttoncolor)?.cgColor
         button.addTarget(self, action: #selector(generatePassword), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
@@ -163,13 +164,12 @@ class LogInViewController: UIViewController {
     
     @objc private func logInButtonPressed() {
         
-        //guard let userName = userNameTextField.text, let _ = passwordTextField.text else { return }
-    #if DEBUG
-    let user = delegate?.checkValue(login: userNameTextField.text ?? "", password: passwordTextField.text ?? "") ?? User(name: "Нет данных", avatar: UIImage(named: "gratis") ?? UIImage(), status: "Нет данных")
-    #else
+        #if DEBUG
+        let user = delegate?.checkValue(login: userNameTextField.text ?? "", password: passwordTextField.text ?? "") ?? User(name: "Нет данных", avatar: UIImage(named: "gratis") ?? UIImage(), status: "Нет данных")
+        #else
         let userService = CurrentUserService()
-    #endif
-        var profileViewController = ProfileViewController(user: user)
+        #endif
+        let profileViewController = ProfileViewController(user: user)
         self.navigationController?.pushViewController(profileViewController, animated: true)
     }
     
@@ -245,23 +245,48 @@ class LogInViewController: UIViewController {
         scrollView.verticalScrollIndicatorInsets = .zero
     }
     
-    // MARK: Keyboard notifications
+//    func updateLayer() {
+//        self.userNameTextField.layer.backgroundColor = UIColor.systemGray6.cgColor
+//    }
+    
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+
+        userNameTextField.layer.backgroundColor = UIColor.systemGray6.cgColor
+        passwordTextField.layer.backgroundColor = UIColor.systemGray6.cgColor
+        
+        logInButton.layer.backgroundColor = UIColor.appColor(.buttoncolor)?.cgColor
+        pickUpPass.layer.backgroundColor = UIColor.appColor(.buttoncolor)?.cgColor
+        
+    }
+    
+    //MARK: -Lifecucle
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
+        // MARK: Keyboard notifications
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
-    //MARK: Add subviews
     override func viewDidLoad() {
         super.viewDidLoad()
         
         self.navigationController?.isNavigationBarHidden = true
-        view.backgroundColor = .systemBackground
+        view.backgroundColor = aColor
         
         self.view.addSubview(scrollView)
         scrollView.addSubview(myView)
+        
+        
+        
+//        var wantsUpdateLayer: Bool {
+//            return true
+//        }
+//
+//        updateLayer()
+//
+//        view.setNeedsDisplay()
         
         userNameTextField.leftView = spaceForEmailView
         passwordTextField.leftView = spaceForPasswordView
@@ -277,6 +302,15 @@ class LogInViewController: UIViewController {
         myView.addSubview(pickUpPass)
         
         passwordTextField.isSecureTextEntry = false
+        
+        switch traitCollection.userInterfaceStyle {
+        case .dark:
+            break
+        case .light:
+            break
+        default:
+            print("test theme")
+        }
         
         //MARK: Create constraints
         let constraints = [
@@ -385,6 +419,18 @@ class MyLoginFactory: LoginFactory {
     func checkLoginByFactory() -> LoginInspetor {
         print("check login")
         return LoginInspetor()
+    }
+}
+
+enum AssetsColor: String {
+    case background
+    case buttoncolor
+    case titlecolor
+}
+
+extension UIColor {
+    static func appColor(_ name: AssetsColor) -> UIColor? {
+        return UIColor(named: name.rawValue)
     }
 }
 

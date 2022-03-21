@@ -24,7 +24,6 @@ class PhotosViewController: UIViewController, ImageLibrarySubscriber {
             receivedImages.append(images)
         }
         self.collectionView.reloadData()
-        print(type(of: self), #function)
     }
     
     //ImagePublisherFacade содержит методы добавления, удаления наблюдателя и вызов нотификации
@@ -46,18 +45,17 @@ class PhotosViewController: UIViewController, ImageLibrarySubscriber {
     private lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        collectionView.register(PhotoCollectionViewCell.self, forCellWithReuseIdentifier: String(describing: PhotoCollectionViewCell.self)) //1. Зарегистрировали ячейку
-        collectionView.dataSource = self //dataSurce даёт инфо по количеству ячеек и секций
+        collectionView.register(PhotoCollectionViewCell.self, forCellWithReuseIdentifier: String(describing: PhotoCollectionViewCell.self))
+        collectionView.dataSource = self
         collectionView.delegate = self
-        collectionView.backgroundColor = .white
+        collectionView.backgroundColor = .systemBackground
         return collectionView
     }()
-    
-    
     
     //MARK: viewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         setupCollectionsConstraints()
         
         receivedImages.append(UIImage(named: "1") ?? UIImage())

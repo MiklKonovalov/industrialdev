@@ -9,7 +9,7 @@
 import UIKit
 import iOSIntPackage
 
-final class FlowTableViewCell: UITableViewCell {
+class FlowTableViewCell: UITableViewCell {
     //создаём инстанс структуры ImageProcessor
     let imageProcessor = ImageProcessor()
     //Тут я буду применять фильтр, так как тут мы передаём изображение.
@@ -27,7 +27,7 @@ final class FlowTableViewCell: UITableViewCell {
     private let userNameLable: UILabel = {
         let userNameLable = UILabel()
         userNameLable.font = UIFont.systemFont(ofSize: 22, weight: .bold)
-        userNameLable.textColor = .black
+        userNameLable.textColor = UIColor.appColor(.titlecolor)
         userNameLable.translatesAutoresizingMaskIntoConstraints = false
         return userNameLable
     }()
@@ -35,7 +35,7 @@ final class FlowTableViewCell: UITableViewCell {
     private let descriptionLable: UILabel = {
         let descriptionLable = UILabel()
         descriptionLable.font = UIFont.systemFont(ofSize: 18, weight: .medium)
-        descriptionLable.textColor = .darkGray
+        descriptionLable.textColor = UIColor.appColor(.titlecolor)
         descriptionLable.translatesAutoresizingMaskIntoConstraints = false
         return descriptionLable
     }()
@@ -43,7 +43,7 @@ final class FlowTableViewCell: UITableViewCell {
     private let likesLable: UILabel = {
         let likesLable = UILabel()
         likesLable.font = UIFont.systemFont(ofSize: 18, weight: .medium)
-        likesLable.textColor = .black
+        likesLable.textColor = UIColor.appColor(.titlecolor)
         likesLable.translatesAutoresizingMaskIntoConstraints = false
         return likesLable
     }()
@@ -51,7 +51,7 @@ final class FlowTableViewCell: UITableViewCell {
     private let viewsLable: UILabel = {
         let viewsLable = UILabel()
         viewsLable.font = UIFont.systemFont(ofSize: 18, weight: .medium)
-        viewsLable.textColor = .black
+        viewsLable.textColor = UIColor.appColor(.titlecolor)
         viewsLable.translatesAutoresizingMaskIntoConstraints = false
         return viewsLable
     }()
@@ -67,17 +67,18 @@ final class FlowTableViewCell: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
         setupViews()
+        
+        contentView.backgroundColor = .systemBackground
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-        
-        setupViews()
     }
     
 }
 
-private extension FlowTableViewCell {
+extension FlowTableViewCell {
+    
     func setupViews() {
         contentView.addSubview(userNameLable)
         contentView.addSubview(descriptionLable)
