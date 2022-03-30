@@ -10,11 +10,6 @@ import UIKit
 
 class ProfileViewController: UIViewController {
     
-    //В классе ProfileViewController добавить свойство с типом UserService и инициализатор, который принимает объект UserService и имя пользователя, введённое на экране LogInViewController. При инициализации объекта ProfileViewController передать объект CurrentUserService.
-//    var userService: UserService
-//
-//    var userName: String
-    
     //MARK: -Properties
     
     var user: User
@@ -74,9 +69,9 @@ class ProfileViewController: UIViewController {
     
     var header = ProfileTableHeaderView()
     
-    private let tableView = UITableView(frame: .zero, style: .grouped)
-    private let reuseId = "cellid"
-    private let collectionId = "cellidTwo"
+    var tableView = UITableView(frame: .zero, style: .grouped)
+    let reuseId = "cellid"
+    let collectionId = "cellidTwo"
 
     //MARK: -Inicialization
     
@@ -290,41 +285,10 @@ class ProfileViewController: UIViewController {
     }
 }
 
-//MARK: Создаём 'ColorSet' используя Hex-code
-//extension UIColor {
-//    public convenience init?(hex: String) {
-//        let r, g, b, a: CGFloat
-//        if hex.hasPrefix("#") {
-//            let start = hex.index(hex.startIndex, offsetBy: 1)
-//            let hexColor = String(hex[start...])
-//
-//            if hexColor.count == 8 {
-//                let scanner = Scanner(string: hexColor)
-//                var hexNumber: UInt64 = 0
-//
-//                if scanner.scanHexInt64(&hexNumber) {
-//                    r = CGFloat((hexNumber & 0xff000000) >> 24) / 255
-//                    g = CGFloat((hexNumber & 0x00ff0000) >> 16) / 255
-//                    b = CGFloat((hexNumber & 0x0000ff00) >> 8) / 255
-//                    a = CGFloat(hexNumber & 0x000000ff) / 255
-//
-//                        self.init(red: r, green: g, blue: b, alpha: a)
-//                        return
-//                }
-//            }
-//        }
-//
-//        return nil
-//    }
-//}
+//MARK: DataSource
 
-    //let color = UIColor(hex: "#4885CC")
+extension ProfileViewController: UITableViewDataSource {
 
-    //MARK: DataSource
-    extension ProfileViewController: UITableViewDataSource {
-
-    //реализуем протокол dataSource
-    
     func numberOfSections(in tableView: UITableView) -> Int {
         return 2 //возвращаем количество секций у TableView
         
@@ -334,7 +298,6 @@ class ProfileViewController: UIViewController {
         if section == 0 {
             return 1 // если секция 0, то 1 ячейка
         } else {
-        
             return Flow.sections.fasting.count // в другом случае, показываем количество ячеек, раное количеству объектов в fasting
         }
     }

@@ -8,11 +8,8 @@
 
 import UIKit
 
-//Протокол делегирования проверки логинаи пароля. Он имеет несколько параметров, данных для передачи обратно вызвавшему контроллеру. В данном случае я передаю обратно контроллеру логин и пароль.
 protocol LogInViewControllerDelegate: AnyObject {
-    //1.1 В методе делегата передаём экземпляр делегирующего объекта, чтобы вернуть результат работы
     func checkValue(login: String, password: String) -> User?
-
 }
 
 //Фабрика 1: Создайте protocol LoginFactory с 1 методом без параметров, который возвращает LoginInspector.
@@ -30,8 +27,11 @@ class LogInViewController: UIViewController {
     
     let brutForce = BrutForce()
     
-    //1.2 Объявляем делегата для использования. В контроллере мы создаем instance протокола и называем его делегат
-    var delegate: LogInViewControllerDelegate?
+    let loginHelper: LoginHelperMock
+    
+    var model: SettingsViewOutput
+    
+    weak var loginDelegate: LogInViewControllerDelegate?
     
     //MARK: Create subviews
     let substrate: UIView = {
@@ -128,10 +128,10 @@ class LogInViewController: UIViewController {
         return separator
     }()
     
-    private var model: SettingsViewOutput?
-    
-    init(model: SettingsViewOutput) {
+    //MARK: -Inicialization
+    init(model: SettingsViewOutput, loginHelper: LoginHelperMock) {
         self.model = model
+        self.loginHelper = loginHelper
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -163,14 +163,39 @@ class LogInViewController: UIViewController {
     }
     
     @objc private func logInButtonPressed() {
+        do {
+            let login = try loginHelper.validateUsername(userNameTextField.text)
+            let password = try loginHelper.validatePassword(passwordTextField.text)
         
-        #if DEBUG
-        let user = delegate?.checkValue(login: userNameTextField.text ?? "", password: passwordTextField.text ?? "") ?? User(name: "Нет данных", avatar: UIImage(named: "gratis") ?? UIImage(), status: "Нет данных")
-        #else
-        let userService = CurrentUserService()
-        #endif
-        let profileViewController = ProfileViewController(user: user)
-        self.navigationController?.pushViewController(profileViewController, animated: true)
+            let user = Checker.shared.user
+        
+            _ = Checker.shared.checkLoginAndPassword(param: login , param: password)
+            if login == "1" && password == "2" {
+            
+            let profileViewController = ProfileViewController(user: user)
+            self.navigationController?.pushViewController(profileViewController, animated: true)
+            } else {
+                throw ValidationError.invalidValue
+            }
+        }
+        catch {
+            print(error.localizedDescription)
+        }
+        
+//        if userNameTextField.text == "1" && passwordTextField.text == "2" {
+//            let user = User(name: "Нет данных", avatar: UIImage(named: "gratis") ?? UIImage(), status: "Нет данных")
+//            let profileViewController = ProfileViewController(user: user)
+//            self.navigationController?.pushViewController(profileViewController, animated: true)
+//        } else {
+//            print("No user")
+//        }
+        
+        //#if DEBUG
+        //let user = loginDelegate?.checkValue(login: userNameTextField.text ?? "", password: passwordTextField.text ?? "") ?? User(name: "Нет данных", avatar: UIImage(named: "gratis") ?? UIImage(), status: "Нет данных")
+        //#else
+        //let userService = CurrentUserService()
+        //#endif
+        
     }
     
     @objc private func generatePassword(passwordLength: Int) -> String {
@@ -178,10 +203,6 @@ class LogInViewController: UIViewController {
         //Создаём очередь на побочном потоке
         let queue = DispatchQueue(label: "my_queue",
                                   attributes: .concurrent)
-        
-        //let queue2 = DispatchQueue(label: "my_queue2",
-        //                           qos: .userInteractive,
-        //                           attributes: .concurrent)
         
         let taskGroup1 = DispatchGroup()
         let taskGroup2 = DispatchGroup()
@@ -224,13 +245,6 @@ class LogInViewController: UIViewController {
         return password
     }
     
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
-        
-        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
-        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
-    }
-    
     // MARK: Keyboard Actions
     @objc fileprivate func keyboardWillShow(notification: NSNotification) {
         if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
@@ -245,10 +259,6 @@ class LogInViewController: UIViewController {
         scrollView.verticalScrollIndicatorInsets = .zero
     }
     
-//    func updateLayer() {
-//        self.userNameTextField.layer.backgroundColor = UIColor.systemGray6.cgColor
-//    }
-    
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
 
@@ -261,6 +271,13 @@ class LogInViewController: UIViewController {
     }
     
     //MARK: -Lifecucle
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
@@ -277,16 +294,6 @@ class LogInViewController: UIViewController {
         
         self.view.addSubview(scrollView)
         scrollView.addSubview(myView)
-        
-        
-        
-//        var wantsUpdateLayer: Bool {
-//            return true
-//        }
-//
-//        updateLayer()
-//
-//        view.setNeedsDisplay()
         
         userNameTextField.leftView = spaceForEmailView
         passwordTextField.leftView = spaceForPasswordView
@@ -389,18 +396,25 @@ class LogInViewController: UIViewController {
 //4. Создаем произвольный класс/структуру LoginInspector (или придумайте свое название), который подписывается на протокол LoginViewControllerDelegate, реализуем в нем протокольный метод.
 //5. LoginInspector проверяет точность введенного пароля с помощью синглтона Checker.
 class LoginInspetor: LogInViewControllerDelegate {
-
+    
+    let model: CheckModel
+    
+    init(model: CheckModel) {
+        self.model = model
+    }
+    
     func checkValue(login: String, password: String) -> User? {
-
+        
         let user = Checker.shared.user
-
+        
+        let loginViewController = LogInViewController(model: model, loginHelper: LoginHelperMock())
+        loginViewController.loginDelegate = self
         _ = Checker.shared.checkLoginAndPassword(param: login, param: password)
             if login == "1" && password == "2" {
                 return user
             } else {
-                print("Login not correct")
+                return nil
             }
-            return user
     }
 
 }
@@ -414,13 +428,13 @@ class LoginInspetor: LogInViewControllerDelegate {
 //MyLoginFactory должна подготовить объект (необходимый делегат для LoginViewController) до инициализации ViewController
 
 //Делегат получается от фабрики MyLoginFactory (в этом случае мы имитируем решение, если нам надо иметь возможность что-то менять, не меняя саму структуру кода)
-class MyLoginFactory: LoginFactory {
-    
-    func checkLoginByFactory() -> LoginInspetor {
-        print("check login")
-        return LoginInspetor()
-    }
-}
+//class MyLoginFactory: LoginFactory {
+//    
+//    func checkLoginByFactory() -> LoginInspetor {
+//        print("check login")
+//        return LoginInspetor()
+//    }
+//}
 
 enum AssetsColor: String {
     case background
@@ -433,4 +447,6 @@ extension UIColor {
         return UIColor(named: name.rawValue)
     }
 }
+
+
 

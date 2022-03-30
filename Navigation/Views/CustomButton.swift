@@ -16,15 +16,15 @@ class CustomButton: UIButton {
 //    var title: String
 //    var titleColor: UIColor
     //1.2 замыкание, в котором вызывающий объект, контроллер или родительское UIView, определят действие по нажатию кнопки
-    var onTap: (() -> Void)?
+    //var onTap: (() -> Void)?
     
     init(title: String, titleColor: UIColor, onTap: (() -> Void)?) {
-        self.onTap = onTap
+        //self.onTap = onTap
         super.init(frame: .zero)
         setTitle(title, for: .normal)
         setTitleColor(titleColor, for: .normal)
         translatesAutoresizingMaskIntoConstraints = false
-        addTarget(self, action: #selector(tapped), for: .touchUpInside)
+        //addTarget(self, action: #selector(tapped), for: .touchUpInside)
     }
     
     required init?(coder: NSCoder) {
@@ -32,8 +32,8 @@ class CustomButton: UIButton {
     }
     
     //@objc private func buttonTapped() будет спрятана внутрь реализации CustomButton, и на уровне родительского UIView фигурировать не будет
-    @objc private func tapped() {
-        onTap?()
-    }
+//    @objc private func tapped() {
+//        onTap?()
+//    }
     
 }

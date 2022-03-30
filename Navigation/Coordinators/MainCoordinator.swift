@@ -33,7 +33,7 @@ class MainCoordinator: Coordinator {
             //Create TabOne
             let viewModel = CheckModel()
             let factory = ControllerFactoryImpl()
-            let logInViewController = LogInViewController(model: viewModel)
+            let logInViewController = LogInViewController(model: viewModel, loginHelper: LoginHelperMock())
             let navigationLoginViewController = UINavigationController(rootViewController: logInViewController)
             navigationLoginViewController.tabBarItem = UITabBarItem(
                 title: "display",

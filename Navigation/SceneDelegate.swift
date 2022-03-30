@@ -11,7 +11,7 @@ import UIKit
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
-    let myLoginFactory = MyLoginFactory()
+    //let myLoginFactory = MyLoginFactory()
     let mainCoordinator = MainCoordinator()
     
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
@@ -21,6 +21,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let window = UIWindow(windowScene: windowScene)
         
         window.rootViewController = mainCoordinator.tabBarController
+            
+        //LogInViewController(model: CheckModel())
          
 //        guard let navigationController = tabBarController.viewControllers?.first as? UINavigationController, let viewController = navigationController.viewControllers.first as? ProfileViewController else { fatalError() }
 //        viewController.viewModel = viewModel

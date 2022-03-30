@@ -10,24 +10,57 @@ import XCTest
 
 class NavigationNewTests: XCTestCase {
 
-    override func setUpWithError() throws {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+    var loginHelper: LoginHelperMock!
+    var tableView: UITableView!
+    
+    override func setUp() {
+        loginHelper = LoginHelperMock()
+        super.setUp()
     }
-
-    override func tearDownWithError() throws {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
+    
+    override func tearDown() {
+        loginHelper = nil
+        tableView = nil
+        super.tearDown()
     }
-
-    func testExample() throws {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
+    
+    //Проверяем, действительное ли имя пользователя
+    func test_is_valid_username() throws {
+        XCTAssertNoThrow(try loginHelper?.validateUsername("1"))
     }
-
-    func testPerformanceExample() throws {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
+    
+    func test_username_is_nil() throws {
+        let expectedError = ValidationError.invalidValue
+        var error: ValidationError?
+        
+        XCTAssertThrowsError(try loginHelper.validateUsername(nil)) { thrownError in
+            error = thrownError as? ValidationError
         }
+        
+        XCTAssertEqual(expectedError, error)
+        XCTAssertEqual(expectedError.errorDescription, error?.errorDescription)
     }
-
+    
+    func test_username_is_long() throws {
+        let expectedError = ValidationError.usernameTooLong
+        var error: ValidationError?
+        let username = "very long1"
+        
+        XCTAssertTrue(username.count == 10)
+        
+        XCTAssertThrowsError(try loginHelper.validateUsername(username)) {
+            thrownError in
+            error = thrownError as? ValidationError
+        }
+        
+        XCTAssertEqual(expectedError, error)
+        XCTAssertEqual(expectedError.errorDescription, error?.errorDescription)
+    }
+    
+    func test_init_user() {
+        let user = User(name: "Misha", avatar: UIImage(named: "регби") ?? UIImage(), status: "Я - новенький!")
+        
+        XCTAssertNotNil(user)
+    }
+    
 }
