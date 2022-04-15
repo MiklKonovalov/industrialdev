@@ -46,6 +46,7 @@ final class FeedViewController: UIViewController {
         })
         button.layer.cornerRadius = 10
         button.clipsToBounds = true
+        button.layer.backgroundColor = UIColor.appColor(.buttoncolor)?.cgColor
         button.addTarget(self, action: #selector(buttonPressed), for: .editingChanged)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
@@ -56,6 +57,7 @@ final class FeedViewController: UIViewController {
             self.showNextModule()
         })
         button.layer.cornerRadius = 10
+        button.layer.backgroundColor = UIColor.appColor(.buttoncolor)?.cgColor
         button.clipsToBounds = true
         button.addTarget(self, action: #selector(buttonPressed), for: .editingChanged)
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -129,11 +131,20 @@ final class FeedViewController: UIViewController {
         //Мы попросим viewModel передать touch event о том, что нужно показать другой модуль
         print("Должен показаться другой вью контроллер")
         viewModel.onTapShowNextModel()
-        
+    }
+     
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        textField.layer.backgroundColor = UIColor.systemGray6.cgColor
+        button.layer.backgroundColor = UIColor.appColor(.buttoncolor)?.cgColor
+        showModuleButton.layer.backgroundColor = UIColor.appColor(.buttoncolor)?.cgColor
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.view.backgroundColor = .systemBackground
+        
         self.view.addSubview(textField)
         self.view.addSubview(button)
         self.view.addSubview(label)

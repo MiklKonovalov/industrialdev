@@ -20,13 +20,28 @@ class MainCoordinator: Coordinator {
         
         let feed = configureFeed()
         let logInCoordinator = configureLogIn()
-        let photos = configurePhotosController()
+        let photos = configurePhotosViewController()
         coordinators.append(feed)
         
         //В главном координаторе (MainCoordinator) запускаем дочерний координатор (FeedCoordinator)
         tabBarController.viewControllers = [feed.navigationController, logInCoordinator, photos]
         
         feed.start()
+    }
+    
+    //Это дочерний координатор
+    func configureFeed() -> FeedCoordinator {
+        //Create TabTwo
+        //Вынесли создание контроллера в отдельную фабрику "ControllerFactory"
+        //Чтобы вернуть SettingsCoordinator его надо сначала инициализировать
+        let navigationFeedViewController = UINavigationController()
+        navigationFeedViewController.tabBarItem = UITabBarItem(
+            title: "Folder",
+            image: UIImage(systemName: "folder"),
+            tag: 0)
+        let coordinator = FeedCoordinator(navigation: navigationFeedViewController, factory: factory)
+        
+        return coordinator
     }
     
         func configureLogIn() -> UINavigationController {
@@ -36,34 +51,20 @@ class MainCoordinator: Coordinator {
             let logInViewController = LogInViewController(model: viewModel)
             let navigationLoginViewController = UINavigationController(rootViewController: logInViewController)
             navigationLoginViewController.tabBarItem = UITabBarItem(
-                title: "display",
-                image: UIImage(named: "display"),
-                selectedImage: UIImage(named: "display"))
+                title: "Profile",
+                image: UIImage(systemName: "person.crop.circle"),
+                tag: 1)
             return navigationLoginViewController
         }
         
-        //Это дочерний координатор
-        func configureFeed() -> FeedCoordinator {
-            //Create TabTwo
-            //Вынесли создание контроллера в отдельную фабрику "ControllerFactory"
-            //Чтобы вернуть SettingsCoordinator его надо сначала инициализировать
-            let navigationFeedViewController = UINavigationController()
-            navigationFeedViewController.tabBarItem = UITabBarItem(
-                title: "Feed",
-                image: UIImage(named: "keyboard"),
-                selectedImage: UIImage(named: "keyboard"))
-            let coordinator = FeedCoordinator(navigation: navigationFeedViewController, factory: factory)
-            
-            return coordinator
-        }
-        
-        func configurePhotosController() -> UINavigationController {
+        func configurePhotosViewController() -> UINavigationController {
             let photosViewController = PhotosViewController()
+            photosViewController.title = "Photos"
             let navigationPhotosController = UINavigationController(rootViewController: photosViewController)
             navigationPhotosController.tabBarItem = UITabBarItem(
                 title: "Photos",
-                image: UIImage(named: "photo"),
-                selectedImage: UIImage(named: "photo"))
+                image: UIImage(systemName: "photo"),
+                tag: 2)
             
             return navigationPhotosController
         }

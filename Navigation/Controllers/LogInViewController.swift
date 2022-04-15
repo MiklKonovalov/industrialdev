@@ -245,10 +245,6 @@ class LogInViewController: UIViewController {
         scrollView.verticalScrollIndicatorInsets = .zero
     }
     
-//    func updateLayer() {
-//        self.userNameTextField.layer.backgroundColor = UIColor.systemGray6.cgColor
-//    }
-    
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
 
@@ -277,16 +273,6 @@ class LogInViewController: UIViewController {
         
         self.view.addSubview(scrollView)
         scrollView.addSubview(myView)
-        
-        
-        
-//        var wantsUpdateLayer: Bool {
-//            return true
-//        }
-//
-//        updateLayer()
-//
-//        view.setNeedsDisplay()
         
         userNameTextField.leftView = spaceForEmailView
         passwordTextField.leftView = spaceForPasswordView
@@ -343,7 +329,6 @@ class LogInViewController: UIViewController {
             spaceForPasswordView.leadingAnchor.constraint(equalTo: passwordTextField.leadingAnchor),
             
             logoImageView.topAnchor.constraint(equalTo: myView.topAnchor, constant: 120),
-            //logInButton.heightAnchor.constraint(equalToConstant: 100.0),
             logoImageView.centerXAnchor.constraint(equalTo: myView.centerXAnchor),
             logoImageView.widthAnchor.constraint(equalToConstant: 100.0),
             logoImageView.heightAnchor.constraint(equalTo: logoImageView.widthAnchor),
@@ -367,7 +352,6 @@ class LogInViewController: UIViewController {
             logInButton.leadingAnchor.constraint(equalTo: myView.leadingAnchor, constant: 16),
             logInButton.trailingAnchor.constraint(equalTo: myView.trailingAnchor, constant: -16),
             logInButton.topAnchor.constraint(equalTo: passwordTextField.bottomAnchor, constant: 16),
-            //logInButton.bottomAnchor.constraint(equalTo: myView.bottomAnchor),
             logInButton.heightAnchor.constraint(equalToConstant: 50.0),
             
             pickUpPass.topAnchor.constraint(equalTo: logInButton.bottomAnchor, constant: 16),

@@ -36,7 +36,6 @@ class PhotosViewController: UIViewController, ImageLibrarySubscriber {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationController?.navigationBar.isHidden = false
-        title = "Photos Gallery"
         navigationController?.title = labelString
         
     }

@@ -98,7 +98,6 @@ class User {
         self.avatar = avatar
         self.status = status
     }
-    
 }
 
 //Добавить протокол UserService с функцией, которая принимает имя пользователя и возвращает объект класса User.
