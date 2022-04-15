@@ -304,20 +304,37 @@ extension ProfileViewController: UITableViewDataSource {
     
     //создаём ячейку
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: collectionId, for: indexPath)
-        if indexPath.section == 0 { 
-            let collection = Flow.photos.imageArray[indexPath.row]
-            (cell as! PhotosTableViewCell).images = collection
+        switch indexPath.section {
+        case 0:
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: collectionId, for: indexPath) as? PhotosTableViewCell else {
+            return UITableViewCell()
+            }
+            cell.images = Flow.photos.imageArray[indexPath.row]
             return cell
-        }
-        let cellTwo = tableView.dequeueReusableCell(withIdentifier: reuseId, for: indexPath)
-        if indexPath.section == 1 {
-            let posts = Flow.sections.fasting[indexPath.row]
-            (cellTwo as! FlowTableViewCell).fasting = posts
-            return cellTwo
-        }
-
+        case 1:
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: collectionId, for: indexPath) as? FlowTableViewCell else {
+            return UITableViewCell()
+            }
+            cell.fasting = Flow.sections.fasting[indexPath.row]
             return cell
+        default:
+            return UITableViewCell()
+        }
+        
+//        let cell = tableView.dequeueReusableCell(withIdentifier: collectionId, for: indexPath)
+//        if indexPath.section == 0 {
+//            let collection = Flow.photos.imageArray[indexPath.row]
+//            (cell as! PhotosTableViewCell).images = collection
+//            return cell
+//        }
+//        let cellTwo = tableView.dequeueReusableCell(withIdentifier: reuseId, for: indexPath)
+//        if indexPath.section == 1 {
+//            let posts = Flow.sections.fasting[indexPath.row]
+//            (cellTwo as! FlowTableViewCell).fasting = posts
+//            return cellTwo
+//        }
+//
+//            return cell
         }
     //MARK: pushViewController
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

@@ -16,7 +16,7 @@ protocol LogInViewControllerDelegate: AnyObject {
 //Комментарий: Объявляем интерфейс, который будет играть роль «абстрактной фабрики»:
 protocol LoginFactory {
     //Создаём фабричный метод (Фабричный метод - это метод, который что-то возвращает), который возвращает LoginInspector. Мы знаем, что фабрика должна проверять логин и пароль, по-этому, когда мы пишем общий интерфейс для фабрики, мы возвращаем LjginInspector. Интерфейс абстрактной фабрики содержит один метода: для проверки логина и пароля. Метод возвращает экземпляр общего базового класса? Таким образом, ограничивается область распространения знаний о конкретных типах пределами той области, в которой это действительно необходимо.
-    func checkLoginByFactory() -> LoginInspetor
+    //func checkLoginByFactory() -> LoginInspetor
 }
 
 // Слой Presentation: M-V-C (V + C)
@@ -27,11 +27,11 @@ class LogInViewController: UIViewController {
     
     let brutForce = BrutForce()
     
-    let loginHelper: LoginHelperMock
-    
-    var model: SettingsViewOutput
+    //var model: SettingsViewOutput
     
     weak var loginDelegate: LogInViewControllerDelegate?
+    
+    var loginCoordinator: LoginCoordinator
     
     //MARK: Create subviews
     let substrate: UIView = {
@@ -74,7 +74,7 @@ class LogInViewController: UIViewController {
         return logoImageView
     }()
     
-    private var userNameTextField: UITextField = {
+    var userNameTextField: UITextField = {
         let userNameTextField = UITextField()
         userNameTextField.layer.borderColor = UIColor.white.cgColor
         userNameTextField.layer.cornerRadius = 10
@@ -85,7 +85,7 @@ class LogInViewController: UIViewController {
         return userNameTextField
     }()
     
-    private var passwordTextField: UITextField = {
+    var passwordTextField: UITextField = {
         let passwordTextField = UITextField()
         passwordTextField.layer.borderColor = UIColor.white.cgColor
         passwordTextField.layer.cornerRadius = 10
@@ -129,9 +129,8 @@ class LogInViewController: UIViewController {
     }()
     
     //MARK: -Inicialization
-    init(model: SettingsViewOutput, loginHelper: LoginHelperMock) {
-        self.model = model
-        self.loginHelper = loginHelper
+    init(loginCoordinator: LoginCoordinator) {
+        self.loginCoordinator = loginCoordinator
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -163,24 +162,27 @@ class LogInViewController: UIViewController {
     }
     
     @objc private func logInButtonPressed() {
-        do {
-            let login = try loginHelper.validateUsername(userNameTextField.text)
-            let password = try loginHelper.validatePassword(passwordTextField.text)
+        //Тут должен логикой управлять координатор
+        loginCoordinator.pressButtonAndCheck()
         
-            let user = Checker.shared.user
-        
-            _ = Checker.shared.checkLoginAndPassword(param: login , param: password)
-            if login == "1" && password == "2" {
-            
-            let profileViewController = ProfileViewController(user: user)
-            self.navigationController?.pushViewController(profileViewController, animated: true)
-            } else {
-                throw ValidationError.invalidValue
-            }
-        }
-        catch {
-            print(error.localizedDescription)
-        }
+//        do {
+//            let login = try loginHelper.validateUsername(userNameTextField.text)
+//            let password = try loginHelper.validatePassword(passwordTextField.text)
+//
+//            let user = Checker.shared.user
+//
+//            _ = Checker.shared.checkLoginAndPassword(param: login , param: password)
+//            if login == "1" && password == "2" {
+//
+//            let profileViewController = ProfileViewController(user: user)
+//            self.navigationController?.pushViewController(profileViewController, animated: true)
+//            } else {
+//                throw ValidationError.invalidValue
+//            }
+//        }
+//        catch {
+//            print(error.localizedDescription)
+//        }
         
 //        if userNameTextField.text == "1" && passwordTextField.text == "2" {
 //            let user = User(name: "Нет данных", avatar: UIImage(named: "gratis") ?? UIImage(), status: "Нет данных")
@@ -395,29 +397,29 @@ class LogInViewController: UIViewController {
 //LoginInspector - это реализация делегата.
 //4. Создаем произвольный класс/структуру LoginInspector (или придумайте свое название), который подписывается на протокол LoginViewControllerDelegate, реализуем в нем протокольный метод.
 //5. LoginInspector проверяет точность введенного пароля с помощью синглтона Checker.
-class LoginInspetor: LogInViewControllerDelegate {
-    
-    let model: CheckModel
-    
-    init(model: CheckModel) {
-        self.model = model
-    }
-    
-    func checkValue(login: String, password: String) -> User? {
-        
-        let user = Checker.shared.user
-        
-        let loginViewController = LogInViewController(model: model, loginHelper: LoginHelperMock())
-        loginViewController.loginDelegate = self
-        _ = Checker.shared.checkLoginAndPassword(param: login, param: password)
-            if login == "1" && password == "2" {
-                return user
-            } else {
-                return nil
-            }
-    }
-
-}
+//class LoginInspetor: LogInViewControllerDelegate {
+//
+//    let model: CheckModel
+//
+//    init(model: CheckModel) {
+//        self.model = model
+//    }
+//
+//    func checkValue(login: String, password: String) -> User? {
+//
+//        let user = Checker.shared.user
+//
+//        let loginViewController = LogInViewController(model: model, loginHelper: loginHelper, loginCoordinator: loginCoordinator)
+//        loginViewController.loginDelegate = self
+//        _ = Checker.shared.checkLoginAndPassword(param: login, param: password)
+//            if login == "1" && password == "2" {
+//                return user
+//            } else {
+//                return nil
+//            }
+//    }
+//
+//}
 
 //Фабрика п2: Вынесите генерацию LoginInspector из SceneDelegate (или AppDelegate) в фабрику: создайте объект MyLoginFactory (название на ваше усмотрение), подпишите на протокол.
 

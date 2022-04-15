@@ -10,6 +10,7 @@ import UIKit
 
 class MainCoordinator: Coordinator {
     
+    //Пустой массив координаторов
     var coordinators: [Coordinator] = []
     let tabBarController: TabBarController
     //Спомощью фабрики координатор будет публиковать контроллеры
@@ -24,22 +25,23 @@ class MainCoordinator: Coordinator {
         coordinators.append(feed)
         
         //В главном координаторе (MainCoordinator) запускаем дочерний координатор (FeedCoordinator)
-        tabBarController.viewControllers = [feed.navigationController, logInCoordinator, photos]
+        tabBarController.viewControllers = [feed.navigationController, logInCoordinator.navigationController, photos]
         
         feed.start()
     }
     
-        func configureLogIn() -> UINavigationController {
+        func configureLogIn() -> LoginCoordinator {
             //Create TabOne
             let viewModel = CheckModel()
             let factory = ControllerFactoryImpl()
-            let logInViewController = LogInViewController(model: viewModel, loginHelper: LoginHelperMock())
+            let logInViewController = LogInViewController(loginCoordinator: LoginCoordinator(navigationController: UINavigationController()))
             let navigationLoginViewController = UINavigationController(rootViewController: logInViewController)
             navigationLoginViewController.tabBarItem = UITabBarItem(
                 title: "display",
                 image: UIImage(named: "display"),
                 selectedImage: UIImage(named: "display"))
-            return navigationLoginViewController
+            let coordinator = LoginCoordinator(navigationController: UINavigationController())
+            return coordinator
         }
         
         //Это дочерний координатор

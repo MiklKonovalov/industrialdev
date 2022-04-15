@@ -128,32 +128,6 @@ class TestUserService: UserService {
     
 }
 
-//Создаем сервис для проверки логина и пароля Checker или любым другим названием, у сервиса (это Singleton) будет 1 интерфейсный метод для проверки логина и пароля
-class Checker {
-    //создаём синглтон внутри себя. Статик так как создаём объект внутри объекта (Checker внутри Checker)
-    static let shared = Checker()
-    
-    var user = User(name: "Регбист", avatar: UIImage(named: "регби") ?? UIImage(), status: "Бегу-бью!")
-    
-    private let login = "1"
-    
-    private let password = "2"
-    
-    //делаем приватный инициализатор, что бы нельзя было получить к нему доступ из вне
-    private init() {
-    
-    }
-    
-    func checkLoginAndPassword(param log: String, param pass: String) -> User {
-        if log == login && pass == password {
-            return user
-        } else {
-            print("Wrong")
-        }
-        return user
-    }
-    
-}
 
 
 
