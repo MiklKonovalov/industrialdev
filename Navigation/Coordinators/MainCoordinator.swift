@@ -15,6 +15,7 @@ class MainCoordinator: Coordinator {
     let tabBarController: TabBarController
     //Спомощью фабрики координатор будет публиковать контроллеры
     private let factory = ControllerFactoryImpl()
+    let navigationController = UINavigationController()
     
     init() {
         tabBarController = TabBarController()
@@ -28,19 +29,16 @@ class MainCoordinator: Coordinator {
         tabBarController.viewControllers = [feed.navigationController, logInCoordinator.navigationController, photos]
         
         feed.start()
+        logInCoordinator.start()
     }
     
         func configureLogIn() -> LoginCoordinator {
-            //Create TabOne
-            let viewModel = CheckModel()
-            let factory = ControllerFactoryImpl()
-            let logInViewController = LogInViewController(loginCoordinator: LoginCoordinator(navigationController: UINavigationController()))
-            let navigationLoginViewController = UINavigationController(rootViewController: logInViewController)
+            let navigationLoginViewController = UINavigationController()
             navigationLoginViewController.tabBarItem = UITabBarItem(
                 title: "display",
                 image: UIImage(named: "display"),
                 selectedImage: UIImage(named: "display"))
-            let coordinator = LoginCoordinator(navigationController: UINavigationController())
+            let coordinator = LoginCoordinator(navigationController: navigationLoginViewController)
             return coordinator
         }
         
@@ -54,7 +52,7 @@ class MainCoordinator: Coordinator {
                 title: "Feed",
                 image: UIImage(named: "keyboard"),
                 selectedImage: UIImage(named: "keyboard"))
-            let coordinator = FeedCoordinator(navigation: navigationFeedViewController, factory: factory)
+            let coordinator = FeedCoordinator(navigationController: navigationFeedViewController, factory: factory)
             
             return coordinator
         }

@@ -8,6 +8,11 @@
 
 import UIKit
 
+enum LoginViewControllerAction {
+    case success
+    case invalid
+}
+
 protocol LogInViewControllerDelegate: AnyObject {
     func checkValue(login: String, password: String) -> User?
 }
@@ -22,16 +27,14 @@ protocol LoginFactory {
 // Слой Presentation: M-V-C (V + C)
 
 class LogInViewController: UIViewController {
-    
+      
+    var output: ((LoginViewControllerAction) -> Void)?
+
     let aColor = UIColor(named: "background")
     
     let brutForce = BrutForce()
     
-    //var model: SettingsViewOutput
-    
     weak var loginDelegate: LogInViewControllerDelegate?
-    
-    var loginCoordinator: LoginCoordinator
     
     //MARK: Create subviews
     let substrate: UIView = {
@@ -128,9 +131,11 @@ class LogInViewController: UIViewController {
         return separator
     }()
     
+    private var model: SettingsViewOutput
+    
     //MARK: -Inicialization
-    init(loginCoordinator: LoginCoordinator) {
-        self.loginCoordinator = loginCoordinator
+    init(model: SettingsViewOutput) {
+        self.model = model
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -163,26 +168,29 @@ class LogInViewController: UIViewController {
     
     @objc private func logInButtonPressed() {
         //Тут должен логикой управлять координатор
-        loginCoordinator.pressButtonAndCheck()
-        
-//        do {
-//            let login = try loginHelper.validateUsername(userNameTextField.text)
-//            let password = try loginHelper.validatePassword(passwordTextField.text)
-//
-//            let user = Checker.shared.user
-//
-//            _ = Checker.shared.checkLoginAndPassword(param: login , param: password)
-//            if login == "1" && password == "2" {
-//
-//            let profileViewController = ProfileViewController(user: user)
-//            self.navigationController?.pushViewController(profileViewController, animated: true)
-//            } else {
-//                throw ValidationError.invalidValue
-//            }
-//        }
-//        catch {
-//            print(error.localizedDescription)
-//        }
+
+        do {
+            let login = userNameTextField.text
+            let password = passwordTextField.text
+            
+            //let login = try loginHelper.validateUsername(userNameTextField.text)
+            //let password = try loginHelper.validatePassword(passwordTextField.text)
+
+            //let user = Checker.shared.user
+
+            _ = Checker.shared.checkLoginAndPassword(param: login ?? "" , param: password ?? "")
+            
+            if login == "1" && password == "2" {
+                self.output?(.success)
+            //let profileViewController = ProfileViewController(user: user)
+            //self.navigationController?.pushViewController(profileViewController, animated: true)
+            } else {
+                self.output?(.invalid)
+            }
+        }
+        catch {
+            print(error.localizedDescription)
+        }
         
 //        if userNameTextField.text == "1" && passwordTextField.text == "2" {
 //            let user = User(name: "Нет данных", avatar: UIImage(named: "gratis") ?? UIImage(), status: "Нет данных")

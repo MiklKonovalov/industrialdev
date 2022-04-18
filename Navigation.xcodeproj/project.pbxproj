@@ -113,6 +113,8 @@
 		C6D63E4928082BFB0045C223 /* LoginCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6D63E47280828900045C223 /* LoginCoordinator.swift */; };
 		C6D63E4C28082D730045C223 /* Checker.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6D63E4B28082D730045C223 /* Checker.swift */; };
 		C6D63E4D28082DB40045C223 /* Checker.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6D63E4B28082D730045C223 /* Checker.swift */; };
+		C6D63E52280D9D3C0045C223 /* ProfileCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6D63E51280D9D3C0045C223 /* ProfileCoordinator.swift */; };
+		C6D63E53280D9ED70045C223 /* ProfileCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6D63E51280D9D3C0045C223 /* ProfileCoordinator.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -227,6 +229,7 @@
 		C6D63E452807219D0045C223 /* AutorizationTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutorizationTest.swift; sourceTree = "<group>"; };
 		C6D63E47280828900045C223 /* LoginCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginCoordinator.swift; sourceTree = "<group>"; };
 		C6D63E4B28082D730045C223 /* Checker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Checker.swift; sourceTree = "<group>"; };
+		C6D63E51280D9D3C0045C223 /* ProfileCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileCoordinator.swift; sourceTree = "<group>"; };
 		C6F086662614CE7B004F76E7 /* Header.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Header.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -313,8 +316,8 @@
 			children = (
 				C6D63E4A28082D5D0045C223 /* ViewModel */,
 				C667BB2226D6501F00FEA1AC /* Collection */,
-				C667BB3526D6501F00FEA1AC /* Controllers */,
 				C667BB3126D6501F00FEA1AC /* Coordinators */,
+				C667BB3526D6501F00FEA1AC /* Controllers */,
 				C667BB4026D6501F00FEA1AC /* Data */,
 				C667BB3B26D6501F00FEA1AC /* FeedSettingsModule */,
 				C667BB2726D6501F00FEA1AC /* Header */,
@@ -422,6 +425,7 @@
 				C667BB3226D6501F00FEA1AC /* MainCoordinator.swift */,
 				C667BB3426D6501F00FEA1AC /* FeedCoordinator.swift */,
 				C6D63E47280828900045C223 /* LoginCoordinator.swift */,
+				C6D63E51280D9D3C0045C223 /* ProfileCoordinator.swift */,
 			);
 			path = Coordinators;
 			sourceTree = "<group>";
@@ -866,6 +870,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C6D63E53280D9ED70045C223 /* ProfileCoordinator.swift in Sources */,
 				C6D63E4D28082DB40045C223 /* Checker.swift in Sources */,
 				C6D63E4928082BFB0045C223 /* LoginCoordinator.swift in Sources */,
 				C650E27727F1C88400080CB5 /* User.swift in Sources */,
@@ -979,6 +984,7 @@
 				C6A80AE627EB2D7E00F3E106 /* LoginHelper.swift in Sources */,
 				C667BB5D26D655E900FEA1AC /* TextInput.swift in Sources */,
 				C667BB5C26D655E200FEA1AC /* MainCoordinator.swift in Sources */,
+				C6D63E52280D9D3C0045C223 /* ProfileCoordinator.swift in Sources */,
 				C667BB5B26D655DC00FEA1AC /* Storage.swift in Sources */,
 				C667BB5A26D655D500FEA1AC /* FlowTableViewCell.swift in Sources */,
 				C62F2E9E26DCEBA40029897F /* Constants.swift in Sources */,

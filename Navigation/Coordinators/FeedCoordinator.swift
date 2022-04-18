@@ -20,8 +20,8 @@ final class FeedCoordinator: Coordinator {
         factory.makeFeed()
     }()
     
-    init(navigation: UINavigationController, factory: ControllerFactory) {
-        self.navigationController = navigation
+    init(navigationController: UINavigationController, factory: ControllerFactory) {
+        self.navigationController = navigationController
         self.factory = factory
     }
     

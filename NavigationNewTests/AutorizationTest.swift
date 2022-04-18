@@ -14,9 +14,8 @@ class AutorizationTest: XCTestCase {
     func testOpenLoginScreen() throws {
         let mainCoordinator = MainCoordinator()
         let viewController = mainCoordinator.configureLogIn()
-        viewController.viewDidLoad()
-        XCTAssertNotNil(viewController.topViewController as? LogInViewController)
-        
+        viewController.start()
+        XCTAssertNotNil(viewController)
     }
 
 }

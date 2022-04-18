@@ -10,34 +10,40 @@ import UIKit
 
 class LoginCoordinator: Coordinator {
     var coordinators: [Coordinator] = []
+    let viewModel = CheckModel()
     let navigationController: UINavigationController
-
+    var profileCoordinator: ProfileCoordinator?
+    private var output: (() -> Void)?
     
     
     init(navigationController: UINavigationController) {
         self.navigationController = navigationController
     }
     
-    func pressButtonAndCheck() {
-
-        do {
-            
-            let user = Checker.shared.user
-            let profileViewController = ProfileViewController(user: user)
-            let loginViewController = LogInViewController(loginCoordinator: self)
-            guard let login = loginViewController.userNameTextField.text else { return }
-            guard let password = loginViewController.passwordTextField.text else { return }
-            _ = Checker.shared.checkLoginAndPassword(param: login , param: password)
-            
-            if login == "1" && password == "2" {
-                self.navigationController.pushViewController(profileViewController, animated: true)
-            } else {
-                throw ValidationError.invalidValue
+    public func start() {
+        showLoginViewController()
+    }
+    
+    private func showLoginViewController() {
+        let loginViewController = LogInViewController(model: viewModel)
+        
+        loginViewController.output = { action in
+            switch action {
+            case .success:
+                self.profileCoordinator = ProfileCoordinator(navigationController: self.navigationController)
+                self.profileCoordinator?.start()
+                //let user = Checker.shared.user
+                //self.showProfileViewController(user: user)
+            case .invalid:
+                print("Invalid Login or Password")
             }
         }
-        catch {
-            print(error.localizedDescription)
-        }
+        self.navigationController.pushViewController(loginViewController, animated: true)
     }
+    
+//    func showProfileViewController(user: User) {
+//        let profileViewController = ProfileViewController(user: user)
+//        self.navigationController.pushViewController(profileViewController, animated: true)
+//    }
     
 }
