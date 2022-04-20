@@ -26,6 +26,13 @@ class TableViewTests: XCTestCase {
         
     }
 
+    func test_table_view_not_nil_when_view_is_loaded() {
+        
+        _ = sut.view
+        
+        XCTAssertNotNil(sut.tableView)
+    }
+    
     func test_number_of_sections_is_two() {
         let numberOfSections = tableView?.numberOfSections
         

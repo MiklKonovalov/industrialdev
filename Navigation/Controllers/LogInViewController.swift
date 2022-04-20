@@ -28,6 +28,8 @@ protocol LoginFactory {
 
 class LogInViewController: UIViewController {
       
+    weak var delegate: LogInViewControllerDelegate?
+    
     var output: ((LoginViewControllerAction) -> Void)?
 
     let aColor = UIColor(named: "background")
@@ -166,9 +168,13 @@ class LogInViewController: UIViewController {
         }
     }
     
-    @objc private func logInButtonPressed() {
+    @objc func logInButtonPressed() {
         //Тут должен логикой управлять координатор
 
+        /*guard let user = delegate?.checkValue(login: userNameTextField.text ?? "", password: passwordTextField.text ?? "") else { return }
+        let profileViewController = ProfileViewController(user: user)
+        self.navigationController?.pushViewController(profileViewController, animated: true)*/
+        
         do {
             let login = userNameTextField.text
             let password = passwordTextField.text
@@ -405,29 +411,21 @@ class LogInViewController: UIViewController {
 //LoginInspector - это реализация делегата.
 //4. Создаем произвольный класс/структуру LoginInspector (или придумайте свое название), который подписывается на протокол LoginViewControllerDelegate, реализуем в нем протокольный метод.
 //5. LoginInspector проверяет точность введенного пароля с помощью синглтона Checker.
-//class LoginInspetor: LogInViewControllerDelegate {
-//
-//    let model: CheckModel
-//
-//    init(model: CheckModel) {
-//        self.model = model
-//    }
-//
-//    func checkValue(login: String, password: String) -> User? {
-//
-//        let user = Checker.shared.user
-//
-//        let loginViewController = LogInViewController(model: model, loginHelper: loginHelper, loginCoordinator: loginCoordinator)
-//        loginViewController.loginDelegate = self
-//        _ = Checker.shared.checkLoginAndPassword(param: login, param: password)
-//            if login == "1" && password == "2" {
-//                return user
-//            } else {
-//                return nil
-//            }
-//    }
-//
-//}
+class LoginInspetor: LogInViewControllerDelegate {
+
+    func checkValue(login: String, password: String) -> User? {
+
+        let user = Checker.shared.user
+
+        _ = Checker.shared.checkLoginAndPassword(param: login, param: password)
+            if login == "1" && password == "2" {
+                return user
+            } else {
+                return nil
+            }
+    }
+
+}
 
 //Фабрика п2: Вынесите генерацию LoginInspector из SceneDelegate (или AppDelegate) в фабрику: создайте объект MyLoginFactory (название на ваше усмотрение), подпишите на протокол.
 
@@ -438,13 +436,14 @@ class LogInViewController: UIViewController {
 //MyLoginFactory должна подготовить объект (необходимый делегат для LoginViewController) до инициализации ViewController
 
 //Делегат получается от фабрики MyLoginFactory (в этом случае мы имитируем решение, если нам надо иметь возможность что-то менять, не меняя саму структуру кода)
-//class MyLoginFactory: LoginFactory {
-//    
-//    func checkLoginByFactory() -> LoginInspetor {
-//        print("check login")
-//        return LoginInspetor()
-//    }
-//}
+
+class MyLoginFactory: LoginFactory {
+    
+    func checkLoginByFactory() -> LoginInspetor {
+        print("check login")
+        return LoginInspetor()
+    }
+}
 
 enum AssetsColor: String {
     case background

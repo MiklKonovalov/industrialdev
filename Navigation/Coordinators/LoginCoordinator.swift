@@ -32,18 +32,11 @@ class LoginCoordinator: Coordinator {
             case .success:
                 self.profileCoordinator = ProfileCoordinator(navigationController: self.navigationController)
                 self.profileCoordinator?.start()
-                //let user = Checker.shared.user
-                //self.showProfileViewController(user: user)
             case .invalid:
                 print("Invalid Login or Password")
             }
         }
         self.navigationController.pushViewController(loginViewController, animated: true)
     }
-    
-//    func showProfileViewController(user: User) {
-//        let profileViewController = ProfileViewController(user: user)
-//        self.navigationController.pushViewController(profileViewController, animated: true)
-//    }
     
 }

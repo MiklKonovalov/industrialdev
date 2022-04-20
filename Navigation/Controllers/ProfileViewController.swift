@@ -9,7 +9,7 @@
 import UIKit
 
 class ProfileViewController: UIViewController {
-    
+
     //MARK: -Properties
     
     var user: User

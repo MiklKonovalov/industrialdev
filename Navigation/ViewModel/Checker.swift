@@ -14,9 +14,9 @@ class Checker {
     
     var user = User(name: "Регбист", avatar: UIImage(named: "регби") ?? UIImage(), status: "Бегу-бью!")
     
-    private let login = "1"
+    let login = "1"
     
-    private let password = "2"
+    let password = "2"
     
     //делаем приватный инициализатор, что бы нельзя было получить к нему доступ из вне
     private init() {
