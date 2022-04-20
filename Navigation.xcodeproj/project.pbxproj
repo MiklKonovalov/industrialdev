@@ -161,16 +161,12 @@
 		C610D3F0269EEF500035B24F /* CustomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
 		C610D3F6269F1B110035B24F /* CheckViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckViewModel.swift; sourceTree = "<group>"; };
 		C610D3F826A093250035B24F /* TextInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextInput.swift; sourceTree = "<group>"; };
-		C6295C56261CEBA900CA7154 /* LogInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInViewController.swift; sourceTree = "<group>"; };
 		C62F2E9D26DCEBA40029897F /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		C634AF3826DD059F0001B516 /* Planet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Planet.swift; sourceTree = "<group>"; };
 		C63AD35026BAA00500C55030 /* BrutForce.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrutForce.swift; sourceTree = "<group>"; };
-		C63AD35226BBF71700C55030 /* SpinnerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpinnerViewController.swift; sourceTree = "<group>"; };
 		C649D01826274B080024113E /* PhotosTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosTableViewCell.swift; sourceTree = "<group>"; };
 		C649D01C26282D5D0024113E /* PhotoCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoCollectionViewCell.swift; sourceTree = "<group>"; };
-		C649D0222629888D0024113E /* PhotosViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosViewController.swift; sourceTree = "<group>"; };
 		C64E754126AC9B78007C34B4 /* ControllerFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControllerFactory.swift; sourceTree = "<group>"; };
-		C64E754326ADD262007C34B4 /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		C64E754826ADF45C007C34B4 /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
 		C64E754B26ADF510007C34B4 /* MainCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCoordinator.swift; sourceTree = "<group>"; };
 		C64E754E26AEC8C1007C34B4 /* FeedCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedCoordinator.swift; sourceTree = "<group>"; };
@@ -223,7 +219,6 @@
 		C6A0FA2226D68C1F004FE33A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C6A80AE527EB2D7E00F3E106 /* LoginHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginHelper.swift; sourceTree = "<group>"; };
 		C6A80AEB27EDCA2F00F3E106 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Platforms/iPhoneOS.platform/Developer/Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
-		C6C1A7212609354C00B4FB14 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		C6D63E452807219D0045C223 /* OpenControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenControllerTests.swift; sourceTree = "<group>"; };
 		C6D63E47280828900045C223 /* LoginCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginCoordinator.swift; sourceTree = "<group>"; };
 		C6D63E4B28082D730045C223 /* Checker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Checker.swift; sourceTree = "<group>"; };
@@ -312,6 +307,8 @@
 		C617AD8526D42F44005DB681 /* Navigation */ = {
 			isa = PBXGroup;
 			children = (
+				060782B1250CE27700A87020 /* AppDelegate.swift */,
+				060782B3250CE27700A87020 /* SceneDelegate.swift */,
 				C6D63E4A28082D5D0045C223 /* ViewModel */,
 				C667BB2226D6501F00FEA1AC /* Collection */,
 				C667BB3126D6501F00FEA1AC /* Coordinators */,
@@ -323,8 +320,6 @@
 				C667BB2426D6501F00FEA1AC /* NextModule */,
 				C667BB2A26D6501F00FEA1AC /* Table */,
 				C667BB2E26D6501F00FEA1AC /* Views */,
-				060782B1250CE27700A87020 /* AppDelegate.swift */,
-				060782B3250CE27700A87020 /* SceneDelegate.swift */,
 				060782BF250CE27A00A87020 /* Info.plist */,
 				060782C5250CEB0A00A87020 /* InfoViewController.swift */,
 				060782C7250CEE5D00A87020 /* PostViewController.swift */,
@@ -332,13 +327,6 @@
 				C62F2E9D26DCEBA40029897F /* Constants.swift */,
 			);
 			path = Navigation;
-			sourceTree = "<group>";
-		};
-		C617ADA726D42F44005DB681 /* NavigationUITests */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = NavigationUITests;
 			sourceTree = "<group>";
 		};
 		C617ADAA26D42F45005DB681 /* StorageServiceTests */ = {
@@ -514,10 +502,6 @@
 			isa = PBXGroup;
 			children = (
 				C6A0FA2226D68C1F004FE33A /* Assets.xcassets */,
-				C6F3BBCE26D42E5600D120D7 /* Navigation */,
-				C6F3BBE526D42E5D00D120D7 /* NavigationTests */,
-				C6F3BBF026D42E5D00D120D7 /* NavigationUITests */,
-				C617ADA726D42F44005DB681 /* NavigationUITests */,
 				C617AD8526D42F44005DB681 /* Navigation */,
 				C617ADAA26D42F45005DB681 /* StorageServiceTests */,
 				C6A0F9A726D68088004FE33A /* NavigationNew */,
@@ -540,34 +524,6 @@
 				C6A0F9FE26D68114004FE33A /* Navigation copy.app */,
 			);
 			name = Products;
-			sourceTree = "<group>";
-		};
-		C6F3BBCE26D42E5600D120D7 /* Navigation */ = {
-			isa = PBXGroup;
-			children = (
-				C6F3BBD526D42E5600D120D7 /* Main.storyboard */,
-				C6F3BBDA26D42E5C00D120D7 /* LaunchScreen.storyboard */,
-			);
-			path = Navigation;
-			sourceTree = "<group>";
-		};
-		C6F3BBE526D42E5D00D120D7 /* NavigationTests */ = {
-			isa = PBXGroup;
-			children = (
-				C6C1A7212609354C00B4FB14 /* ProfileViewController.swift */,
-				C649D0222629888D0024113E /* PhotosViewController.swift */,
-				C6295C56261CEBA900CA7154 /* LogInViewController.swift */,
-				C63AD35226BBF71700C55030 /* SpinnerViewController.swift */,
-				C64E754326ADD262007C34B4 /* TabBarController.swift */,
-			);
-			path = NavigationTests;
-			sourceTree = "<group>";
-		};
-		C6F3BBF026D42E5D00D120D7 /* NavigationUITests */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = NavigationUITests;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1032,20 +988,6 @@
 			isa = PBXVariantGroup;
 			children = (
 				C6A0F9B426D6808F004FE33A /* Base */,
-			);
-			name = LaunchScreen.storyboard;
-			sourceTree = "<group>";
-		};
-		C6F3BBD526D42E5600D120D7 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
-		C6F3BBDA26D42E5C00D120D7 /* LaunchScreen.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
 			);
 			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
