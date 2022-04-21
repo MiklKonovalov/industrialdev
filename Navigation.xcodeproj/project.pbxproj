@@ -114,6 +114,7 @@
 		C6D63E4D28082DB40045C223 /* Checker.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6D63E4B28082D730045C223 /* Checker.swift */; };
 		C6D63E52280D9D3C0045C223 /* ProfileCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6D63E51280D9D3C0045C223 /* ProfileCoordinator.swift */; };
 		C6D63E53280D9ED70045C223 /* ProfileCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6D63E51280D9D3C0045C223 /* ProfileCoordinator.swift */; };
+		C6D63E55281024110045C223 /* LocalNotificationsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6D63E54281024100045C223 /* LocalNotificationsService.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -223,6 +224,7 @@
 		C6D63E47280828900045C223 /* LoginCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginCoordinator.swift; sourceTree = "<group>"; };
 		C6D63E4B28082D730045C223 /* Checker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Checker.swift; sourceTree = "<group>"; };
 		C6D63E51280D9D3C0045C223 /* ProfileCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileCoordinator.swift; sourceTree = "<group>"; };
+		C6D63E54281024100045C223 /* LocalNotificationsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalNotificationsService.swift; sourceTree = "<group>"; };
 		C6F086662614CE7B004F76E7 /* Header.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Header.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -309,6 +311,7 @@
 			children = (
 				060782B1250CE27700A87020 /* AppDelegate.swift */,
 				060782B3250CE27700A87020 /* SceneDelegate.swift */,
+				C6D63E562811A7A30045C223 /* Services */,
 				C6D63E4A28082D5D0045C223 /* ViewModel */,
 				C667BB2226D6501F00FEA1AC /* Collection */,
 				C667BB3126D6501F00FEA1AC /* Coordinators */,
@@ -496,6 +499,14 @@
 				C6A80AE527EB2D7E00F3E106 /* LoginHelper.swift */,
 			);
 			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		C6D63E562811A7A30045C223 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				C6D63E54281024100045C223 /* LocalNotificationsService.swift */,
+			);
+			path = Services;
 			sourceTree = "<group>";
 		};
 		C6F3BBC326D42E5600D120D7 = {
@@ -827,6 +838,7 @@
 				C6D63E4D28082DB40045C223 /* Checker.swift in Sources */,
 				C6D63E4928082BFB0045C223 /* LoginCoordinator.swift in Sources */,
 				C650E27727F1C88400080CB5 /* User.swift in Sources */,
+				C6D63E55281024110045C223 /* LocalNotificationsService.swift in Sources */,
 				C6A80AE727ECE3C800F3E106 /* LoginHelper.swift in Sources */,
 				C634AF3A26DD18ED0001B516 /* Planet.swift in Sources */,
 				C634AF3726DCF37A0001B516 /* Constants.swift in Sources */,

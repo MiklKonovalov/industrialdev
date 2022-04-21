@@ -10,19 +10,6 @@ import UIKit
 import UserNotifications
 
 class LocalNotificationsService {
-
-    /*func requestPermission() {
-        func setupNotifications(on application: UIApplication) {
-            let center = UNUserNotificationCenter.current()
-            center.requestAuthorization(options: [.alert, .sound, .badge]) { granted, error in
-                if granted {
-                    print("Notifications valid")
-                } else {
-                    print("Invalid access")
-                }
-            }
-        }
-    }*/
     
     func registeForLatestUpdatesIfPossible() {
         
@@ -35,8 +22,8 @@ class LocalNotificationsService {
         content.badge = 1
         
         var dateComponents = DateComponents()
-        dateComponents.hour = 20
-        dateComponents.minute = 01
+        dateComponents.hour = 19
+        dateComponents.minute = 16
         
         let calendarNotificationTrigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: true)
     
