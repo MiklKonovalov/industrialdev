@@ -203,6 +203,8 @@ class ProfileViewController: UIViewController {
         tableView.register(PhotosTableViewCell.self, forCellReuseIdentifier: collectionId) //регистрируем секцию из одной ячейки с 4 фотографиями
         tableView.dataSource = self
         tableView.delegate = self
+        tableView.dragDelegate = self
+        tableView.dropDelegate = self
     }
     
     func setupConstraints() {
@@ -322,20 +324,18 @@ class ProfileViewController: UIViewController {
 
     //MARK: DataSource
     extension ProfileViewController: UITableViewDataSource {
-
-    //реализуем протокол dataSource
     
     func numberOfSections(in tableView: UITableView) -> Int {
         return 2 //возвращаем количество секций у TableView
         
     }
     //задаём количество ячеек
+        
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == 0 {
-            return 1 // если секция 0, то 1 ячейка
+            return 1 
         } else {
-        
-            return Flow.sections.fasting.count // в другом случае, показываем количество ячеек, раное количеству объектов в fasting
+            return Flow.sections.fasting.count
         }
     }
     
@@ -382,5 +382,58 @@ extension ProfileViewController: UITableViewDelegate {
     
 }
 
+//MARK: Drag and drop
 
+extension ProfileViewController {
+    func dragItems(for indexPath: IndexPath) -> [UIDragItem] {
+        let post = Flow.sections.fasting[indexPath.row]
+        let postProvider = NSItemProvider(object: post.autor as NSString)
+        let dragItem = UIDragItem(itemProvider: postProvider)
+        return [dragItem]
+    }
+    
+    func addGeocache(_ newGeocache: Fasting, at index: Int) {
+        var cashes = Flow.sections.fasting
+        cashes.insert(newGeocache, at: index)
+    }
+}
+
+extension ProfileViewController: UITableViewDragDelegate {
+    func tableView(_ tableView: UITableView, itemsForBeginning session: UIDragSession, at indexPath: IndexPath) -> [UIDragItem] {
+        return dragItems(for: indexPath)
+    }
+}
+
+extension ProfileViewController: UITableViewDropDelegate {
+    func tableView(_ tableView: UITableView, performDropWith coordinator: UITableViewDropCoordinator) {
+        let destinationIndexPath = IndexPath(row: tableView.numberOfRows(inSection: 1), section: 1)
+        let item = coordinator.items[0]
+        
+        switch coordinator.proposal.operation {
+        case .copy:
+            print("Copying...")
+            let itemProvider = item.dragItem.itemProvider
+            
+            itemProvider.loadObject(ofClass: NSString.self) { string, error  in
+                if (string as? String) != nil {
+                    let fasting = Fasting(autor: "Author", description: "Description", image: UIImage(named: "регби") ?? UIImage(), numberOfLikes: 0, numberOfviews: 0)
+                    self.addGeocache(fasting, at: destinationIndexPath.row)
+                    DispatchQueue.main.async {
+                        tableView.insertRows(at: [destinationIndexPath], with: .automatic)
+                    }
+                }
+        }
+        default:
+            return
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, dropSessionDidUpdate session: UIDropSession, withDestinationIndexPath destinationIndexPath: IndexPath?) -> UITableViewDropProposal {
+        if session.localDragSession != nil {
+            return UITableViewDropProposal(operation: .forbidden)
+        } else {
+            return UITableViewDropProposal(operation: .copy, intent: .insertAtDestinationIndexPath)
+        }
+    }
+}
 

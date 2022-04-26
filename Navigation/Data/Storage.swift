@@ -38,16 +38,37 @@ struct Flow {
     
     static let sections = FastingSections(
             fasting: [
-                Fasting(autor: "Gustav", description: "Today i did eat this", image: UIImage(named: "эко-мороженое 1")!, numberOfLikes: 100, numberOfviews: 100),
-                Fasting(autor: "Dasha", description: "I love this watch", image: UIImage(named: "часы")!, numberOfLikes: 200, numberOfviews: 200),
-                Fasting(autor: "Misha", description: "Playing rugby with my friends", image: UIImage(named: "регби")!, numberOfLikes: 300, numberOfviews: 300),
-                Fasting(autor: "Nikita", description: "Soon...", image: UIImage(named: "cosmos")!, numberOfLikes: 400, numberOfviews: 400),
+                Fasting(autor: "Gustav",
+                        description: "Today i did eat this",
+                        image: UIImage(named: "эко-мороженое 1")!,
+                        numberOfLikes: 100,
+                        numberOfviews: 100),
+                Fasting(autor: "Dasha",
+                        description: "I love this watch",
+                        image: UIImage(named: "часы")!,
+                        numberOfLikes: 200,
+                        numberOfviews: 200),
+                Fasting(autor: "Misha",
+                        description: "Playing rugby with my friends",
+                        image: UIImage(named: "регби")!,
+                        numberOfLikes: 300,
+                        numberOfviews: 300),
+                Fasting(autor: "Nikita",
+                        description: "Soon...",
+                        image: UIImage(named: "cosmos")!,
+                        numberOfLikes: 400,
+                        numberOfviews: 400),
                     ]
                     )
 
     static let photos = PhotosSection(
             imageArray: [
-                Images(image: UIImage(named: "регби")!, secondImage: UIImage(named: "cosmos")!, thirdImage: UIImage(named: "эко-мороженое 1")!, fourthImage: UIImage(named: "часы")!, title: "Photos", arrow: "\u{2192}"),
+                Images(image: UIImage(named: "регби")!,
+                       secondImage: UIImage(named: "cosmos")!,
+                       thirdImage: UIImage(named: "эко-мороженое 1")!,
+                       fourthImage: UIImage(named: "часы")!,
+                       title: "Photos",
+                       arrow: "\u{2192}"),
                         ]
                         )
     }
