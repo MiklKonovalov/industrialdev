@@ -36,7 +36,7 @@ struct PhotosSection {
 
 struct Flow {
     
-    static let sections = FastingSections(
+    static var sections = FastingSections(
             fasting: [
                 Fasting(autor: "Gustav",
                         description: "Today i did eat this",
@@ -61,7 +61,7 @@ struct Flow {
                     ]
                     )
 
-    static let photos = PhotosSection(
+    static var photos = PhotosSection(
             imageArray: [
                 Images(image: UIImage(named: "регби")!,
                        secondImage: UIImage(named: "cosmos")!,

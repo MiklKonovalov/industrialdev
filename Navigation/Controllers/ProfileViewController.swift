@@ -394,7 +394,11 @@ extension ProfileViewController {
     
     func addGeocache(_ newGeocache: Fasting, at index: Int) {
         var cashes = Flow.sections.fasting
-        cashes.insert(newGeocache, at: index)
+        DispatchQueue.main.async {
+            self.tableView.beginUpdates()
+            cashes.insert(newGeocache, at: index)
+            self.tableView.endUpdates()
+        }
     }
 }
 
@@ -406,6 +410,7 @@ extension ProfileViewController: UITableViewDragDelegate {
 
 extension ProfileViewController: UITableViewDropDelegate {
     func tableView(_ tableView: UITableView, performDropWith coordinator: UITableViewDropCoordinator) {
+        
         let destinationIndexPath = IndexPath(row: tableView.numberOfRows(inSection: 1), section: 1)
         let item = coordinator.items[0]
         
@@ -419,7 +424,10 @@ extension ProfileViewController: UITableViewDropDelegate {
                     let fasting = Fasting(autor: "Author", description: "Description", image: UIImage(named: "регби") ?? UIImage(), numberOfLikes: 0, numberOfviews: 0)
                     self.addGeocache(fasting, at: destinationIndexPath.row)
                     DispatchQueue.main.async {
-                        tableView.insertRows(at: [destinationIndexPath], with: .automatic)
+                        self.tableView.beginUpdates()
+                        self.tableView.insertRows(at: [destinationIndexPath], with: .automatic)
+                        self.tableView.deleteRows(at: [destinationIndexPath], with: .fade)
+                        self.tableView.endUpdates()
                     }
                 }
         }
