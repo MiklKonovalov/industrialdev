@@ -387,18 +387,15 @@ extension ProfileViewController: UITableViewDelegate {
 extension ProfileViewController {
     func dragItems(for indexPath: IndexPath) -> [UIDragItem] {
         let post = Flow.sections.fasting[indexPath.row]
-        let postProvider = NSItemProvider(object: post.autor as NSString)
-        let dragItem = UIDragItem(itemProvider: postProvider)
-        return [dragItem]
+        let postAuthorProvider = NSItemProvider(object: post.autor as NSString)
+        let postImageProvider = NSItemProvider(object: post.image as UIImage)
+        let dragAuthorItem = UIDragItem(itemProvider: postAuthorProvider)
+        let dragImageItem = UIDragItem(itemProvider: postImageProvider)
+        return [dragAuthorItem, dragImageItem]
     }
     
     func addGeocache(_ newGeocache: Fasting, at index: Int) {
-        var cashes = Flow.sections.fasting
-        DispatchQueue.main.async {
-            self.tableView.beginUpdates()
-            cashes.insert(newGeocache, at: index)
-            self.tableView.endUpdates()
-        }
+            Flow.sections.fasting.insert(newGeocache, at: index)
     }
 }
 
@@ -411,28 +408,18 @@ extension ProfileViewController: UITableViewDragDelegate {
 extension ProfileViewController: UITableViewDropDelegate {
     func tableView(_ tableView: UITableView, performDropWith coordinator: UITableViewDropCoordinator) {
         
-        let destinationIndexPath = IndexPath(row: tableView.numberOfRows(inSection: 1), section: 1)
-        let item = coordinator.items[0]
+        let destinationIndexPath = coordinator.destinationIndexPath ?? IndexPath(row: 0, section: 1)
         
-        switch coordinator.proposal.operation {
-        case .copy:
-            print("Copying...")
-            let itemProvider = item.dragItem.itemProvider
-            
-            itemProvider.loadObject(ofClass: NSString.self) { string, error  in
-                if (string as? String) != nil {
-                    let fasting = Fasting(autor: "Author", description: "Description", image: UIImage(named: "регби") ?? UIImage(), numberOfLikes: 0, numberOfviews: 0)
+        coordinator.session.loadObjects(ofClass: NSString.self) { (string) in
+            coordinator.session.loadObjects(ofClass: UIImage.self) { (image) in
+                
+            tableView.performBatchUpdates({
+                let fasting = Fasting(autor: string.first as? String ?? "Author", description: "Description", image: (image.first as? UIImage ?? UIImage(named: "регби"))!, numberOfLikes: 0, numberOfviews: 0)
                     self.addGeocache(fasting, at: destinationIndexPath.row)
-                    DispatchQueue.main.async {
-                        self.tableView.beginUpdates()
-                        self.tableView.insertRows(at: [destinationIndexPath], with: .automatic)
-                        self.tableView.deleteRows(at: [destinationIndexPath], with: .fade)
-                        self.tableView.endUpdates()
-                    }
-                }
-        }
-        default:
-            return
+                    self.tableView.insertRows(at: [destinationIndexPath], with: .automatic)
+                    self.tableView.reloadSections(IndexSet(integer: 0), with: .automatic)
+            })
+            }
         }
     }
     

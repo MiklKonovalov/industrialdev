@@ -15,10 +15,15 @@ struct Fasting {
     var image: UIImage
     var numberOfLikes: Int
     var numberOfviews: Int
+    
 }
-
-struct FastingSections {
+ 
+class FastingSections {
     var fasting: [Fasting]
+    
+    init(fasting: [Fasting]) {
+        self.fasting = fasting
+    }
 }
 
 struct Images {
@@ -30,11 +35,15 @@ struct Images {
     var arrow: String
 }
 
-struct PhotosSection {
+class PhotosSection {
     var imageArray: [Images]
+    
+    init(imageArray: [Images]) {
+        self.imageArray = imageArray
+    }
 }
 
-struct Flow {
+class Flow {
     
     static var sections = FastingSections(
             fasting: [
