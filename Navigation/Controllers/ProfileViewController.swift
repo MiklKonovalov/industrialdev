@@ -203,6 +203,7 @@ class ProfileViewController: UIViewController {
         tableView.register(PhotosTableViewCell.self, forCellReuseIdentifier: collectionId) //регистрируем секцию из одной ячейки с 4 фотографиями
         tableView.dataSource = self
         tableView.delegate = self
+        tableView.dragInteractionEnabled = true
         tableView.dragDelegate = self
         tableView.dropDelegate = self
     }
@@ -410,16 +411,15 @@ extension ProfileViewController: UITableViewDropDelegate {
         
         let destinationIndexPath = coordinator.destinationIndexPath ?? IndexPath(row: 0, section: 1)
         
-        coordinator.session.loadObjects(ofClass: NSString.self) { (string) in
-            coordinator.session.loadObjects(ofClass: UIImage.self) { (image) in
-                
+        coordinator.session.loadObjects(ofClass: UIImage.self) { (image) in
+            
             tableView.performBatchUpdates({
-                let fasting = Fasting(autor: string.first as? String ?? "Author", description: "Description", image: (image.first as? UIImage ?? UIImage(named: "регби"))!, numberOfLikes: 0, numberOfviews: 0)
+                let fasting = Fasting(autor: "Author", description: "Description", image: image[0] as! UIImage, numberOfLikes: 0, numberOfviews: 0)
                     self.addGeocache(fasting, at: destinationIndexPath.row)
                     self.tableView.insertRows(at: [destinationIndexPath], with: .automatic)
                     self.tableView.reloadSections(IndexSet(integer: 0), with: .automatic)
             })
-            }
+            
         }
     }
     
@@ -430,5 +430,13 @@ extension ProfileViewController: UITableViewDropDelegate {
             return UITableViewDropProposal(operation: .copy, intent: .insertAtDestinationIndexPath)
         }
     }
+}
+
+extension ProfileViewController: UIDropInteractionDelegate {
+    func dropInteraction(_ interaction: UIDropInteraction, canHandle session: UIDropSession) -> Bool {
+        return session.canLoadObjects(ofClass: UIImage.self)
+    }
+    
+    
 }
 
